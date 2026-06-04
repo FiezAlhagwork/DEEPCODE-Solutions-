@@ -45,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" className={`${cairo.variable} ${black_one_ops.variable} bg-background`}>
+    <html lang="ar" dir="rtl" className={`${cairo.variable} ${black_one_ops.variable} `}>
       <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === "production" && <Analytics />}
