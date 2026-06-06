@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { motion } from "framer-motion";
 
+
 // أنميشن خاص بحاوية النصوص (تظهر من اليمين إلى اليسار بسلاسة)
 const textContainerVariants = {
   hidden: { opacity: 0, x: 50 }, // يبدأ مزاحاً جهة اليمين قليلاً ومعتم
@@ -13,7 +14,7 @@ const textContainerVariants = {
     transition: {
       duration: 0.8,
       ease: [0.16, 1, 0.3, 1], // تأثير فيزيائي ناعم جداً
-      staggerChildren: 0.12,   // تتابع ظهور العناصر الداخلية (العنوان، الوصف، الزر)
+      staggerChildren: 0.12, // تتابع ظهور العناصر الداخلية (العنوان، الوصف، الزر)
     },
   },
 };
@@ -51,9 +52,8 @@ const About = () => {
       dir="rtl"
     >
       <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
-        
         {/* العمود: حاوية الصورة والخطوط التقاطعية */}
-        <motion.div 
+        <motion.div
           variants={imageVariants}
           initial="hidden"
           whileInView="visible"
@@ -84,7 +84,7 @@ const About = () => {
         </motion.div>
 
         {/* العمود: حاوية النصوص والمعلومات */}
-        <motion.div 
+        <motion.div
           variants={textContainerVariants}
           initial="hidden"
           whileInView="visible"
@@ -92,7 +92,7 @@ const About = () => {
           className="flex flex-col items-center text-center lg:items-start lg:text-right gap-6 order-1 lg:order-2"
         >
           {/* الشارة العلوية (Badge) */}
-          <motion.span 
+          <motion.span
             variants={textItemVariants}
             className="rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-medium tracking-wide text-primary"
           >
@@ -100,7 +100,7 @@ const About = () => {
           </motion.span>
 
           {/* العنوان الفرعي */}
-          <motion.h2 
+          <motion.h2
             variants={textItemVariants}
             className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl text-balance"
           >
@@ -108,14 +108,17 @@ const About = () => {
           </motion.h2>
 
           {/* اسم الهوية البرمجية */}
-          <motion.div variants={textItemVariants} className="flex items-center gap-3 py-1">
+          <motion.div
+            variants={textItemVariants}
+            className="flex items-center gap-3 py-1"
+          >
             <span className="text-3xl font-bold tracking-wide text-white md:text-3xl">
-               <span className="text-primary">DEEP CODE</span> Solutions
+              <span className="text-primary">DEEP CODE</span> Solutions
             </span>
           </motion.div>
 
           {/* النص الوصفي */}
-          <motion.p 
+          <motion.p
             variants={textItemVariants}
             className="max-w-xl text-base font-light leading-relaxed text-muted-foreground text-pretty"
           >
@@ -130,7 +133,7 @@ const About = () => {
             </Button>
           </motion.div>
         </motion.div>
-
+   
       </div>
     </section>
   );

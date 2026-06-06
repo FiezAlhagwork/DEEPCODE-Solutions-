@@ -12,7 +12,7 @@ const navLinks = [
   { label: "فريقنا", href: "#team" },
 ];
 
-export function Navbar() {
+export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

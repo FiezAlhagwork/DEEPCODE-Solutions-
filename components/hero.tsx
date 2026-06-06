@@ -34,7 +34,7 @@ const pills = [
   { label: "جودة", active: false },
 ];
 
-export function Hero() {
+export default function Hero() {
   return (
     /* تم إزالة overflow-hidden وإضافة relative فقط لضمان تداخل الإضاءة مع القسم التالي */
     <section
