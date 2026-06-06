@@ -1,15 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { Crosshair, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  motion,
-  useMotionValue,
-  useTransform,
-  animate,
-  useInView,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import AnimatedCounter from "./AnimatedCounter";
 
 const containerVariants = {
@@ -17,7 +10,7 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15, // الفارق الزمني بين ظهور كل عنصر والتالي
+      staggerChildren: 0.15,
       delayChildren: 0.1,
     },
   },
@@ -30,7 +23,7 @@ const itemVariants = {
     y: 0,
     transition: {
       duration: 1,
-      ease: [0.16, 1, 0.3, 1], // Custom cubic-bezier لحركة فائقة النعومة
+      ease: [0.16, 1, 0.3, 1],
     },
   },
 };
@@ -43,21 +36,25 @@ const pills = [
 
 export function Hero() {
   return (
+    /* تم إزالة overflow-hidden وإضافة relative فقط لضمان تداخل الإضاءة مع القسم التالي */
     <section
       aria-label="Hero Introduction"
-      className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pb-16 overflow-hidden bg-[#0D0D0E]"
+      className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pb-24 bg-[#0D0D0E]"
     >
-      {/* تأثيرات الـ Blur على الجوانب الخلفية */}
+      {/* حاوية فرعية لحجب الـ Scroll الأفقي فقط دون قص الإضاءة العمودية الممتدة للأسفل */}
+      <div className="absolute inset-0 overflow-x-hidden pointer-events-none z-0" />
+
+      {/* تأثيرات الـ Blur الخلفية ممددة لتبدأ من أسفل الـ Hero وتتداخل مع الـ About */}
       {/* الجانب الأيسر (البنفسجي والفاتح) */}
-      <div className="absolute left-0 top-3/4 -translate-y-1/2 w-50 md:w-170 h-full pointer-events-none opacity-60 mix-blend-screen select-none z-0">
-        <div className="absolute inset-0 bg-[url('/Ellipse1.png')] w-60 md:w-170 h-full bg-no-repeat bg-left bg-contain blur-[80px]" />
-        <div className="absolute inset-0 bg-[url('/Ellipse2.png')] h-full bg-no-repeat bg-left bg-contain blur-[60px]" />
+      <div className="absolute left-0 bottom-[-15%] w-60 md:w-150 h-125 md:h-140 pointer-events-none opacity-50 mix-blend-screen select-none z-0">
+        <div className="absolute inset-0 bg-[url('/Ellipse1.png')] bg-no-repeat bg-left bg-contain blur-[100px]" />
+        <div className="absolute inset-0 bg-[url('/Ellipse2.png')] bg-no-repeat bg-left bg-contain blur-[80px]" />
       </div>
 
       {/* الجانب الأيمن (النيلي والداكن) */}
-      <div className="absolute right-0 top-[70%] -translate-y-1/2 h-full pointer-events-none opacity-60 mix-blend-screen select-none z-0">
-        <div className="absolute inset-0 bg-[url('/Ellipse5.png')] w-60 md:w-170 h-full bg-no-repeat bg-right bg-contain blur-[80px]" />
-        <div className="absolute inset-0 bg-[url('/Ellipse4.png')] w-20 md:w-110 h-full bg-no-repeat bg-right bg-contain blur-[60px]" />
+      <div className="absolute right-0 bottom-[-20%] w-60 md:w-150 h-125 md:h-140 pointer-events-none opacity-40 mix-blend-screen select-none z-0">
+        <div className="absolute inset-0 bg-[url('/Ellipse5.png')] bg-no-repeat bg-right bg-contain blur-[100px]" />
+        <div className="absolute inset-0 bg-[url('/Ellipse4.png')] bg-no-repeat bg-right bg-contain blur-[80px]" />
       </div>
 
       {/* الحاوية المتحركة الأساسية */}
@@ -77,7 +74,7 @@ export function Hero() {
               key={pill.label}
               className={`px-4 py-2 rounded-full text-sm transition-all cursor-pointer ${
                 pill.active
-                  ? "bg-primary/20 text-primary border border-primary/40 shadow-[0_0_20px_rgba(168,85,247,0.3)]"
+                  ? "bg-primary/10 text-primary border border-primary/50 shadow-[0_0_20px_rgba(168,85,247,0.3)]"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
