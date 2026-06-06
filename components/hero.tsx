@@ -34,7 +34,7 @@ const pills = [
   { label: "جودة", active: false },
 ];
 
-export default function Hero() {
+const Hero = () => {
   return (
     /* تم إزالة overflow-hidden وإضافة relative فقط لضمان تداخل الإضاءة مع القسم التالي */
     <section
@@ -150,4 +150,6 @@ export default function Hero() {
       </motion.div>
     </section>
   );
-}
+};
+
+export default Hero;

@@ -12,7 +12,7 @@ const navLinks = [
   { label: "فريقنا", href: "#team" },
 ];
 
-export default function Navbar() {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -67,4 +67,5 @@ export default function Navbar() {
       <NavigationOverlay isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
-}
+};
+export default Navbar;
