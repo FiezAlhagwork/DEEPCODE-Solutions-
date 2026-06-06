@@ -22,4 +22,18 @@ export interface FeatureListProps {
   features: FeatureData[];
 }
 
+export interface PricingPlan {
+  id: string;
+  name: string;
+  price: number;
+  currency: string;
+  period: string;
+  features: string[];
+  featured?: boolean;
+}
+
+export interface PricingCardProps {
+  plan: PricingPlan;
+}
+
 

@@ -1,0 +1,112 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "motion/react";
+import { pricingPlans } from "@/constant";
+import { cn } from "@/lib/utils";
+import PricingCard from "./ui/PricingCard";
+
+const listVariants = {
+  hidden: { opacity: 1 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15 },
+  },
+};
+
+function PricingJsonLd() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "باقات المواقع",
+    itemListElement: pricingPlans.map((plan, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Product",
+        name: plan.name,
+        offers: {
+          "@type": "Offer",
+          price: plan.price,
+          priceCurrency: plan.currency,
+          availability: "https://schema.org/InStock",
+        },
+      },
+    })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
+
+export default function Pricing() {
+
+  return (
+    <section
+      aria-labelledby="pricing-heading"
+      className="relative w-full overflow-hidden bg-[#0B0A0E] px-6 py-16"
+    >
+      <PricingJsonLd />
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0  bg-center opacity-40"
+      />
+
+      <div className="relative z-10 mx-auto max-w-6xl">
+        <header className="mb-12 flex flex-col items-center gap-4 text-center">
+          <span className="rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-medium tracking-wide text-primary">
+            استغل العروض
+          </span>
+
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              role="switch"
+              aria-label="لفترة محدودة"
+              className="relative h-5 w-10 shrink-0 rounded-full transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0A0E] bg-primary"
+            >
+              <span
+                aria-hidden="true"
+                className="absolute top-[2px] size-4 rounded-full bg-white shadow-sm transition-all duration-300 ease-out right-1"
+              />
+            </button>
+            <span className="text-sm text-muted-foreground">لفترة محدودة</span>
+          </div>
+
+          <h2
+            id="pricing-heading"
+            className="text-3xl font-medium text-white md:text-4xl pt-6"
+          >
+            باقات المواقع
+          </h2>
+          
+          <p className="max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
+            اختر الباقة المناسبة لعملك واترك حضورك الرقمي علينا
+          </p>
+        </header>
+
+        <motion.ul
+          variants={listVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-3 md:gap-4 lg:gap-6"
+          role="list"
+        >
+          {pricingPlans.map((plan) => (
+            <PricingCard
+              key={plan.id}
+              plan={plan}
+
+            />
+          ))}
+        </motion.ul>
+      </div>
+    </section>
+  );
+}
