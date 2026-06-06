@@ -16,26 +16,25 @@ const black_one_ops = Black_Ops_One({
 });
 
 export const metadata: Metadata = {
-  title: "حلول ديب كود | وجهتك الآمنة لحضور رقمي متكامل",
+  title: "DEEP CODE Solution | وجهتك الآمنة لحضور رقمي متكامل",
   description:
     "نحول أفكارك إلى تجارب رقمية استثنائية تلبي احتياجات عملائك وتدعم نجاحك وتطورك في عالم الاعمال",
-  generator: "v0.app",
   icons: {
     icon: [
       {
-        url: "/icon-light-32x32.png",
+        url: "/photo_2026-05-24_12-23-18.jpg",
         media: "(prefers-color-scheme: light)",
       },
       {
-        url: "/icon-dark-32x32.png",
+        url: "/photo_2026-05-24_12-23-18.jpg",
         media: "(prefers-color-scheme: dark)",
       },
       {
-        url: "/icon.svg",
+        url: "/photo_2026-05-24_12-23-18.jpg",
         type: "image/svg+xml",
       },
     ],
-    apple: "/apple-icon.png",
+    apple: "/photo_2026-05-24_12-23-18.jpg",
   },
 };
 
