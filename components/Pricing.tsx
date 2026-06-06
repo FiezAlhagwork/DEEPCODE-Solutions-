@@ -48,7 +48,7 @@ export default function Pricing() {
   return (
     <section
       aria-labelledby="pricing-heading"
-      className="relative w-full overflow-hidden bg-[#0B0A0E] px-6 py-16"
+      className="relative w-full overflow-hidden  px-6 py-16"
     >
       <PricingJsonLd />
 

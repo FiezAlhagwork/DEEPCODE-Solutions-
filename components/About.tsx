@@ -48,7 +48,7 @@ const About = () => {
   return (
     <section
       aria-label="من نحن"
-      className="relative w-full px-6 py-10 md:py-20 bg-transparent"
+      className="relative w-full px-6 py-10 md:py-20 bg-transparent "
       dir="rtl"
     >
       <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-2">

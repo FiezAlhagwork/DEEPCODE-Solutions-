@@ -6,7 +6,7 @@ import Pricing from "@/components/Pricing";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#0B0A0E]">
+    <main className="min-h-screen bg-[#0D0D0E]">
       <Navbar />
       <Hero />
       <About />

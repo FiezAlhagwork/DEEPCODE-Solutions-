@@ -39,7 +39,7 @@ const Hero = () => {
     /* تم إزالة overflow-hidden وإضافة relative فقط لضمان تداخل الإضاءة مع القسم التالي */
     <section
       aria-label="Hero Introduction"
-      className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pb-24 bg-[#0D0D0E]"
+      className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pb-24 "
     >
       {/* حاوية فرعية لحجب الـ Scroll الأفقي فقط دون قص الإضاءة العمودية الممتدة للأسفل */}
       <div className="absolute inset-0 overflow-x-hidden pointer-events-none z-0" />
