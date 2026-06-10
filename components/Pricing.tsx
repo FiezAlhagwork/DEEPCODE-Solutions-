@@ -1,18 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "motion/react";
-import { pricingPlans } from "@/constant";
-import { cn } from "@/lib/utils";
-import PricingCard from "./ui/PricingCard";
 
-const listVariants = {
-  hidden: { opacity: 1 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15 },
-  },
-};
+
+import { pricingPlans } from "@/constant";
+import PricingList from "./ui/PricingList";
+
+
+
 
 function PricingJsonLd() {
   const jsonLd = {
@@ -47,10 +41,11 @@ export default function Pricing() {
 
   return (
     <section
+      id="pricing"
       aria-labelledby="pricing-heading"
       className="relative w-full overflow-hidden  px-6 py-16"
     >
-      <PricingJsonLd />
+      {/* <PricingJsonLd /> */}
 
       <div
         aria-hidden="true"
@@ -58,7 +53,7 @@ export default function Pricing() {
       />
 
       <div className="relative z-10 mx-auto max-w-6xl">
-        <header className="mb-12 flex flex-col items-center gap-4 text-center">
+        <div className="mb-12 flex flex-col items-center gap-4 text-center">
           <span className="rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-medium tracking-wide text-primary">
             استغل العروض
           </span>
@@ -84,28 +79,13 @@ export default function Pricing() {
           >
             باقات المواقع
           </h2>
-          
+
           <p className="max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
             اختر الباقة المناسبة لعملك واترك حضورك الرقمي علينا
           </p>
-        </header>
+        </div>
 
-        <motion.ul
-          variants={listVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-3 md:gap-4 lg:gap-6"
-          role="list"
-        >
-          {pricingPlans.map((plan) => (
-            <PricingCard
-              key={plan.id}
-              plan={plan}
-
-            />
-          ))}
-        </motion.ul>
+        <PricingList PricingPlans={pricingPlans} />
       </div>
     </section>
   );

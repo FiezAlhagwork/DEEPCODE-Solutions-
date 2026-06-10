@@ -37,3 +37,42 @@ export interface PricingCardProps {
 }
 
 
+export interface PricingListProps {
+  PricingPlans: PricingPlan[]
+}
+
+export interface ContactInfoData {
+  iconName: keyof typeof LucideIcons;
+  title: string;
+  detail: string;
+}
+
+export interface ContactInfoItemProps {
+  item: ContactInfoData;
+}
+
+
+export interface FieldProps {
+  label: string;
+  iconName: keyof typeof LucideIcons;
+  htmlFor?: string;
+  children: React.ReactNode;
+  className?: string;
+}
+
+
+export interface TextareaProps
+  extends React.ComponentProps<"textarea"> { }
+
+export interface InputProps extends React.ComponentProps<"input"> { }
+
+export interface FooterLink {
+  label: string;
+  href: string;
+}
+
+export interface FooterSocialLink {
+  label: string;
+  href: string;
+  iconName: keyof typeof LucideIcons;
+}

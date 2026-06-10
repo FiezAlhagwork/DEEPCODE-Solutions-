@@ -26,7 +26,7 @@ export default function PricingCard({ plan }: PricingCardProps) {
       <div
         className={cn(
           "relative flex h-full flex-col rounded-xl   p-8 transition-all duration-300 ease-out",
-          featured ? cn(" bg-[#121115]/90","drop-shadow-[0_0_30px_rgba(168,85,247,0.5)]",) :  "border border-white/10 bg-[#121115]/80 hover:scale-[1.02] hover:border-primary/30",
+          featured ? cn(" bg-[#121115]/90", "drop-shadow-[0_0_30px_rgba(168,85,247,0.5)]",) : "border border-white/10 bg-[#121115]/80 hover:scale-[1.02] hover:border-primary/30",
         )}
       >
         {featured && (
@@ -57,7 +57,7 @@ export default function PricingCard({ plan }: PricingCardProps) {
               key={feature}
               className="flex items-start justify-start gap-2 text-[14px] leading-relaxed text-muted-foreground"
             >
-              
+
               <Check
                 className="mt-0.5 size-4 shrink-0 text-white"
                 strokeWidth={2.5}
@@ -69,8 +69,8 @@ export default function PricingCard({ plan }: PricingCardProps) {
         </ul>
 
         <Button
-            variant={featured ? "default" : "outline"}
-            className="mt-15"
+          variant={featured ? "default" : "outline"}
+          className="mt-15"
         >
           اطلب الآن
         </Button>

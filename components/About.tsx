@@ -47,6 +47,7 @@ const imageVariants = {
 const About = () => {
   return (
     <section
+      id="about"
       aria-label="من نحن"
       className="relative w-full px-6 py-10 md:py-20 bg-transparent "
       dir="rtl"

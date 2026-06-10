@@ -1,4 +1,17 @@
-import { FeatureData, PricingPlan } from "@/types";
+import { ContactInfoData, FeatureData, FooterLink, FooterSocialLink, PricingPlan } from "@/types";
+
+export const footerNavLinks: FooterLink[] = [
+  { label: "من نحن", href: "#about" },
+  { label: "خدماتنا", href: "#services" },
+  { label: "باقات المواقع", href: "#pricing" },
+  { label: "تواصل معنا", href: "#contact" },
+];
+
+export const footerSocialLinks: FooterSocialLink[] = [
+  { label: "GitHub", href: "https://github.com", iconName: "Github" },
+  { label: "LinkedIn", href: "https://linkedin.com", iconName: "Linkedin" },
+  { label: "Instagram", href: "https://instagram.com", iconName: "Instagram" },
+];
 
 export const pricingPlans: PricingPlan[] = [
   {
@@ -41,6 +54,24 @@ export const pricingPlans: PricingPlan[] = [
   },
 ];
 
+export const contactInfoItems: ContactInfoData[] = [
+  {
+    iconName: "MapPin",
+    title: "تفضل بزيارتنا",
+    detail: "دمشق - الشعلان",
+  },
+  {
+    iconName: "Phone",
+    title: "اتصل بنا",
+    detail: "963997013656+",
+  },
+  {
+    iconName: "Mail",
+    title: "راسلنا عبر البريد الإلكتروني",
+    detail: "codedeep@gmail.com",
+  },
+];
+
 export const featuresData: FeatureData[] = [
   {
     iconName: "Sparkle",
@@ -58,3 +89,4 @@ export const featuresData: FeatureData[] = [
     description: "ريادة التقنيات",
   },
 ];
+
