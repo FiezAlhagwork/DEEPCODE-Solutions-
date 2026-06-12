@@ -9,46 +9,51 @@ interface NavigationOverlayProps {
   onClose: () => void;
 }
 
+
 const navLinks = [
   { label: "من نحن", href: "#about" },
   { label: "خدماتنا", href: "#services" },
   { label: "فريقنا", href: "#team" },
 ];
 
-const navVariants = {
-  hidden: { opacity: 0, x: 30 },
-  visible: (i: number) => ({
-    opacity: 1,
-    x: 0,
-    transition: {
-      delay: i * 0.08,
-      type: "spring" as const,
-      stiffness: 120,
-      damping: 18,
-    },
-  }),
-};
 
-const drawerVariants = {
-  hidden: {
-    x: "100%",
-  },
-  visible: {
-    x: 0,
-    transition: {
-      duration: 0.28,
-      ease: "easeOut",
-    },
-  },
-  exit: {
-    x: "100%",
-    transition: {
-      duration: 0.2,
-      ease: "easeIn",
-    },
-  },
-};
+
+
 export function NavigationOverlay({ isOpen, onClose }: NavigationOverlayProps) {
+  console.log("NavigationOverlay");
+  const navVariants = {
+    hidden: { opacity: 0, x: 30 },
+    visible: (i: number) => ({
+      opacity: 1,
+      x: 0,
+      transition: {
+        delay: i * 0.08,
+        type: "spring" as const,
+        stiffness: 120,
+        damping: 18,
+      },
+    }),
+  };
+
+  const drawerVariants = {
+    hidden: {
+      x: "100%",
+    },
+    visible: {
+      x: 0,
+      transition: {
+        duration: 0.28,
+        ease: "easeOut",
+      },
+    },
+    exit: {
+      x: "100%",
+      transition: {
+        duration: 0.2,
+        ease: "easeIn",
+      },
+    },
+  };
   return (
     <AnimatePresence>
       {isOpen && (
@@ -79,7 +84,9 @@ export function NavigationOverlay({ isOpen, onClose }: NavigationOverlayProps) {
                 <motion.button
                   whileHover={{ scale: 1.05, rotate: -90 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={onClose}
+                  onClick={() => {
+                    onClose(); console.log("clicked");
+                  }}
                   aria-label="إغلاق القائمة"
                   className="w-12 h-12 rounded-full flex items-center justify-center bg-secondary border border-border/30 text-foreground shadow-md transition-colors hover:bg-secondary/80"
                 >
