@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "motion/react";
+import { useCallback, useState } from "react";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavigationOverlay } from "./NavigationOverlay";
@@ -15,22 +14,20 @@ const navLinks = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const openMenu = useCallback(() => setIsOpen(true), []);
+  const closeMenu = useCallback(() => setIsOpen(false), []);
+
   return (
     <>
       <header className="z-50 bg-[#0D0D0E]">
         <nav className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            {/* Logo */}
             <a href="#" className="flex items-center gap-2">
               <span className="text-xl md:text-[22px] text-primary font-bold ">
                 DEEPCODE{" "}
-                {/* <span className="text-white font-bold font-(family-name:--font-cairo)">
-                  Solutions
-                </span> */}
               </span>
             </a>
 
-            {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
                 <a
@@ -43,29 +40,27 @@ const Navbar = () => {
               ))}
             </div>
 
-            {/* Language & CTA */}
             <div className="hidden md:flex items-center gap-4">
               <Button variant="outline">English</Button>
               <Button variant="default">اتصل بنا</Button>
             </div>
 
-            {/* Animated Hamburger Button */}
-            <motion.button
-              className="md:hidden w-10 h-10 rounded-lg flex items-center justify-center bg-secondary/50 border border-border/30 text-foreground"
-              onClick={() => setIsOpen(true)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <button
+              type="button"
+              className="md:hidden flex h-10 w-10 touch-manipulation items-center justify-center rounded-lg border border-border/30 bg-secondary/50 text-foreground transition-transform active:scale-95"
+              onClick={openMenu}
               aria-label="فتح القائمة"
+              aria-expanded={isOpen}
             >
               <Menu size={22} />
-            </motion.button>
+            </button>
           </div>
         </nav>
       </header>
 
-      {/* Mobile Navigation Overlay */}
-      <NavigationOverlay isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <NavigationOverlay isOpen={isOpen} onClose={closeMenu} />
     </>
   );
 };
+
 export default Navbar;
