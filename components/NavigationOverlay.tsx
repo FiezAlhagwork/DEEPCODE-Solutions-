@@ -2,7 +2,6 @@
 
 import { motion, AnimatePresence } from "motion/react";
 import { X } from "lucide-react";
-import FocusTrap from "focus-trap-react";
 import { Button } from "@/components/ui/button";
 
 interface NavigationOverlayProps {
