@@ -27,7 +27,7 @@ export default function ContactForm() {
               id="name"
               name="name"
               type="text"
-              placeholder="abduluah"
+              placeholder="Mohamed"
               required
               autoComplete="fiez"
               dir="ltr"
