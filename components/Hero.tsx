@@ -36,28 +36,23 @@ const pills = [
 
 const Hero = () => {
   return (
-    /* تم إزالة overflow-hidden وإضافة relative فقط لضمان تداخل الإضاءة مع القسم التالي */
     <section
       aria-label="Hero Introduction"
-      className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pb-24 "
+      className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pb-24 pt-24 "
     >
-      {/* حاوية فرعية لحجب الـ Scroll الأفقي فقط دون قص الإضاءة العمودية الممتدة للأسفل */}
       <div className="absolute inset-0 overflow-x-hidden pointer-events-none z-0" />
 
-      {/* تأثيرات الـ Blur الخلفية ممددة لتبدأ من أسفل الـ Hero وتتداخل مع الـ About */}
-      {/* الجانب الأيسر (البنفسجي والفاتح) */}
       <div className="absolute left-0 bottom-[-15%] w-60 md:w-150 h-125 md:h-140 pointer-events-none opacity-50 mix-blend-screen select-none z-0">
         <div className="absolute inset-0 bg-[url('/Ellipse1.png')] bg-no-repeat bg-left bg-contain blur-[100px]" />
         <div className="absolute inset-0 bg-[url('/Ellipse2.png')] bg-no-repeat bg-left bg-contain blur-[80px]" />
       </div>
 
-      {/* الجانب الأيمن (النيلي والداكن) */}
       <div className="absolute right-0 bottom-[-20%] w-60 md:w-150 h-125 md:h-140 pointer-events-none opacity-40 mix-blend-screen select-none z-0">
         <div className="absolute inset-0 bg-[url('/Ellipse5.png')] bg-no-repeat bg-right bg-contain blur-[100px]" />
         <div className="absolute inset-0 bg-[url('/Ellipse4.png')] bg-no-repeat bg-right bg-contain blur-[80px]" />
       </div>
 
-      {/* الحاوية المتحركة الأساسية */}
+
       <motion.div
         variants={containerVariants}
         initial="hidden"
