@@ -1,3 +1,4 @@
+import type { LucideIcon } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 
 export interface NavigationOverlayProps {
@@ -20,6 +21,20 @@ export interface FeatureCardProps {
 }
 export interface FeatureListProps {
   features: FeatureData[];
+}
+
+export interface ServiceData {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+}
+
+export interface ServiceCardProps {
+  service: ServiceData;
+}
+
+export interface ServiceListProps {
+  services: ServiceData[];
 }
 
 export interface PricingPlan {

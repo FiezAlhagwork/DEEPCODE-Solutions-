@@ -4,8 +4,8 @@ import FeaturesList from "./ui/FeaturesList";
 const Features = () => {
   return (
     <section
-      id="services"
-      aria-label="خدماتنا"
+      id="features"
+      aria-label="مميزاتنا"
       className="relative w-full px-6 py-10 md:py-20 bg-transparent"
       dir="rtl"
     >

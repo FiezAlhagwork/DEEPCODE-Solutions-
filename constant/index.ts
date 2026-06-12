@@ -1,4 +1,12 @@
-import { ContactInfoData, FeatureData, FooterLink, FooterSocialLink, PricingPlan } from "@/types";
+import {
+  Globe,
+  MonitorSmartphone,
+  Smartphone,
+  Palette,
+  Figma,
+  Server,
+} from "lucide-react";
+import { ContactInfoData, FeatureData, FooterLink, FooterSocialLink, PricingPlan, ServiceData } from "@/types";
 
 export const footerNavLinks: FooterLink[] = [
   { label: "من نحن", href: "#about" },
@@ -89,4 +97,46 @@ export const featuresData: FeatureData[] = [
     description: "ريادة التقنيات",
   },
 ];
+
+
+export const services: ServiceData[] = [
+  {
+    title: "تطوير المواقع الإلكترونية",
+    description:
+      "نصمم ونطور مواقع إلكترونية احترافية سريعة ومتجاوبة مع جميع الأجهزة لتعزيز حضورك الرقمي وإظهار علامتك التجارية بأفضل صورة.",
+    icon: Globe,
+  },
+  {
+    title: "تطوير تطبيقات الويب",
+    description:
+      "نبني تطبيقات ويب مخصصة تلبي احتياجات أعمالك مع التركيز على الأداء العالي وسهولة الاستخدام وقابلية التوسع.",
+    icon: MonitorSmartphone,
+  },
+  {
+    title: "تطوير تطبيقات الجوال",
+    description:
+      "نطور تطبيقات Android و iOS حديثة توفر تجربة استخدام سلسة وتساعدك على الوصول إلى عملائك في أي وقت.",
+    icon: Smartphone,
+  },
+  {
+    title: "التصميم الجرافيكي",
+    description:
+      "نقدم تصاميم إبداعية تشمل الشعارات والهوية البصرية والمواد التسويقية لتعزيز حضور علامتك التجارية.",
+    icon: Palette,
+  },
+  {
+    title: "تصميم واجهات وتجربة المستخدم",
+    description:
+      "نصمم واجهات عصرية وتجارب استخدام مدروسة تضمن سهولة التفاعل وتحسين رضا المستخدمين.",
+    icon: Figma,
+  },
+  {
+    title: "الاستضافة وإدارة السيرفرات",
+    description:
+      "نوفر حلول استضافة وسيرفرات آمنة ومستقرة مع إدارة احترافية لضمان أفضل أداء لموقعك أو تطبيقك.",
+    icon: Server,
+  },
+];  
+
+
 
