@@ -31,22 +31,29 @@ const navVariants = {
 };
 
 const drawerVariants = {
-  hidden: { x: "100%" },
+  hidden: {
+    x: "100%",
+  },
   visible: {
     x: 0,
-    transition: { type: "spring", damping: 25, stiffness: 200 },
+    transition: {
+      duration: 0.28,
+      ease: "easeOut",
+    },
   },
   exit: {
     x: "100%",
-    transition: { type: "spring", damping: 30, stiffness: 250 },
+    transition: {
+      duration: 0.2,
+      ease: "easeIn",
+    },
   },
 };
-
 export function NavigationOverlay({ isOpen, onClose }: NavigationOverlayProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <FocusTrap active={isOpen}>
+        <>
           <div className="fixed inset-0 z-999 flex justify-start" dir="rtl">
             {/* Backdrop */}
             <motion.div
@@ -54,7 +61,7 @@ export function NavigationOverlay({ isOpen, onClose }: NavigationOverlayProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={onClose}
-              className="fixed inset-0 bg-black/60 backdrop-blur-md cursor-pointer"
+              className="fixed inset-0 bg-black/70 cursor-pointer"
             />
 
             {/* Drawer */}
@@ -63,7 +70,10 @@ export function NavigationOverlay({ isOpen, onClose }: NavigationOverlayProps) {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="relative w-full max-w-sm h-full bg-background/95 backdrop-blur-2xl border-l border-border/20 shadow-2xl flex flex-col p-8 z-10"
+              className="relative w-full max-w-sm h-full bg-background/95  border-l border-border/20 shadow-2xl flex flex-col p-8 z-10"
+              style={{
+                willChange: "transform",
+              }}
             >
               {/* Close Button */}
               <div className="flex justify-end mb-8">
@@ -118,7 +128,7 @@ export function NavigationOverlay({ isOpen, onClose }: NavigationOverlayProps) {
               </motion.div>
             </motion.div>
           </div>
-        </FocusTrap>
+        </>
       )}
     </AnimatePresence>
   );
