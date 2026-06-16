@@ -65,7 +65,7 @@ export default function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="relative w-full overflow-x-hidden  px-6 py-16 md:py-24"
+      className="relative w-full overflow-y-hidden  px-6 py-16 md:py-24"
       dir="rtl"
     >
       <div
