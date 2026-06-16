@@ -11,7 +11,7 @@ import DedicatedSection from "@/components/home/DedicatedSection";
 export default function Home() {
   return (
     <main className="min-h-screen  bg-[#0D0D0E]">
-      <Hero />
+      <Hero /> 
       <About />
       <Features />
       <Services />

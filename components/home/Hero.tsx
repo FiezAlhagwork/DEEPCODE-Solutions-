@@ -38,7 +38,7 @@ const Hero = () => {
   return (
     <section
       aria-label="Hero Introduction"
-      className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pb-24 pt-24 "
+      className="relative min-h-screen  flex flex-col items-center justify-center text-center px-6 pb-24 pt-24 "
     >
       <div className="absolute inset-0 overflow-x-hidden pointer-events-none z-0" />
 
