@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { services } from "@/constant";
-import ServicesList from "./ui/ServicesList";
+import ServicesList from "../ui/ServicesList";
 
 const headerContainerVariants = {
   hidden: { opacity: 0, y: 30 },

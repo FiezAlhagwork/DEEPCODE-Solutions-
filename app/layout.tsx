@@ -3,6 +3,9 @@ import { Cairo } from "next/font/google";
 import { Black_Ops_One } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+import Navbar from "@/components/shared/Navbar";
+import Footer from "@/components/shared/Footer";
+import QueryProvider from "@/providers/query-provider";
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
@@ -44,9 +47,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl" className={`${cairo.variable} ${black_one_ops.variable} `}>
+    <html
+      lang="ar"
+      dir="rtl"
+      className={`${cairo.variable} ${black_one_ops.variable} `}
+    >
       <body className="font-sans antialiased">
-        {children}
+        <Navbar />
+        <QueryProvider>{children}</QueryProvider>
+        <Footer />
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>

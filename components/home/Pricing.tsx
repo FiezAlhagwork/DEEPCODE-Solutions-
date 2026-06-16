@@ -3,39 +3,10 @@
 
 
 import { pricingPlans } from "@/constant";
-import PricingList from "./ui/PricingList";
+import PricingList from "../ui/PricingList";
 
 
 
-
-function PricingJsonLd() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "باقات المواقع",
-    itemListElement: pricingPlans.map((plan, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      item: {
-        "@type": "Product",
-        name: plan.name,
-        offers: {
-          "@type": "Offer",
-          price: plan.price,
-          priceCurrency: plan.currency,
-          availability: "https://schema.org/InStock",
-        },
-      },
-    })),
-  };
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-    />
-  );
-}
 
 export default function Pricing() {
 
@@ -67,7 +38,7 @@ export default function Pricing() {
             >
               <span
                 aria-hidden="true"
-                className="absolute top-[2px] size-4 rounded-full bg-white shadow-sm transition-all duration-300 ease-out right-1"
+                className="absolute top-0.5 size-4 rounded-full bg-white shadow-sm transition-all duration-300 ease-out right-1"
               />
             </button>
             <span className="text-sm text-muted-foreground">لفترة محدودة</span>

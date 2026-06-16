@@ -1,13 +1,13 @@
 import { contactInfoItems } from "@/constant";
-import FooterSocial from "./ui/FooterSocial";
-import FooterLinks from "./ui/FooterLinks";
+import FooterSocial from "../ui/FooterSocial";
+import FooterLinks from "../ui/FooterLinks";
 
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer
       aria-label="تذييل الموقع"
-      className="relative w-full  px-6 py-12 md:pt-16 md:pb-22" 
+      className="relative w-full  px-6 py-12 md:pt-16 md:pb-22 bg-[#0D0D0E]" 
 
     >
       <div className="mx-auto max-w-6xl">

@@ -1,24 +1,24 @@
-import About from "@/components/About";
-import Contact from "@/components/Contact";
-import Features from "@/components/Features";
-import Footer from "@/components/Footer";
-import Hero from "@/components/Hero";
-import Navbar from "@/components/Navbar";
-import Pricing from "@/components/Pricing";
-import ScrollToTop from "@/components/ScrollToTop";
-import Services from "@/components/Services";
+import About from "@/components/home/About";
+import Contact from "@/components/home/Contact";
+import Features from "@/components/home/Features";
+import Hero from "@/components/home/Hero";
+import Pricing from "@/components/home/Pricing";
+import ScrollToTop from "@/components/shared/ScrollToTop";
+import Services from "@/components/home/Services";
+import VPSSection from "@/components/home/VPSSection";
+import DedicatedSection from "@/components/home/DedicatedSection";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#0D0D0E]">
-      <Navbar />
       <Hero />
       <About />
       <Features />
       <Services />
       <Pricing />
+      <VPSSection />
+      <DedicatedSection />
       <Contact />
-      <Footer />
       <ScrollToTop />
     </main>
   );

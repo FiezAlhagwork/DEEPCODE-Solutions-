@@ -3,7 +3,7 @@
 import { Crosshair, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import AnimatedCounter from "./AnimatedCounter";
+import AnimatedCounter from "../ui/AnimatedCounter";
 
 const containerVariants = {
   hidden: { opacity: 0 },

@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import ContactForm from "./ui/ContactForm";
-import ContactInfo from "./ui/ContactInfo";
+import ContactForm from "../ui/ContactForm";
+import ContactInfo from "../ui/ContactInfo";
 
 const headerContainerVariants = {
   hidden: { opacity: 0, y: 30 },

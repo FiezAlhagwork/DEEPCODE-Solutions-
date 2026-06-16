@@ -1,5 +1,5 @@
 import { featuresData } from "@/constant";
-import FeaturesList from "./ui/FeaturesList";
+import FeaturesList from "../ui/FeaturesList";
 
 const Features = () => {
   return (
