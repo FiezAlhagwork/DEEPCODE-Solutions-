@@ -15,7 +15,7 @@ const navLinks = [
   { label: "الرئيسية", href: "/" },
   { label: "من نحن", href: "/#about" },
   { label: "خدماتنا", href: "/#services" },
-  { label: "الميزات", href: "/#features" },
+  { label: "الميزات", href: "/#server" },
   { label: "التسعير", href: "/#pricing" },
   { label: "تواصل", href: "/#contact" },
 ];
@@ -85,7 +85,9 @@ export function NavigationOverlay({ isOpen, onClose }: NavigationOverlayProps) {
               style={{ transitionDelay: isOpen ? `${60 + i * 40}ms` : "0ms" }}
               className={cn(
                 "inline-block w-full py-1 text-xl font-semibold tracking-tight text-foreground/90 transition-[opacity,transform] duration-300 ease-out hover:text-primary",
-                isOpen ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0",
+                isOpen
+                  ? "translate-x-0 opacity-100"
+                  : "translate-x-4 opacity-0",
               )}
             >
               {link.label}

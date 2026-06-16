@@ -56,7 +56,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               key={item.label}
               className="rounded-2xl border border-white/10 bg-white/5 p-3"
             >
-              <p className="mb-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground/80">
+              <p className="mb-1 text-[10px] uppercase  text-muted-foreground/80">
                 {item.label}
               </p>
               <p className="text-sm font-semibold text-white">{item.value}</p>

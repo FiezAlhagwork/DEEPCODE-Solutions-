@@ -27,7 +27,7 @@ export default function DedicatedSection() {
         <Products type="kvm" category="dedicated" limit={3} />
 
         <Link
-          href="/dedicated/vps"
+          href="/hosting/dedicated"
           className="flex justify-center items-center"
         >
           <Button className="relative z-10 mt-6 text-md  " variant="default">
