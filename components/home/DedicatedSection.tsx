@@ -1,5 +1,7 @@
-import { ShieldCheck, ServerCog, Cpu } from "lucide-react";
+import { Cpu, ArrowLeft } from "lucide-react";
 import Products from "../hosting/Products";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 export default function DedicatedSection() {
   return (
@@ -23,6 +25,16 @@ export default function DedicatedSection() {
         </div>
 
         <Products type="kvm" category="dedicated" limit={3} />
+
+        <Link
+          href="/dedicated/vps"
+          className="flex justify-center items-center"
+        >
+          <Button className="relative z-10 mt-6 text-md  " variant="default">
+            عرض جميع العروص Dedicated
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+        </Link>
       </div>
     </section>
   );

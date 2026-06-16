@@ -5,6 +5,7 @@ import { ArrowLeft, ShieldCheck, Gauge, ServerCog } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { ProductCardProps } from "@/types/hosting";
 
+
 export default function ProductCard({ product }: ProductCardProps) {
   const specs = [
     { label: "CPU", value: product.specifications.cpu },

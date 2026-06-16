@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -11,9 +12,12 @@ interface NavigationOverlayProps {
 }
 
 const navLinks = [
-  { label: "من نحن", href: "#about" },
-  { label: "خدماتنا", href: "#services" },
-  { label: "فريقنا", href: "#team" },
+  { label: "الرئيسية", href: "/" },
+  { label: "من نحن", href: "/#about" },
+  { label: "خدماتنا", href: "/#services" },
+  { label: "الميزات", href: "/#features" },
+  { label: "التسعير", href: "/#pricing" },
+  { label: "تواصل", href: "/#contact" },
 ];
 
 export function NavigationOverlay({ isOpen, onClose }: NavigationOverlayProps) {
@@ -74,7 +78,7 @@ export function NavigationOverlay({ isOpen, onClose }: NavigationOverlayProps) {
 
         <nav className="mt-2 flex flex-1 flex-col items-start gap-4">
           {navLinks.map((link, i) => (
-            <a
+            <Link
               key={link.label}
               href={link.href}
               onClick={onClose}
@@ -85,7 +89,7 @@ export function NavigationOverlay({ isOpen, onClose }: NavigationOverlayProps) {
               )}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
