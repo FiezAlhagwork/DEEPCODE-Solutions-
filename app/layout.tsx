@@ -52,7 +52,7 @@ export default function RootLayout({
       dir="rtl"
       className={`${cairo.variable} ${black_one_ops.variable} `}
     >
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased bg-[#0D0D0E]">
         <Navbar />
         <QueryProvider>{children}</QueryProvider>
         <Footer />

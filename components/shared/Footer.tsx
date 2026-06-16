@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <footer
       aria-label="تذييل الموقع"
-      className="relative w-full  px-6 py-12 md:pt-16 md:pb-22 bg-[#0D0D0E]" 
+      className="relative w-full  px-6 py-12 md:pt-16 md:pb-22 bg-[#0D0D0E] " 
 
     >
       <div className="mx-auto max-w-6xl">

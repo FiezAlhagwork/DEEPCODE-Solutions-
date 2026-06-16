@@ -68,13 +68,7 @@ export default function Contact() {
       className="relative w-full overflow-y-hidden  px-6 py-16 md:py-24"
       dir="rtl"
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute right-0 bottom-[-15%] z-0 h-125 w-60 opacity-40 mix-blend-screen select-none md:h-140 md:w-150"
-      >
-        <div className="absolute inset-0 bg-[url('/Ellipse5.png')] bg-contain bg-right bg-no-repeat blur-[100px]" />
-        <div className="absolute inset-0 bg-[url('/Ellipse4.png')] bg-contain bg-right bg-no-repeat blur-[80px]" />
-      </div>
+
 
       <div className="relative z-10 mx-auto max-w-6xl">
         <motion.div
