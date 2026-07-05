@@ -6,7 +6,8 @@ import {
   Figma,
   Server,
 } from "lucide-react";
-import { ContactInfoData, FeatureData, FooterLink, FooterSocialLink, PricingPlan, ServiceData } from "@/types";
+import { ContactInfoData, FeatureData, FooterLink, FooterSocialLink, PricingPlan, ServiceData, Project } from "@/types";
+
 
 export const footerNavLinks: FooterLink[] = [
   { label: "من نحن", href: "#about" },
@@ -136,7 +137,9 @@ export const services: ServiceData[] = [
       "نوفر حلول استضافة وسيرفرات آمنة ومستقرة مع إدارة احترافية لضمان أفضل أداء لموقعك أو تطبيقك.",
     icon: Server,
   },
-];  
+];
+
+
 
 
 

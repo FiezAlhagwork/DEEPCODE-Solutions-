@@ -7,14 +7,16 @@ import ScrollToTop from "@/components/shared/ScrollToTop";
 import Services from "@/components/home/Services";
 import VPSSection from "@/components/home/VPSSection";
 import DedicatedSection from "@/components/home/DedicatedSection";
+import Project from "@/components/home/Project";
 
 export default function Home() {
   return (
-    <main className="min-h-screen  ">
-      <Hero /> 
+    <main className="min-h-screen">
+      <Hero />
       <About />
       <Features />
       <Services />
+      <Project />
       <Pricing />
       <VPSSection />
       <DedicatedSection />

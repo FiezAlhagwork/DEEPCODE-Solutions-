@@ -91,3 +91,13 @@ export interface FooterSocialLink {
   href: string;
   iconName: keyof typeof LucideIcons;
 }
+
+export interface Project {
+  id: number;
+  title: string;
+  year: string;
+  tags: string[];
+  image: string;
+  color: string;
+  link: string;
+}
