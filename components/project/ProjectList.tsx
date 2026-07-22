@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import ProjectCard from "./projectCard";
+import ProjectCard from "./ProjectCard";
 import type { Project } from "@/types";
 
 const listVariants = {

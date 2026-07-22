@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import ProjectList from "../ui/projectList";
-import { projects } from "@/constant/projectData";
+import ProjectList from "../project/ProjectList";
+import { projects } from "@/constant/project";
 
 const headerContainerVariants = {
   hidden: { opacity: 0, y: 30 },

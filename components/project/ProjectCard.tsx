@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
-import { Button } from "./button";
+import { Button } from "../ui/button";
 import type { Project } from "@/types";
 
 const cardVariants = {
