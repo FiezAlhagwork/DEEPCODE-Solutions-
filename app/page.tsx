@@ -7,7 +7,7 @@ import ScrollToTop from "@/components/shared/ScrollToTop";
 import Services from "@/components/home/Services";
 import VPSSection from "@/components/home/VPSSection";
 // import DedicatedSection from "@/components/home/DedicatedSection";
-// import Project from "@/components/home/Project";
+import Project from "@/components/home/Project";
 
 export default function Home() {
   return (
@@ -16,7 +16,7 @@ export default function Home() {
       <About />
       <Features />
       <Services />
-      {/* <Project /> */}
+      <Project />
       <Pricing />
       <VPSSection />
       {/* <DedicatedSection /> */}
