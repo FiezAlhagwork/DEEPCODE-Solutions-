@@ -67,6 +67,7 @@
 }
 
 @layer components {
+  
   .input-base {
     @apply w-full min-w-0 rounded-lg border border-white/5
       bg-[#0B0A0E] px-4 py-3 text-sm text-foreground
