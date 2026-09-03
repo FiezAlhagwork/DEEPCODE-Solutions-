@@ -74,7 +74,7 @@ const About = () => {
           {/* الصورة مع تأثير الطفو الافتراضي */}
           <div className="animate-float relative p-6">
             <Image
-              src="/mingcute_safety-certificate-line.png"
+              src="/mingcute_safety-certificate-line.webp"
               alt="درع الأمان والموثوقية"
               width={280}
               height={280}

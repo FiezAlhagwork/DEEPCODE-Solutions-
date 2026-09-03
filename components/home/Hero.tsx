@@ -43,13 +43,13 @@ const Hero = () => {
       <div className="absolute inset-0 overflow-x-hidden pointer-events-none z-0" />
 
       <div className="absolute left-0 bottom-[-15%] w-60 md:w-150 h-125 md:h-140 pointer-events-none opacity-50 mix-blend-screen select-none z-0">
-        <div className="absolute inset-0 bg-[url('/Ellipse1.png')] bg-no-repeat bg-left bg-contain blur-[100px]" />
-        <div className="absolute inset-0 bg-[url('/Ellipse2.png')] bg-no-repeat bg-left bg-contain blur-[80px]" />
+        <div className="absolute inset-0 bg-[url('/Ellipse1.webp')] bg-no-repeat bg-left bg-contain blur-[100px]" />
+        <div className="absolute inset-0 bg-[url('/Ellipse2.webp')] bg-no-repeat bg-left bg-contain blur-[80px]" />
       </div>
 
       <div className="absolute right-0 bottom-[-20%] w-60 md:w-150 h-125 md:h-140 pointer-events-none opacity-40 mix-blend-screen select-none z-0">
-        <div className="absolute inset-0 bg-[url('/Ellipse5.png')] bg-no-repeat bg-right bg-contain blur-[100px]" />
-        <div className="absolute inset-0 bg-[url('/Ellipse4.png')] bg-no-repeat bg-right bg-contain blur-[80px]" />
+        <div className="absolute inset-0 bg-[url('/Ellipse5.webp')] bg-no-repeat bg-right bg-contain blur-[100px]" />
+        <div className="absolute inset-0 bg-[url('/Ellipse4.webp')] bg-no-repeat bg-right bg-contain blur-[80px]" />
       </div>
 
 

@@ -38,8 +38,8 @@ const Team = () => {
         aria-hidden="true"
         className="pointer-events-none absolute right-0 top-[10%] z-0 h-125 w-60 opacity-40 mix-blend-screen select-none md:h-140 md:w-150"
       >
-        <div className="absolute inset-0 bg-[url('/Ellipse1.png')] bg-contain bg-right bg-no-repeat blur-[100px]" />
-        <div className="absolute inset-0 bg-[url('/Ellipse2.png')] bg-contain bg-right bg-no-repeat blur-[80px]" />
+        <div className="absolute inset-0 bg-[url('/Ellipse1.webp')] bg-contain bg-right bg-no-repeat blur-[100px]" />
+        <div className="absolute inset-0 bg-[url('/Ellipse2.webp')] bg-contain bg-right bg-no-repeat blur-[80px]" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-6xl ">
