@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { ArrowLeft, ShieldCheck, Gauge, ServerCog } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import type { ProductCardProps } from "@/features/hosting/types/Hosting";
 
 
@@ -79,9 +80,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </div>
 
-      <Button className="relative z-10 mt-6 w-full" variant="default">
-        {t("cta")}
-        <ArrowLeft className="h-4 w-4 ltr:rotate-180" />
+      <Button asChild className="relative z-10 mt-6 w-full" variant="default">
+        <Link href="/#contact">
+          {t("cta")}
+          <ArrowLeft className="h-4 w-4 ltr:rotate-180" />
+        </Link>
       </Button>
     </motion.article>
   );

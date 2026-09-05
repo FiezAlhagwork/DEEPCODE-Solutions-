@@ -1,4 +1,5 @@
 import * as LucideIcons from "lucide-react";
+import type { Messages } from "next-intl";
 
 export type NavigationOverlayProps = {
   isOpen: boolean;
@@ -7,7 +8,7 @@ export type NavigationOverlayProps = {
 
 /** `key` resolves against the `footer.links` message namespace. */
 export type FooterLink = {
-  key: string;
+  key: keyof Messages["footer"]["links"];
   href: string;
 };
 
@@ -20,6 +21,6 @@ export type FooterSocialLink = {
 
 /** `key` resolves against the `contact.info` message namespace. */
 export type ContactInfoData = {
-  key: string;
+  key: keyof Messages["contact"]["info"];
   iconName: keyof typeof LucideIcons;
 };

@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import TeamList from "./TeamList";
 import { useTranslations } from "next-intl";
 import { teamMembers } from "@/features/team/constants/Team";
+import { Link } from "@/i18n/navigation";
 
 const headerContainerVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -103,12 +104,12 @@ const Team = () => {
             className="text-sm text-muted-foreground md:text-base"
           >
             {t("joinText")}{" "}
-            <a
-              href="#contact"
+            <Link
+              href="/#contact"
               className="font-medium text-primary underline-offset-4 transition-colors hover:underline"
             >
               {t("joinCta")}
-            </a>
+            </Link>
           </motion.p>
         </motion.div>
       </div>

@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { contactInfoItems } from "@/constants/Site";
+import { Link } from "@/i18n/navigation";
 import FooterSocial from "./FooterSocial";
 import FooterLinks from "./FooterLinks";
 
@@ -18,9 +19,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
 
           <div className="flex flex-col gap-4 text-start">
-            <a href="#" className="inline-block">
+            <Link href="/" className="inline-block">
               <span className="text-xl font-bold text-primary md:text-2xl">DEEPCODE</span>
-            </a>
+            </Link>
             <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
               {t("tagline")}
             </p>

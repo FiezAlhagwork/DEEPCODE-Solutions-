@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 
@@ -130,8 +131,8 @@ const About = () => {
 
           {/* زر اتخاذ الإجراء */}
           <motion.div variants={textItemVariants}>
-            <Button size="lg" variant="default">
-              {t("cta")}
+            <Button asChild size="lg" variant="default">
+              <Link href="/#contact">{t("cta")}</Link>
             </Button>
           </motion.div>
         </motion.div>

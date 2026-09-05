@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { footerNavLinks } from "@/constants/Site";
+import { Link } from "@/i18n/navigation";
 
 export default function FooterLinks() {
   const t = useTranslations("footer");
@@ -11,12 +12,12 @@ export default function FooterLinks() {
       <ul className="flex flex-col gap-3">
         {footerNavLinks.map((link) => (
           <li key={link.href}>
-            <a
+            <Link
               href={link.href}
               className="text-sm text-muted-foreground hover:text-primary"
             >
               {t(`links.${link.key}`)}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

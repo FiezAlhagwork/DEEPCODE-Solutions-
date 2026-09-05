@@ -38,6 +38,7 @@ export default function ScrollToTop() {
       type="button"
       onClick={scrollToTop}
       aria-label={t("scrollToTop")}
+      inert={!visible}
       className={cn(
         "fixed bottom-6 inset-e-6 z-40 flex h-12 w-12 touch-manipulation items-center justify-center rounded-full ",
         "border border-primary/30 bg-secondary/90 text-primary backdrop-blur-sm",

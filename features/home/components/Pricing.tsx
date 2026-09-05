@@ -32,17 +32,15 @@ export default function Pricing() {
           </span>
 
           <div className="flex items-center gap-3">
-            <button
-              type="button"
-              role="switch"
-              aria-label={t("limitedTime")}
-              className="relative h-5 w-10 shrink-0 rounded-full transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0A0E] bg-primary"
+            <span
+              aria-hidden="true"
+              className="relative block h-5 w-10 shrink-0 rounded-full transition-colors duration-300 bg-primary"
             >
               <span
                 aria-hidden="true"
                 className="absolute top-0.5 size-4 rounded-full bg-white shadow-sm transition-all duration-300 ease-out inset-s-1"
               />
-            </button>
+            </span>
             <span className="text-sm text-muted-foreground">{t("limitedTime")}</span>
           </div>
 

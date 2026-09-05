@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { cn } from "@/lib/Utils";
 import { PricingCardProps } from "@/features/home/types/Home";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -23,7 +24,7 @@ export default function PricingCard({ plan }: PricingCardProps) {
   const t = useTranslations("pricing");
   const { key, price, featured } = plan;
 
-  const features = t.raw(`plans.${key}.features`) as string[];
+  const features: string[] = t.raw(`plans.${key}.features`);
 
   return (
     <motion.li variants={cardVariants} className="list-none h-full">
@@ -105,10 +106,11 @@ export default function PricingCard({ plan }: PricingCardProps) {
           </ul>
 
           <Button
+            asChild
             variant={featured ? "default" : "outline"}
             className="mt-10"
           >
-            {t("cta")}
+            <Link href="/#contact">{t("cta")}</Link>
           </Button>
         </div>
       </div>

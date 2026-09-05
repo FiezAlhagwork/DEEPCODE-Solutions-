@@ -11,15 +11,16 @@ The frontend is a Next.js application serving the public marketing site, soon ex
 - **Framework:** Next.js 16 (App Router), React 19
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS v4
-- **UI components:** shadcn/ui (Radix UI primitives + class-variance-authority + tailwind-merge + lucide-react)
+- **UI components:** shadcn/ui — only the primitives actually in use are kept (`button`, `skeleton`, `tabs`, `sonner`); anything else is one `npx shadcn add` away
 - **Forms:** react-hook-form + zod + @hookform/resolvers
 - **Data fetching / server state:** axios + TanStack Query (React Query) v5
 - **Internationalization:** next-intl v4 (`ar` / `en`, locale-prefixed routes)
 - **Notifications:** sonner (toasts)
 - **Theming:** next-themes
 - **Animation:** motion (Framer Motion)
-- **Misc:** recharts (charts), embla-carousel (carousels), cmdk (command palette), vaul (drawers), date-fns
-- **Fonts:** @fontsource/cairo
+- **Accessibility:** focus-trap-react (mobile navigation drawer)
+- **Fonts:** `next/font/google` — Cairo (Arabic + Latin) and Black Ops One, loaded in `app/[locale]/layout.tsx`
+- **Linting:** ESLint flat config (`eslint.config.mjs`) with `eslint-config-next/core-web-vitals` + `/typescript`
 - **Analytics:** @vercel/analytics
 - **Image pipeline:** `scripts/convert-images-to-webp.mjs` (uses `sharp`)
 - **Auth:** none on the frontend yet. `@clerk/nextjs` will be added later, scoped strictly to admin flows (sign-in/sign-up + protecting admin routes). The public site needs no authentication.
@@ -45,7 +46,10 @@ i18n/
   navigation.ts               # locale-aware Link / useRouter / usePathname
   request.ts                  # loads messages/<locale>.json per request
   metadata.ts                 # canonical + hreflang helper
+  Locale.ts                   # requireLocale() — validates the [locale] segment
+global.d.ts                   # types every message key against messages/ar.json
 proxy.ts                      # next-intl middleware (Next 16 "proxy" convention)
+eslint.config.mjs
 
 features/
   home/
@@ -185,13 +189,16 @@ The site ships in Arabic and English at `/ar/...` and `/en/...`. `/` redirects t
 **Hard rules:**
 
 1. **No user-facing string literal ever appears in JSX.** Every label, heading, placeholder, `aria-label`, `alt`, and error message comes from `messages/<locale>.json` via `useTranslations`. The only literals left in components are brand names (DEEPCODE, Ryzen, GitHub) and data from the external hosting API.
-2. **Import `Link` and the navigation hooks from `@/i18n/navigation`, never from `next/link` or `next/navigation`** — otherwise the locale prefix is dropped and the user is bounced back to the default locale.
-3. **Constants hold structure, messages hold text.** A constants file keeps ids, icons, hrefs, images, and prices, plus a `key` that resolves against a message namespace. See `features/home/constants/Home.ts` (`serviceItems`, `pricingPlans`) and `features/team/constants/Team.ts`.
-4. Message namespaces mirror the features: `metadata`, `nav`, `hero`, `about`, `features`, `services`, `pricing`, `projects`, `team`, `contact`, `footer`, `hosting`, `common`, `notFound`.
-5. `useTranslations` works in **both** server and client components — no prop threading. Async server functions (`generateMetadata`) use `getTranslations({locale, namespace})` instead.
-6. Every page and layout calls `setRequestLocale(locale)` **before** any translation call, otherwise it opts out of static rendering. (`next/root-params` would replace this, but it needs Next 16.3+ and we are on 16.2.6.)
-7. Interpolated numbers are passed as strings (`{ year: String(...) }`) — ICU would otherwise group them as `2,026`.
-8. Highlighted fragments inside a heading use `t.rich("title", { hl: (c) => <span…>{c}</span> })` with `<hl>` in the message, never string concatenation.
+2. **Import `Link` and the navigation hooks from `@/i18n/navigation`, never from `next/link` or `next/navigation`** — otherwise the locale prefix is dropped and the user is bounced back to the default locale. In-page anchors are written root-relative (`/#contact`, not `#contact`) so they work from every route.
+3. **A button that navigates is `<Button asChild><Link …></Button>`**, never `<Link><Button></Link>` — the latter renders a `<button>` inside an `<a>`, which is invalid HTML.
+4. **Route params are validated, not cast.** `params.locale` is typed `string` by Next; pass it through `requireLocale()` from `i18n/Locale.ts`, which narrows to the locale union and 404s on anything else. Typing the param as the union directly breaks the route validator that `next build` generates.
+5. **Message keys are type-checked** through the `AppConfig` augmentation in `global.d.ts`, and key unions are derived from it (e.g. `keyof Messages["team"]["members"]`) rather than typed as `string`. A typo is a build error, not a runtime crash.
+6. **Constants hold structure, messages hold text.** A constants file keeps ids, icons, hrefs, images, and prices, plus a `key` that resolves against a message namespace. See `features/home/constants/Home.ts` (`serviceItems`, `pricingPlans`) and `features/team/constants/Team.ts`.
+7. Message namespaces mirror the features: `metadata`, `nav`, `hero`, `about`, `features`, `services`, `pricing`, `projects`, `team`, `contact`, `footer`, `hosting`, `common`, `notFound`.
+8. `useTranslations` works in **both** server and client components — no prop threading. Async server functions (`generateMetadata`) use `getTranslations({locale, namespace})` instead.
+9. Every page and layout calls `setRequestLocale(locale)` **before** any translation call, otherwise it opts out of static rendering. (`next/root-params` would replace this, but it needs Next 16.3+ and we are on 16.2.6.)
+10. Interpolated numbers are passed as strings (`{ year: String(...) }`) — ICU would otherwise group them as `2,026`.
+11. Highlighted fragments inside a heading use `t.rich("title", { hl: (c) => <span…>{c}</span> })` with `<hl>` in the message, never string concatenation.
 
 ### Direction (RTL ⇄ LTR)
 
@@ -231,7 +238,7 @@ A Clerk publishable key will be added once Clerk is integrated on the frontend.
 npm run dev               # start dev server
 npm run build              # production build
 npm run start              # start production server
-npm run lint                # eslint
+npm run lint               # eslint (flat config; `next lint` was removed in Next 16)
 npm run optimize-images    # convert images to webp (scripts/convert-images-to-webp.mjs, uses sharp)
 ```
 
@@ -248,12 +255,14 @@ npm run optimize-images    # convert images to webp (scripts/convert-images-to-w
 
 ## Known Issues / Cleanup Backlog
 
-- `next.config.mjs` sets `typescript.ignoreBuildErrors: true`, so **`npm run build` does not catch type errors or broken imports**. Always verify with `npx tsc --noEmit` (currently clean). Turning the flag off is the eventual goal.
-- `npm run lint` runs `eslint .` but there is no ESLint config file in the repo, so it fails. Either add a config or drop the script.
+- **`NEXT_PUBLIC_SITE_URL` is not set on the server yet**, so `canonical` and `hreflang` are baked into the production HTML as `http://localhost:3000/...`. Highest-impact, lowest-cost SEO fix outstanding.
+- The contact form still has an empty `onSubmit` — nothing is sent anywhere. `react-hook-form`, `@hookform/resolvers`, and `zod` are installed and reserved for it. Blocked on a backend endpoint; see the five-layer plan in the Decisions Log.
+- No `app/robots.ts` or `app/sitemap.ts`, and no OpenGraph/Twitter metadata — link previews are blank and search engines are not told about the locale pairs.
+- `i18n/metadata.ts` emits `hreflang` for `ar` and `en` but no `x-default`.
+- The navbar has no link to the Projects or Team sections even though both have anchors (`#projects`, `#team`).
 - `app/[locale]/hosting/page.tsx` is still a placeholder rendering a single translated word.
-- `components/ui/` still contains many unused shadcn primitives. They are harmless (tree-shaken) but can be pruned; anything removed is one `npx shadcn add` away.
 - `messages/en.json` is a first-pass translation of the Arabic marketing copy and should be reviewed by a native speaker before launch.
-- The contact form still has an empty `onSubmit` — nothing is sent anywhere.
+- `.github/workflows/deploy.yml` uses `npm install` rather than `npm ci`, builds directly on the production box with no CI gate, and has no `concurrency` group, so two quick pushes race.
 
 ## Pending Decisions (TBD)
 
@@ -282,4 +291,13 @@ npm run optimize-images    # convert images to webp (scripts/convert-images-to-w
 - **2026-09-05** — The middleware lives in **`proxy.ts`**, the Next.js 16 name for the old `middleware.ts` convention. It runs on the `nodejs` runtime, which is fine for the self-hosted pm2 deploy.
 - **2026-09-05** — Static rendering is kept via `generateStaticParams` + `setRequestLocale`. next-intl now prefers `next/root-params`, but that needs Next 16.3+ and the project is on 16.2.6 — revisit after the next Next.js upgrade.
 - **2026-09-05** — Direction is handled with Tailwind logical properties plus `rtl:`/`ltr:` variants; no component hardcodes `dir`, except deliberate `dir="ltr"` islands for latin input, prices, and counters.
+- **2026-09-05** — Every navigating button is `<Button asChild><Link>`; nine CTAs across the site were inert `<button>`s with no handler, and two wrapped a `<Button>` inside a `<Link>` (a `<button>` inside an `<a>`).
+- **2026-09-05** — In-page anchors are root-relative (`/#contact`). The footer, team cards, and join link used bare `#contact`, which silently did nothing on every route except the home page.
+- **2026-09-05** — Translation keys are type-checked via an `AppConfig` augmentation in `global.d.ts`, and every `key` field in a constants file is typed as `keyof Messages[...]` instead of `string`.
+- **2026-09-05** — `params.locale` stays typed `string` and is narrowed by `requireLocale()` in `i18n/Locale.ts`. Typing the route param as the locale union looks tidier but fails the route validator `next build` generates.
+- **2026-09-05** — `typescript.ignoreBuildErrors` and `images.unoptimized` were both removed from `next.config.mjs`; `sharp` moved to `dependencies` since the production server now runs the image optimizer.
+- **2026-09-05** — `components/ui/` was pruned to the four primitives actually used (`button`, `skeleton`, `tabs`, `sonner`), and the 32 packages that only those deleted files imported were uninstalled. Dependencies went from 47 to 21.
+- **2026-09-05** — ESLint runs through a flat config with `eslint-config-next`; `components/ui/` is ignored since it is generated code. It immediately caught two `setState`-in-effect violations and a `role="switch"` with no `aria-checked`.
+- **2026-09-05** — The mobile drawer uses `inert` when closed plus `focus-trap-react` when open. It previously carried `aria-hidden` over links that were still in the tab order, and the drawer's open state is now derived (`isOpen && isMobile`) rather than synced in an effect.
+- **2026-09-05** — `hooks/UseMobile.ts` was rewritten on `useSyncExternalStore`, removing the mount-time state sync it inherited from shadcn.
 - **2026-09-05** — `app/[locale]/hosting/vps/page.tsx` was converted from a client page to a server page plus a `VpsCategoryTabs` client child, so the page can export `generateMetadata`. Its tabs are now driven by `VPS_CATEGORIES` in `features/hosting/constants/Hosting.ts`, which had been dead code.

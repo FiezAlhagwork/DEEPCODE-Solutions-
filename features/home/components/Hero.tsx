@@ -3,6 +3,7 @@
 import { Crosshair, Rocket } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import { motion } from "motion/react";
 import AnimatedCounter from "./AnimatedCounter";
 
@@ -107,12 +108,16 @@ const Hero = () => {
           variants={itemVariants}
           className="flex flex-col sm:flex-row items-center gap-4 mt-4"
         >
-          <Button size="lg" variant="default">
-            <Rocket className="w-5 h-5 me-2" /> {t("ctaPrimary")}
+          <Button asChild size="lg" variant="default">
+            <Link href="/#contact">
+              <Rocket className="w-5 h-5 me-2" /> {t("ctaPrimary")}
+            </Link>
           </Button>
-          <Button size="lg" variant="outline">
-            <Crosshair className="w-5 h-5 me-2" />
-            {t("ctaSecondary")}
+          <Button asChild size="lg" variant="outline">
+            <Link href="/#services">
+              <Crosshair className="w-5 h-5 me-2" />
+              {t("ctaSecondary")}
+            </Link>
           </Button>
         </motion.div>
 

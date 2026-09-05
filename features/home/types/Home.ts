@@ -1,6 +1,7 @@
 import type { ComponentProps, ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import * as LucideIcons from "lucide-react";
+import type { Messages } from "next-intl";
 
 export type AnimatedCounterProps = {
   from: number;
@@ -9,7 +10,7 @@ export type AnimatedCounterProps = {
 
 /** `key` resolves against the `features.items` message namespace. */
 export type FeatureItem = {
-  key: string;
+  key: keyof Messages["features"]["items"];
   iconName: keyof typeof LucideIcons;
 };
 
@@ -23,7 +24,7 @@ export type FeatureListProps = {
 
 /** `key` resolves against the `services.items` message namespace. */
 export type ServiceItem = {
-  key: string;
+  key: keyof Messages["services"]["items"];
   icon: LucideIcon;
 };
 
@@ -37,7 +38,7 @@ export type ServiceListProps = {
 
 /** `key` resolves against the `pricing.plans` message namespace. */
 export type PricingPlan = {
-  key: string;
+  key: keyof Messages["pricing"]["plans"];
   price: number;
   currency: string;
   featured?: boolean;

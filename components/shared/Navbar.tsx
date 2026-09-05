@@ -5,6 +5,7 @@ import { Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/Utils";
+import { useIsMobile } from "@/hooks/UseMobile";
 import { Link } from "@/i18n/navigation";
 import { NavigationOverlay } from "./NavigationOverlay";
 import LocaleSwitcher from "./LocaleSwitcher";
@@ -22,6 +23,7 @@ const SCROLL_THRESHOLD = 60;
 
 const Navbar = () => {
   const t = useTranslations("nav");
+  const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
@@ -71,7 +73,11 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const showNavbar = isVisible || isOpen || isAtTop;
+  // The drawer is `md:hidden`, so a resize to desktop must close it — otherwise
+  // its focus trap would run against content hidden by `display: none`.
+  const isMenuOpen = isOpen && isMobile;
+
+  const showNavbar = isVisible || isMenuOpen || isAtTop;
 
   return (
     <>
@@ -106,7 +112,9 @@ const Navbar = () => {
 
             <div className="hidden items-center gap-4 md:flex">
               <LocaleSwitcher />
-              <Button variant="default">{t("cta")}</Button>
+              <Button asChild variant="default">
+                <Link href="/#contact">{t("cta")}</Link>
+              </Button>
             </div>
 
             <button
@@ -119,7 +127,7 @@ const Navbar = () => {
               )}
               onClick={openMenu}
               aria-label={t("openMenu")}
-              aria-expanded={isOpen}
+              aria-expanded={isMenuOpen}
             >
               <Menu size={22} />
             </button>
@@ -127,7 +135,7 @@ const Navbar = () => {
         </nav>
       </header>
 
-      <NavigationOverlay isOpen={isOpen} onClose={closeMenu} />
+      <NavigationOverlay isOpen={isMenuOpen} onClose={closeMenu} />
     </>
   );
 };

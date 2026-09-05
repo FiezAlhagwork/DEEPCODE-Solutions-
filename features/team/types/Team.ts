@@ -1,6 +1,8 @@
+import type { Messages } from "next-intl";
+
 /** `key` resolves against the `team.members` message namespace. */
 export type TeamMember = {
-  key: string;
+  key: keyof Messages["team"]["members"];
   image: string;
   contactHref: string;
 };

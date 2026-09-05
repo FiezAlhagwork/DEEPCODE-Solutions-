@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/Utils";
+import { Link } from "@/i18n/navigation";
 import type { TeamCardProps } from "@/features/team/types/Team";
 
 // أنميشن ظهور الكارت من الأسفل بنفس إحساس باقي أقسام الموقع
@@ -53,12 +54,12 @@ export default function TeamCard({ member, isOrphan = false }: TeamCardProps) {
           {name}
         </h3>
 
-        <a
+        <Link
           href={contactHref}
           className="mt-1 rounded-lg border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-primary hover:bg-primary/10 hover:text-primary"
         >
           {t("contactCta")}
-        </a>
+        </Link>
       </div>
     </motion.article>
   );

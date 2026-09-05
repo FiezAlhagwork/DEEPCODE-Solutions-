@@ -29,12 +29,14 @@ export default function VPSSection() {
 
         <Products type="kvm" limit={3} />
 
-        <Link href="/hosting/vps" className="flex justify-center items-center">
-          <Button   className="relative z-10 mt-6 text-md  " variant="default">
-            {t("cta")}
-            <ArrowLeft className="h-4 w-4 ltr:rotate-180" />
+        <div className="flex justify-center items-center">
+          <Button asChild className="relative z-10 mt-6 text-md  " variant="default">
+            <Link href="/hosting/vps">
+              {t("cta")}
+              <ArrowLeft className="h-4 w-4 ltr:rotate-180" />
+            </Link>
           </Button>
-        </Link>
+        </div>
       </div>
     </section>
   );
