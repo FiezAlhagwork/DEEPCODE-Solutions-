@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent } from "react";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import Field from "./Field";
@@ -8,6 +9,7 @@ import Input from "./Input";
 import Textarea from "./Textarea";
 
 export default function ContactForm() {
+  const t = useTranslations("contact.form");
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -18,32 +20,25 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
 
-          <Field
-            label="الاسم"
-            htmlFor="name"
-            iconName="User"
-          >
+          <Field label={t("name")} htmlFor="name" iconName="User">
             <Input
               id="name"
               name="name"
               type="text"
-              placeholder="Mohamed"
+              placeholder={t("namePlaceholder")}
               required
-              autoComplete="fiez"
+              autoComplete="name"
               dir="ltr"
               className="text-left placeholder:text-right"
             />
           </Field>
-          <Field
-            label="البريد الإلكتروني"
-            htmlFor="email"
-            iconName="Mail"
-          >
+
+          <Field label={t("email")} htmlFor="email" iconName="Mail">
             <Input
               id="email"
               name="email"
               type="email"
-              placeholder="example@gmail.com"
+              placeholder={t("emailPlaceholder")}
               required
               autoComplete="email"
               dir="ltr"
@@ -51,21 +46,17 @@ export default function ContactForm() {
             />
           </Field>
 
-          <Field
-            label="الشركة (اختياري)"
-            htmlFor="company"
-            iconName="Building2"
-          >
+          <Field label={t("company")} htmlFor="company" iconName="Building2">
             <Input
               id="company"
               name="company"
-              placeholder="اسم الشركة"
+              placeholder={t("companyPlaceholder")}
               autoComplete="organization"
             />
           </Field>
 
           <Field
-            label="الموضوع"
+            label={t("subject")}
             htmlFor="subject"
             iconName="MessagesSquare"
             className=""
@@ -73,22 +64,18 @@ export default function ContactForm() {
             <Input
               id="subject"
               name="subject"
-              placeholder="بناء موقع مثلاً"
+              placeholder={t("subjectPlaceholder")}
               required
             />
           </Field>
 
         </div>
 
-        <Field
-          label="الرسالة"
-          htmlFor="message"
-          iconName="MessagesSquare"
-        >
+        <Field label={t("message")} htmlFor="message" iconName="MessagesSquare">
           <Textarea
             id="message"
             name="message"
-            placeholder="أخبرنا عن فكرة مشروعك والجدول الزمني لتنفيذه"
+            placeholder={t("messagePlaceholder")}
             required
           />
         </Field>
@@ -98,11 +85,11 @@ export default function ContactForm() {
           size="lg"
           className="mt-1 w-full py-6 text-base"
         >
-          إرسال الرسالة
+          {t("submit")}
         </Button>
 
         <p className="text-center text-xs leading-relaxed text-muted-foreground">
-          عادة ما نستجيب خلال 24 ساعة. معلوماتك تبقى سرية.
+          {t("note")}
         </p>
       </form>
     </div>

@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/Utils";
 
 const SCROLL_THRESHOLD = 400;
 
 export default function ScrollToTop() {
+  const t = useTranslations("common");
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -35,7 +37,8 @@ export default function ScrollToTop() {
     <button
       type="button"
       onClick={scrollToTop}
-      aria-label="العودة للأعلى"
+      aria-label={t("scrollToTop")}
+      inert={!visible}
       className={cn(
         "fixed bottom-6 inset-e-6 z-40 flex h-12 w-12 touch-manipulation items-center justify-center rounded-full ",
         "border border-primary/30 bg-secondary/90 text-primary backdrop-blur-sm",

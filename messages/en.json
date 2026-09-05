@@ -1,0 +1,249 @@
+{
+  "metadata": {
+    "title": "DEEP CODE Solution | Your trusted route to a complete digital presence",
+    "description": "We turn your ideas into exceptional digital experiences that serve your customers and drive your growth in business."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "servers": "Servers",
+    "features": "Features",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "cta": "Contact us",
+    "switchLanguage": "العربية",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menuLabel": "Navigation menu"
+  },
+  "hero": {
+    "pills": {
+      "simplicity": "Simplicity",
+      "reliability": "Reliability",
+      "quality": "Quality"
+    },
+    "title": "Your trusted route to a <hl>complete digital</hl> presence",
+    "description": "We turn your ideas into exceptional digital experiences that meet your customers needs and drive your growth in business.",
+    "ctaPrimary": "Book a free consultation",
+    "ctaSecondary": "Explore our solutions",
+    "stats": {
+      "clients": "Happy clients",
+      "success": "Lasting successes"
+    }
+  },
+  "about": {
+    "sectionLabel": "About us",
+    "badge": "Who are we?",
+    "title": "Building today the answers to tomorrow’s problems",
+    "imageAlt": "Security and reliability shield",
+    "description": "We are more than a software company — we innovate, we solve problems, and we build digital solutions that lead to success.",
+    "cta": "Start your project"
+  },
+  "features": {
+    "sectionLabel": "Our strengths",
+    "items": {
+      "impact": {
+        "title": "Impact",
+        "description": "Results that last"
+      },
+      "quality": {
+        "title": "Quality",
+        "description": "Built to scale and maintain"
+      },
+      "innovation": {
+        "title": "Innovation",
+        "description": "Ahead of the technology curve"
+      }
+    }
+  },
+  "services": {
+    "badge": "Our services",
+    "title": "Complete digital solutions for your business",
+    "description": "A full range of technical and creative services that turn your vision into a digital reality which meets your goals.",
+    "items": {
+      "web": {
+        "title": "Website development",
+        "description": "We design and build fast, professional, fully responsive websites that strengthen your digital presence and show your brand at its best."
+      },
+      "webApps": {
+        "title": "Web application development",
+        "description": "We build custom web applications around your business needs, focused on high performance, ease of use, and room to scale."
+      },
+      "mobile": {
+        "title": "Mobile app development",
+        "description": "We develop modern Android and iOS apps that deliver a smooth experience and keep you reachable by your customers at any time."
+      },
+      "graphic": {
+        "title": "Graphic design",
+        "description": "Creative design work covering logos, visual identity, and marketing material that strengthens your brand presence."
+      },
+      "uiux": {
+        "title": "UI and UX design",
+        "description": "Modern interfaces and carefully considered user journeys that make every interaction easy and keep users satisfied."
+      },
+      "hosting": {
+        "title": "Hosting and server management",
+        "description": "Secure, stable hosting and server solutions with professional management, so your site or app always performs at its best."
+      }
+    }
+  },
+  "pricing": {
+    "badge": "Take the offer",
+    "limitedTime": "Limited time",
+    "title": "Website packages",
+    "description": "Pick the package that fits your business and leave your digital presence to us.",
+    "period": "year",
+    "cta": "Order now",
+    "plans": {
+      "startup": {
+        "name": "Starter",
+        "features": ["Up to 5 pages", "Custom page design"]
+      },
+      "professional": {
+        "name": "Professional",
+        "features": [
+          "Everything in the Complete package",
+          "12 months of maintenance",
+          "Basic SEO setup",
+          "Priority technical support",
+          "One additional language (Arabic - English)"
+        ]
+      },
+      "complete": {
+        "name": "Complete",
+        "features": [
+          "Up to 5 pages",
+          "Custom page design",
+          "A .com domain",
+          "Fast, secure hosting + SSL",
+          "Contact form wired to your inbox",
+          "Full setup and configuration"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "badge": "Our work",
+    "title": "Digital projects that stand out",
+    "description": "Explore a selection of the most recent projects we delivered for clients, where creativity, technology, and performance meet.",
+    "cta": "View project"
+  },
+  "team": {
+    "badge": "Meet our team",
+    "title": "<hl>The people behind</hl> your success",
+    "description": "A dedicated team working to grow your idea — outstanding Syrian talent and expertise.",
+    "contactCta": "Get in touch",
+    "joinTitle": "Have a <hl>creative</hl> mind?",
+    "joinText": "Our team welcomes talented and creative people",
+    "joinCta": "Join us",
+    "members": {
+      "nawar": {
+        "name": "Eng. Nawar Abu Kalam",
+        "role": "Head of Frontend Development"
+      },
+      "abdulrahman": {
+        "name": "Eng. Abdulrahman Alahmad",
+        "role": "Head of Backend Development"
+      },
+      "fiez": {
+        "name": "Eng. Fiez Alhag",
+        "role": "Head of Mobile Development"
+      },
+      "jeeda": {
+        "name": "Eng. Jeeda Alsman",
+        "role": "Head of Graphic Design"
+      }
+    }
+  },
+  "contact": {
+    "badge": "Contact us",
+    "title": "Let us help your project succeed",
+    "description": "We are here to plan with you and turn your ideas into successful digital products.",
+    "infoTitle": "Contact information",
+    "info": {
+      "visit": {
+        "title": "Visit us",
+        "detail": "Damascus - Al Shaalan"
+      },
+      "call": {
+        "title": "Call us",
+        "detail": "+963997013656"
+      },
+      "email": {
+        "title": "Email us",
+        "detail": "codedeep@gmail.com"
+      }
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Mohamed",
+      "email": "Email",
+      "emailPlaceholder": "example@gmail.com",
+      "company": "Company (optional)",
+      "companyPlaceholder": "Company name",
+      "subject": "Subject",
+      "subjectPlaceholder": "Building a website, for example",
+      "message": "Message",
+      "messagePlaceholder": "Tell us about your project idea and your timeline",
+      "submit": "Send message",
+      "note": "We usually reply within 24 hours. Your information stays confidential."
+    }
+  },
+  "footer": {
+    "label": "Site footer",
+    "tagline": "We turn your ideas into exceptional digital experiences that serve your customers and drive your success in business.",
+    "linksTitle": "Quick links",
+    "contactTitle": "Contact us",
+    "socialTitle": "Follow us",
+    "copyright": "© {year} DEEPCODE Solutions. All rights reserved.",
+    "links": {
+      "about": "About us",
+      "services": "Services",
+      "pricing": "Website packages",
+      "contact": "Contact us"
+    }
+  },
+  "hosting": {
+    "placeholder": "Hosting",
+    "vpsPage": {
+      "badge": "VPS Hosting",
+      "title": "Fast, secure VPS servers",
+      "description": "Pick the plan that fits your site or app, with high performance and easy management."
+    },
+    "dedicatedPage": {
+      "badge": "Dedicated Servers",
+      "title": "Dedicated servers with outstanding performance",
+      "description": "Get a fully dedicated server with exclusive resources, consistent performance, and the flexibility to run demanding applications and projects."
+    },
+    "vpsSection": {
+      "badge": "Best VPS offers",
+      "title": "Fast, secure VPS servers",
+      "description": "Choose from ready-made plans with excellent performance, continuous support, and flexible usage.",
+      "cta": "View all VPS offers"
+    },
+    "dedicatedSection": {
+      "badge": "Dedicated Servers",
+      "title": "Dedicated servers with professional performance",
+      "description": "A complete server with exclusive resources and consistent performance for large projects and high-load applications.",
+      "cta": "View all Dedicated offers"
+    },
+    "card": {
+      "price": "Price",
+      "cpu": "CPU",
+      "memory": "Memory",
+      "storage": "Storage",
+      "bandwidth": "Bandwidth",
+      "cta": "Order server"
+    },
+    "loadError": "Something went wrong while loading the plans: {message}"
+  },
+  "common": {
+    "scrollToTop": "Back to top"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you requested is not available or has been moved.",
+    "cta": "Back to home"
+  }
+}

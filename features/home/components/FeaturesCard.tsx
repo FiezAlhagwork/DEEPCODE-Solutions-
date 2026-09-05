@@ -2,9 +2,8 @@
 
 import { FeatureCardProps } from "@/features/home/types/Home";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import * as LucideIcons from "lucide-react";
-
-// تعريف الـ Types الخاصة ببيانات الكارت لضمان TypeScript Type Safety
 
 // أنميشن الظهور التدريجي من الأسفل لكل كارت بشكل مستقل
 const cardVariants = {
@@ -20,14 +19,15 @@ const cardVariants = {
 };
 
 export default function FeaturesCard({ feature }: FeatureCardProps) {
-  const { title, description, iconName } = feature;
+  const t = useTranslations("features.items");
+  const { key, iconName } = feature;
 
   const IconComponent = LucideIcons[iconName] as LucideIcons.LucideIcon;
 
   return (
     <motion.div
       variants={cardVariants}
-      className="flex flex-col items-start text-right p-8  rounded-3xl bg-[#1F1E20] border border-border/40 backdrop-blur-md relative overflow-hidden transition-all duration-300 hover:border-primary hover:bg-[#1F1E20]/30 group"
+      className="flex flex-col items-start text-start p-8  rounded-3xl bg-[#1F1E20] border border-border/40 backdrop-blur-md relative overflow-hidden transition-all duration-300 hover:border-primary hover:bg-[#1F1E20]/30 group"
     >
       {/* أيقونة الميزة بلون الـ Primary البنفسجي مع تأثير توهج خفيف عند الـ Hover */}
       <div className="mb-6 text-primary  ">
@@ -35,11 +35,13 @@ export default function FeaturesCard({ feature }: FeatureCardProps) {
       </div>
 
       {/* عنوان الكارت */}
-      <h3 className="text-xl font-bold text-foreground mb-2">{title}</h3>
+      <h3 className="text-xl font-bold text-foreground mb-2">
+        {t(`${key}.title`)}
+      </h3>
 
       {/* النص الوصفي للكارت بلون الـ Muted Foreground */}
       <p className="text-sm font-light leading-relaxed text-muted-foreground text-pretty">
-        {description}
+        {t(`${key}.description`)}
       </p>
     </motion.div>
   );

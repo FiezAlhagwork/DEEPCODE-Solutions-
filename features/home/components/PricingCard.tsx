@@ -2,9 +2,11 @@
 
 import { Check } from "lucide-react";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/Utils";
 import { PricingCardProps } from "@/features/home/types/Home";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -19,7 +21,10 @@ const cardVariants = {
 };
 
 export default function PricingCard({ plan }: PricingCardProps) {
-  const { name, price, period, features, featured } = plan;
+  const t = useTranslations("pricing");
+  const { key, price, featured } = plan;
+
+  const features: string[] = t.raw(`plans.${key}.features`);
 
   return (
     <motion.li variants={cardVariants} className="list-none h-full">
@@ -64,26 +69,26 @@ export default function PricingCard({ plan }: PricingCardProps) {
         )}
 
         <div className="relative z-10 flex h-full flex-col">
-          <div className="text-right">
+          <div className="text-start">
             <h3 className="text-xl font-bold text-white md:text-2xl">
-              {name}
+              {t(`plans.${key}.name`)}
             </h3>
 
             <p className="mt-2 text-lg text-white">
-              <span className="inline-block font-semibold direction-ltr">
+              <span dir="ltr" className="inline-block font-semibold">
                 ${price}
               </span>
 
               <span className="text-sm font-normal text-muted-foreground">
                 {" "}
-                / {period}
+                / {t("period")}
               </span>
             </p>
           </div>
 
           <hr className="my-6 border-white/10" />
 
-          <ul className="flex flex-1 flex-col gap-3 text-left" role="list">
+          <ul className="flex flex-1 flex-col gap-3 text-end" role="list">
             {features.map((feature) => (
               <li
                 key={feature}
@@ -101,10 +106,11 @@ export default function PricingCard({ plan }: PricingCardProps) {
           </ul>
 
           <Button
+            asChild
             variant={featured ? "default" : "outline"}
             className="mt-10"
           >
-            اطلب الآن
+            <Link href="/#contact">{t("cta")}</Link>
           </Button>
         </div>
       </div>

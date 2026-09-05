@@ -4,11 +4,12 @@ import type {
   FooterSocialLink,
 } from "@/types/Shared";
 
+// Root-relative so the links resolve from any route, not just the home page.
 export const footerNavLinks: FooterLink[] = [
-  { label: "من نحن", href: "#about" },
-  { label: "خدماتنا", href: "#services" },
-  { label: "باقات المواقع", href: "#pricing" },
-  { label: "تواصل معنا", href: "#contact" },
+  { key: "about", href: "/#about" },
+  { key: "services", href: "/#services" },
+  { key: "pricing", href: "/#pricing" },
+  { key: "contact", href: "/#contact" },
 ];
 
 export const footerSocialLinks: FooterSocialLink[] = [
@@ -18,19 +19,7 @@ export const footerSocialLinks: FooterSocialLink[] = [
 ];
 
 export const contactInfoItems: ContactInfoData[] = [
-  {
-    iconName: "MapPin",
-    title: "تفضل بزيارتنا",
-    detail: "دمشق - الشعلان",
-  },
-  {
-    iconName: "Phone",
-    title: "اتصل بنا",
-    detail: "963997013656+",
-  },
-  {
-    iconName: "Mail",
-    title: "راسلنا عبر البريد الإلكتروني",
-    detail: "codedeep@gmail.com",
-  },
+  { key: "visit", iconName: "MapPin" },
+  { key: "call", iconName: "Phone" },
+  { key: "email", iconName: "Mail" },
 ];

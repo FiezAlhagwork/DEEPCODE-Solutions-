@@ -24,7 +24,7 @@ const PricingList = ({ PricingPlans }: PricingListProps) => {
         >
             {PricingPlans.map((plan) => (
                 <PricingCard
-                    key={plan.id}
+                    key={plan.key}
                     plan={plan}
 
                 />

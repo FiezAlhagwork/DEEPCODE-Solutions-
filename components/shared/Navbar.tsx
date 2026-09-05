@@ -1,24 +1,29 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { Menu } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/Utils";
+import { useIsMobile } from "@/hooks/UseMobile";
+import { Link } from "@/i18n/navigation";
 import { NavigationOverlay } from "./NavigationOverlay";
+import LocaleSwitcher from "./LocaleSwitcher";
 
 const navLinks = [
-  { label: "الرئيسية", href: "/" },
-  { label: "من نحن", href: "/#about" },
-  { label: "خدماتنا", href: "/#services" },
-  { label: "السيرفرات", href: "/#server" },
-  { label: "التسعير", href: "/#pricing" },
-  { label: "تواصل", href: "/#contact" },
-];
+  { key: "home", href: "/" },
+  { key: "about", href: "/#about" },
+  { key: "services", href: "/#services" },
+  { key: "servers", href: "/#server" },
+  { key: "pricing", href: "/#pricing" },
+  { key: "contact", href: "/#contact" },
+] as const;
 
 const SCROLL_THRESHOLD = 60;
 
 const Navbar = () => {
+  const t = useTranslations("nav");
+  const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
@@ -68,7 +73,11 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const showNavbar = isVisible || isOpen || isAtTop;
+  // The drawer is `md:hidden`, so a resize to desktop must close it — otherwise
+  // its focus trap would run against content hidden by `display: none`.
+  const isMenuOpen = isOpen && isMobile;
+
+  const showNavbar = isVisible || isMenuOpen || isAtTop;
 
   return (
     <>
@@ -96,14 +105,16 @@ const Navbar = () => {
                   href={link.href}
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  {link.label}
+                  {t(link.key)}
                 </Link>
               ))}
             </div>
 
             <div className="hidden items-center gap-4 md:flex">
-              <Button variant="outline">English</Button>
-              <Button variant="default">اتصل بنا</Button>
+              <LocaleSwitcher />
+              <Button asChild variant="default">
+                <Link href="/#contact">{t("cta")}</Link>
+              </Button>
             </div>
 
             <button
@@ -115,8 +126,8 @@ const Navbar = () => {
                   : "border-border/30 bg-secondary/50",
               )}
               onClick={openMenu}
-              aria-label="فتح القائمة"
-              aria-expanded={isOpen}
+              aria-label={t("openMenu")}
+              aria-expanded={isMenuOpen}
             >
               <Menu size={22} />
             </button>
@@ -124,7 +135,7 @@ const Navbar = () => {
         </nav>
       </header>
 
-      <NavigationOverlay isOpen={isOpen} onClose={closeMenu} />
+      <NavigationOverlay isOpen={isMenuOpen} onClose={closeMenu} />
     </>
   );
 };

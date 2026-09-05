@@ -24,7 +24,7 @@ export default function ServicesList({ services }: ServiceListProps) {
       className="grid grid-cols-1 gap-6 md:grid-cols-2 "
     >
       {services.map((service) => (
-        <ServicesCard key={service.title} service={service} />
+        <ServicesCard key={service.key} service={service} />
       ))}
     </motion.div>
   );

@@ -18,7 +18,7 @@ const listVariants = {
 
 export default function FeaturesList({features}:FeatureListProps) {
   return (
-    <div className="w-full py-5 bg-transparent" dir="rtl">
+    <div className="w-full py-5 bg-transparent">
       <motion.div
         variants={listVariants}
         initial="hidden"
@@ -27,7 +27,7 @@ export default function FeaturesList({features}:FeatureListProps) {
         className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-6"
       >
         {features.map((feature) => (
-          <FeaturesCard key={feature.title} feature={feature} />
+          <FeaturesCard key={feature.key} feature={feature} />
         ))}
       </motion.div>
     </div>

@@ -1,7 +1,9 @@
 "use client";
 
 import { Crosshair, Rocket } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import { motion } from "motion/react";
 import AnimatedCounter from "./AnimatedCounter";
 
@@ -29,12 +31,14 @@ const itemVariants = {
 };
 
 const pills = [
-  { label: "بساطة", active: false },
-  { label: "وثوقية", active: true },
-  { label: "جودة", active: false },
-];
+  { key: "simplicity", active: false },
+  { key: "reliability", active: true },
+  { key: "quality", active: false },
+] as const;
 
 const Hero = () => {
+  const t = useTranslations("hero");
+
   return (
     <section
       aria-label="Hero Introduction"
@@ -42,14 +46,14 @@ const Hero = () => {
     >
       <div className="absolute inset-0 overflow-x-hidden pointer-events-none z-0" />
 
-      <div className="absolute left-0 bottom-[-15%] w-60 md:w-150 h-125 md:h-140 pointer-events-none opacity-50 mix-blend-screen select-none z-0">
-        <div className="absolute inset-0 bg-[url('/Ellipse1.webp')] bg-no-repeat bg-left bg-contain blur-[100px]" />
-        <div className="absolute inset-0 bg-[url('/Ellipse2.webp')] bg-no-repeat bg-left bg-contain blur-[80px]" />
+      <div className="absolute inset-s-0 bottom-[-15%] w-60 md:w-150 h-125 md:h-140 pointer-events-none opacity-50 mix-blend-screen select-none z-0">
+        <div className="absolute inset-0 bg-[url('/Ellipse1.webp')] bg-no-repeat rtl:bg-left ltr:bg-right bg-contain blur-[100px]" />
+        <div className="absolute inset-0 bg-[url('/Ellipse2.webp')] bg-no-repeat rtl:bg-left ltr:bg-right bg-contain blur-[80px]" />
       </div>
 
-      <div className="absolute right-0 bottom-[-20%] w-60 md:w-150 h-125 md:h-140 pointer-events-none opacity-40 mix-blend-screen select-none z-0">
-        <div className="absolute inset-0 bg-[url('/Ellipse5.webp')] bg-no-repeat bg-right bg-contain blur-[100px]" />
-        <div className="absolute inset-0 bg-[url('/Ellipse4.webp')] bg-no-repeat bg-right bg-contain blur-[80px]" />
+      <div className="absolute inset-e-0 bottom-[-20%] w-60 md:w-150 h-125 md:h-140 pointer-events-none opacity-40 mix-blend-screen select-none z-0">
+        <div className="absolute inset-0 bg-[url('/Ellipse5.webp')] bg-no-repeat rtl:bg-right ltr:bg-left bg-contain blur-[100px]" />
+        <div className="absolute inset-0 bg-[url('/Ellipse4.webp')] bg-no-repeat rtl:bg-right ltr:bg-left bg-contain blur-[80px]" />
       </div>
 
 
@@ -66,7 +70,7 @@ const Hero = () => {
         >
           {pills.map((pill) => (
             <span
-              key={pill.label}
+              key={pill.key}
               className={`px-4 py-2 rounded-full text-sm transition-all cursor-pointer ${
                 pill.active
                   ? "bg-primary/10 text-primary border border-primary/50 shadow-[0_0_20px_rgba(168,85,247,0.3)]"
@@ -74,9 +78,9 @@ const Hero = () => {
               }`}
             >
               {pill.active && (
-                <span className="inline-block w-2 h-2 rounded-full bg-primary ml-2 animate-pulse" />
+                <span className="inline-block w-2 h-2 rounded-full bg-primary me-2 animate-pulse" />
               )}
-              {pill.label}
+              {t(`pills.${pill.key}`)}
             </span>
           ))}
         </motion.div>
@@ -86,7 +90,9 @@ const Hero = () => {
           variants={itemVariants}
           className="text-[28px] md:text-5xl lg:text-5xl font-bold leading-tight text-balance text-white"
         >
-          وجهتك الآمنة <span className="text-primary">لحضور رقمي</span> متكامل
+          {t.rich("title", {
+            hl: (chunks) => <span className="text-primary">{chunks}</span>,
+          })}
         </motion.h1>
 
         {/* Step 3: Description */}
@@ -94,8 +100,7 @@ const Hero = () => {
           variants={itemVariants}
           className="text-md md:text-xl text-muted-foreground max-w-2xl leading-relaxed text-pretty"
         >
-          نحول أفكارك إلى تجارب رقمية استثنائية تلبي احتياجات عملائك وتدعم نجاحك
-          وتطورك في عالم الأعمال
+          {t("description")}
         </motion.p>
 
         {/* Step 4: CTA Buttons */}
@@ -103,12 +108,16 @@ const Hero = () => {
           variants={itemVariants}
           className="flex flex-col sm:flex-row items-center gap-4 mt-4"
         >
-          <Button size="lg" variant="default">
-            <Rocket className="w-5 h-5 ml-2" /> احجز استشارتك المجانية
+          <Button asChild size="lg" variant="default">
+            <Link href="/#contact">
+              <Rocket className="w-5 h-5 me-2" /> {t("ctaPrimary")}
+            </Link>
           </Button>
-          <Button size="lg" variant="outline">
-            <Crosshair className="w-5 h-5 ml-2" />
-            اكتشف حلولنا التقنية
+          <Button asChild size="lg" variant="outline">
+            <Link href="/#services">
+              <Crosshair className="w-5 h-5 me-2" />
+              {t("ctaSecondary")}
+            </Link>
           </Button>
         </motion.div>
 
@@ -117,15 +126,18 @@ const Hero = () => {
           variants={itemVariants}
           className="w-full max-w-md border border-primary/50 rounded-3xl p-6 backdrop-blur-md shadow-2xl relative overflow-hidden group transition-colors duration-300"
         >
-          <div className="absolute top-0 right-0 w-24 h-24 radial-glow opacity-30 pointer-events-none" />
+          <div className="absolute top-0 inset-e-0 w-24 h-24 radial-glow opacity-30 pointer-events-none" />
 
-          <dl className="grid grid-cols-2 divide-x divide-x-reverse divide-gray-800/80">
+          <dl className="grid grid-cols-2 divide-x rtl:divide-x-reverse divide-gray-800/80">
             {/* Satisfied clients */}
             <div className="px-4 flex flex-col items-center">
               <dt className="text-gray-200 text-xs md:text-lg font-medium mb-1">
-                عميل راضي
+                {t("stats.clients")}
               </dt>
-              <dd className="font-sans font-bold text-3xl md:text-4xl text-primary bg-clip-text bg-linear-to-br from-white to-purple-200 tracking-tight flex items-center direction-ltr">
+              <dd
+                dir="ltr"
+                className="font-sans font-bold text-3xl md:text-4xl text-primary bg-clip-text bg-linear-to-br from-white to-purple-200 tracking-tight flex items-center"
+              >
                 <span>+</span>
                 <AnimatedCounter from={0} to={50} />
               </dd>
@@ -133,9 +145,12 @@ const Hero = () => {
             {/* Sustainable success */}
             <div className="px-4 flex flex-col items-center">
               <dt className="text-gray-200 text-xs md:text-lg font-medium mb-1">
-                نجاح مستدام
+                {t("stats.success")}
               </dt>
-              <dd className="font-sans font-bold text-3xl md:text-4xl text-primary bg-clip-text bg-linear-to-br from-white to-purple-200 tracking-tight flex items-center direction-ltr">
+              <dd
+                dir="ltr"
+                className="font-sans font-bold text-3xl md:text-4xl text-primary bg-clip-text bg-linear-to-br from-white to-purple-200 tracking-tight flex items-center"
+              >
                 <span>+</span>
                 <AnimatedCounter from={0} to={30} />
               </dd>

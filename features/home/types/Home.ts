@@ -1,48 +1,46 @@
 import type { ComponentProps, ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import * as LucideIcons from "lucide-react";
-import type { ContactInfoData } from "@/types/Shared";
+import type { Messages } from "next-intl";
 
 export type AnimatedCounterProps = {
   from: number;
   to: number;
 };
 
-export type FeatureData = {
+/** `key` resolves against the `features.items` message namespace. */
+export type FeatureItem = {
+  key: keyof Messages["features"]["items"];
   iconName: keyof typeof LucideIcons;
-  title: string;
-  description: string;
 };
 
 export type FeatureCardProps = {
-  feature: FeatureData;
+  feature: FeatureItem;
 };
 
 export type FeatureListProps = {
-  features: FeatureData[];
+  features: FeatureItem[];
 };
 
-export type ServiceData = {
-  title: string;
-  description: string;
+/** `key` resolves against the `services.items` message namespace. */
+export type ServiceItem = {
+  key: keyof Messages["services"]["items"];
   icon: LucideIcon;
 };
 
 export type ServiceCardProps = {
-  service: ServiceData;
+  service: ServiceItem;
 };
 
 export type ServiceListProps = {
-  services: ServiceData[];
+  services: ServiceItem[];
 };
 
+/** `key` resolves against the `pricing.plans` message namespace. */
 export type PricingPlan = {
-  id: string;
-  name: string;
+  key: keyof Messages["pricing"]["plans"];
   price: number;
   currency: string;
-  period: string;
-  features: string[];
   featured?: boolean;
 };
 
@@ -55,7 +53,9 @@ export type PricingListProps = {
 };
 
 export type ContactInfoItemProps = {
-  item: ContactInfoData;
+  iconName: keyof typeof LucideIcons;
+  title: string;
+  detail: string;
 };
 
 export type FieldProps = {
