@@ -19,7 +19,7 @@ The frontend is a Next.js application serving the public marketing site, soon ex
 - **Theming:** next-themes
 - **Animation:** motion (Framer Motion)
 - **Accessibility:** focus-trap-react (mobile navigation drawer)
-- **Fonts:** `next/font/google` — Cairo (Arabic + Latin) and Black Ops One, loaded in `app/[locale]/layout.tsx`
+- **Fonts:** `next/font/google` — **one typeface per locale**, not one stack. Arabic pages run entirely on **Cairo** (Arabic + Latin subsets, so digits and brand names inside Arabic text match); English pages run on **Space Grotesk**. Both are loaded in `app/[locale]/layout.tsx` and selected in `app/globals.css` via `--app-font`, overridden on `html[lang="en"]`.
 - **Linting:** ESLint flat config (`eslint.config.mjs`) with `eslint-config-next/core-web-vitals` + `/typescript`
 - **Analytics:** @vercel/analytics
 - **Image pipeline:** `scripts/convert-images-to-webp.mjs` (uses `sharp`)
@@ -299,5 +299,8 @@ npm run optimize-images    # convert images to webp (scripts/convert-images-to-w
 - **2026-09-05** — `components/ui/` was pruned to the four primitives actually used (`button`, `skeleton`, `tabs`, `sonner`), and the 32 packages that only those deleted files imported were uninstalled. Dependencies went from 47 to 21.
 - **2026-09-05** — ESLint runs through a flat config with `eslint-config-next`; `components/ui/` is ignored since it is generated code. It immediately caught two `setState`-in-effect violations and a `role="switch"` with no `aria-checked`.
 - **2026-09-05** — The mobile drawer uses `inert` when closed plus `focus-trap-react` when open. It previously carried `aria-hidden` over links that were still in the tab order, and the drawer's open state is now derived (`isOpen && isMobile`) rather than synced in an effect.
+- **2026-09-06** — Typography is **per locale, not a mixed stack**. Space Grotesk replaced Cairo for English, which was rendering Latin text in Cairo's weak Latin glyphs. A Latin-first shared stack was tried first and rejected: it also reassigned the digits, prices, and brand names *inside* Arabic pages, so Arabic sections turned into two competing typefaces. The switch now happens in `app/globals.css` — `--app-font` defaults to Cairo on `:root` and is overridden on `html[lang="en"]`, so every `font-sans` usage follows the locale with no per-component logic. Cairo keeps both its `arabic` and `latin` subsets for that reason.
+- **2026-09-06** — The Black Ops One font was removed: it was downloaded on every page while its CSS variable `--font-black_ops_one` was never referenced anywhere in the codebase.
+- **2026-09-06** — Button labels are **two to three words** in both locales. Long CTAs ("Book a free consultation", "View all VPS offers", "احجز استشارتك المجانية", "عرض جميع عروض VPS") read as sentences rather than actions and wrap badly at small sizes.
 - **2026-09-05** — `hooks/UseMobile.ts` was rewritten on `useSyncExternalStore`, removing the mount-time state sync it inherited from shadcn.
 - **2026-09-05** — `app/[locale]/hosting/vps/page.tsx` was converted from a client page to a server page plus a `VpsCategoryTabs` client child, so the page can export `generateMetadata`. Its tabs are now driven by `VPS_CATEGORIES` in `features/hosting/constants/Hosting.ts`, which had been dead code.

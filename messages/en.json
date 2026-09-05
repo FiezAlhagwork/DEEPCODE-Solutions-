@@ -25,8 +25,8 @@
     },
     "title": "Your trusted route to a <hl>complete digital</hl> presence",
     "description": "We turn your ideas into exceptional digital experiences that meet your customers needs and drive your growth in business.",
-    "ctaPrimary": "Book a free consultation",
-    "ctaSecondary": "Explore our solutions",
+    "ctaPrimary": "Book a call",
+    "ctaSecondary": "Explore services",
     "stats": {
       "clients": "Happy clients",
       "success": "Lasting successes"
@@ -38,7 +38,7 @@
     "title": "Building today the answers to tomorrow’s problems",
     "imageAlt": "Security and reliability shield",
     "description": "We are more than a software company — we innovate, we solve problems, and we build digital solutions that lead to success.",
-    "cta": "Start your project"
+    "cta": "Get started"
   },
   "features": {
     "sectionLabel": "Our strengths",
@@ -133,7 +133,7 @@
     "badge": "Meet our team",
     "title": "<hl>The people behind</hl> your success",
     "description": "A dedicated team working to grow your idea — outstanding Syrian talent and expertise.",
-    "contactCta": "Get in touch",
+    "contactCta": "Reach out",
     "joinTitle": "Have a <hl>creative</hl> mind?",
     "joinText": "Our team welcomes talented and creative people",
     "joinCta": "Join us",
@@ -220,13 +220,13 @@
       "badge": "Best VPS offers",
       "title": "Fast, secure VPS servers",
       "description": "Choose from ready-made plans with excellent performance, continuous support, and flexible usage.",
-      "cta": "View all VPS offers"
+      "cta": "All VPS plans"
     },
     "dedicatedSection": {
       "badge": "Dedicated Servers",
       "title": "Dedicated servers with professional performance",
       "description": "A complete server with exclusive resources and consistent performance for large projects and high-load applications.",
-      "cta": "View all Dedicated offers"
+      "cta": "All dedicated plans"
     },
     "card": {
       "price": "Price",
@@ -244,6 +244,6 @@
   "notFound": {
     "title": "Page not found",
     "description": "The page you requested is not available or has been moved.",
-    "cta": "Back to home"
+    "cta": "Back home"
   }
 }
