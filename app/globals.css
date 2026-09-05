@@ -2,6 +2,10 @@
 @import "tw-animate-css";
 
 :root {
+  /* Arabic pages: Cairo handles Arabic, Latin and digits alike — one typeface,
+     the way the site was originally designed. */
+  --app-font: var(--font-cairo), "Cairo", ui-sans-serif, system-ui, sans-serif;
+
   --background: #0b0813;
   --foreground: #ffffff;
   --primary: #880fd2;
@@ -19,8 +23,13 @@
   --radius: 0.625rem;
 }
 
+/* English pages only. Higher specificity than the `:root` default above. */
+html[lang="en"] {
+  --app-font: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+}
+
 @theme inline {
-  --font-sans: var(--font-cairo), "Cairo", sans-serif;
+  --font-sans: var(--app-font);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);

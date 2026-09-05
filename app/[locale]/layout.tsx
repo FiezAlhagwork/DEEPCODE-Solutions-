@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Cairo } from "next/font/google";
-import { Black_Ops_One } from "next/font/google";
+import { Cairo, Space_Grotesk } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -12,15 +11,18 @@ import { routing } from "@/i18n/routing";
 import { requireLocale } from "@/i18n/Locale";
 import { localeAlternates, siteUrl } from "@/i18n/metadata";
 
+// One font per locale, picked in globals.css off `html[lang]`. Space Grotesk
+// carries the English pages; the Arabic pages stay entirely on Cairo, which
+// keeps its Latin subset so digits, prices and brand names inside Arabic text
+// look the way they always have.
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+});
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
   variable: "--font-cairo",
   weight: ["400", "500", "600", "700"],
-});
-const black_one_ops = Black_Ops_One({
-  subsets: ["cyrillic-ext", "latin"],
-  variable: "--font-black_ops_one",
-  weight: ["400"],
 });
 
 type LocaleParams = { params: Promise<{ locale: string }> };
@@ -61,7 +63,7 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       dir={locale === "ar" ? "rtl" : "ltr"}
-      className={`${cairo.variable} ${black_one_ops.variable} `}
+      className={`${spaceGrotesk.variable} ${cairo.variable}`}
     >
       <body className="font-sans antialiased bg-[#0D0D0E]">
         <NextIntlClientProvider>
