@@ -1,8 +1,8 @@
 "use client";
-import HostingHero from "@/components/hosting/HostingHero";
-import Products from "@/components/hosting/Products";
+import HostingHero from "@/features/hosting/components/HostingHero";
+import Products from "@/features/hosting/components/Products";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Category } from "@/types/hosting";
+import { Category } from "@/features/hosting/types/Hosting";
 import { useState } from "react";
 
 const page = () => {
@@ -18,7 +18,7 @@ const page = () => {
         <Tabs
           className="flex justify-center items-center pb-10"
           value={category}
-          onValueChange={setCategory}
+          onValueChange={(value) => setCategory(value as Category)}
         >
           <TabsList>
             <TabsTrigger value="ryzen_vps">Ryzen</TabsTrigger>

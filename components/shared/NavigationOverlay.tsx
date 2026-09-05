@@ -4,12 +4,8 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-
-interface NavigationOverlayProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+import { cn } from "@/lib/Utils";
+import type { NavigationOverlayProps } from "@/types/Shared";
 
 const navLinks = [
   { label: "الرئيسية", href: "/" },

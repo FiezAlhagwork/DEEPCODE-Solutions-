@@ -1,6 +1,6 @@
-import { contactInfoItems } from "@/constant";
-import FooterSocial from "../ui/FooterSocial";
-import FooterLinks from "../ui/FooterLinks";
+import { contactInfoItems } from "@/constants/Site";
+import FooterSocial from "./FooterSocial";
+import FooterLinks from "./FooterLinks";
 
 export default function Footer() {
   const year = new Date().getFullYear();
