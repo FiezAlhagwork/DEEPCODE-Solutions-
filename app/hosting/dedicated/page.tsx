@@ -1,5 +1,5 @@
-import HostingHero from "@/components/hosting/HostingHero";
-import Products from "@/components/hosting/Products";
+import HostingHero from "@/features/hosting/components/HostingHero";
+import Products from "@/features/hosting/components/Products";
 
 const page = () => {
   return (

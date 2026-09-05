@@ -1,14 +1,14 @@
-import About from "@/components/home/About";
-import Contact from "@/components/home/Contact";
-import Features from "@/components/home/Features";
-import Hero from "@/components/home/Hero";
-import Pricing from "@/components/home/Pricing";
+import Hero from "@/features/home/components/Hero";
+import About from "@/features/home/components/About";
+import Features from "@/features/home/components/Features";
+import Services from "@/features/home/components/Services";
+import Pricing from "@/features/home/components/Pricing";
+import Contact from "@/features/home/components/Contact";
+import ProjectsSection from "@/features/projects/components/ProjectsSection";
+import Team from "@/features/team/components/Team";
+import VPSSection from "@/features/hosting/components/VPSSection";
+// import DedicatedSection from "@/features/hosting/components/DedicatedSection";
 import ScrollToTop from "@/components/shared/ScrollToTop";
-import Services from "@/components/home/Services";
-import VPSSection from "@/components/home/VPSSection";
-// import DedicatedSection from "@/components/home/DedicatedSection";
-import Project from "@/components/home/Project";
-import Team from "@/components/team/Team";
 
 export default function Home() {
   return (
@@ -17,7 +17,7 @@ export default function Home() {
       <About />
       <Features />
       <Services />
-      <Project />
+      <ProjectsSection />
       <Team />
       <Pricing />
       <VPSSection />
