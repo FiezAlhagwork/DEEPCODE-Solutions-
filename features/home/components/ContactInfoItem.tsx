@@ -2,8 +2,12 @@ import * as React from "react";
 import * as LucideIcons from "lucide-react";
 import { ContactInfoItemProps } from "@/features/home/types/Home";
 
-export default function ContactInfoItem({ item }: ContactInfoItemProps) {
-  const Icon = LucideIcons[item.iconName] as React.ComponentType<{
+export default function ContactInfoItem({
+  iconName,
+  title,
+  detail,
+}: ContactInfoItemProps) {
+  const Icon = LucideIcons[iconName] as React.ComponentType<{
     className?: string;
     strokeWidth?: number;
     "aria-hidden"?: boolean;
@@ -20,10 +24,10 @@ export default function ContactInfoItem({ item }: ContactInfoItemProps) {
             aria-hidden
           />
         )}
-        <h3 className="text-lg font-medium text-white">{item.title}</h3>
+        <h3 className="text-lg font-medium text-white">{title}</h3>
       </div>
-      <p className="pr-10 text-sm leading-relaxed text-muted-foreground">
-        {item.detail}
+      <p className="ps-10 text-sm leading-relaxed text-muted-foreground">
+        {detail}
       </p>
     </div>
   );

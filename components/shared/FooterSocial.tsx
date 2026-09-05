@@ -1,14 +1,17 @@
 import * as LucideIcons from "lucide-react";
+import { useTranslations } from "next-intl";
 import { footerSocialLinks } from "@/constants/Site";
 
 export default function FooterSocial() {
+  const t = useTranslations("footer");
+
   return (
-    <div className="flex flex-col gap-4 text-right">
-      <h3 className="text-base font-semibold text-white">تابعنا</h3>
+    <div className="flex flex-col gap-4 text-start">
+      <h3 className="text-base font-semibold text-white">{t("socialTitle")}</h3>
 
       <div className="flex items-center gap-3">
         {footerSocialLinks.map((social) => {
-          const Icon = LucideIcons[social.iconName] as React.ComponentType<any>;
+          const Icon = LucideIcons[social.iconName] as LucideIcons.LucideIcon;
 
           return (
             <a

@@ -1,7 +1,6 @@
+/** `key` resolves against the `team.members` message namespace. */
 export type TeamMember = {
-  id: number;
-  name: string;
-  role: string;
+  key: string;
   image: string;
   contactHref: string;
 };

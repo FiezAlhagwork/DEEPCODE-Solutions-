@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import ContactForm from "./ContactForm";
 import ContactInfo from "./ContactInfo";
 
@@ -61,12 +62,13 @@ const formVariants = {
 };
 
 export default function Contact() {
+  const t = useTranslations("contact");
+
   return (
     <section
       id="contact"
       aria-labelledby="contact-heading"
       className="relative w-full overflow-y-hidden  px-6 py-16 md:py-24"
-      dir="rtl"
     >
 
 
@@ -82,7 +84,7 @@ export default function Contact() {
             variants={headerItemVariants}
             className="rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-medium tracking-wide text-primary"
           >
-            تواصل معنا
+            {t("badge")}
           </motion.span>
 
           <motion.h2
@@ -90,14 +92,14 @@ export default function Contact() {
             variants={headerItemVariants}
             className="text-3xl font-medium text-white md:text-4xl"
           >
-            دعنا نساعدك بنجاح مشروعك
+            {t("title")}
           </motion.h2>
 
           <motion.p
             variants={headerItemVariants}
             className="max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base"
           >
-            نحن بجانبك لنخطط معاً لتحويل أفكارك إلى منتجات رقمية ناجحة
+            {t("description")}
           </motion.p>
         </motion.div>
 

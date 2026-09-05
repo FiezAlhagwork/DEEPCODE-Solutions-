@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/Utils";
 import type { TeamCardProps } from "@/features/team/types/Team";
 
@@ -19,7 +20,10 @@ const cardVariants = {
 };
 
 export default function TeamCard({ member, isOrphan = false }: TeamCardProps) {
-  const { name, role, image, contactHref } = member;
+  const t = useTranslations("team");
+  const { key, image, contactHref } = member;
+
+  const name = t(`members.${key}.name`);
 
   return (
     <motion.article
@@ -29,8 +33,8 @@ export default function TeamCard({ member, isOrphan = false }: TeamCardProps) {
         isOrphan && "md:col-span-2 md:mx-auto md:w-1/2",
       )}
     >
-      {/* صورة العضو على يمين الكارت - تتجاوز الحافة العلوية كما في التصميم */}
-      <div className="pointer-events-none absolute bottom-0 right-0 h-[128%] w-1/2 select-none md:w-[45%]">
+      {/* صورة العضو على جهة البداية - تتجاوز الحافة العلوية كما في التصميم */}
+      <div className="pointer-events-none absolute bottom-0 inset-s-0 h-[128%] w-1/2 select-none md:w-[45%]">
         <Image
           src={image}
           alt={name}
@@ -39,10 +43,10 @@ export default function TeamCard({ member, isOrphan = false }: TeamCardProps) {
           className="object-contain object-bottom "
         />
       </div>
-      {/* النصوص على يسار الكارت */}
-      <div className="relative z-10 mr-auto flex w-3/5 flex-col items-end gap-3 p-6 text-left">
+      {/* النصوص على الجهة المقابلة للصورة */}
+      <div className="relative z-10 ms-auto flex w-3/5 flex-col items-end gap-3 p-6 text-end">
         <p className="text-xs font-light leading-relaxed text-muted-foreground md:text-sm">
-          {role}
+          {t(`members.${key}.role`)}
         </p>
 
         <h3 className="text-primary bg-clip-text text-xl font-bold  md:text-2xl">
@@ -53,7 +57,7 @@ export default function TeamCard({ member, isOrphan = false }: TeamCardProps) {
           href={contactHref}
           className="mt-1 rounded-lg border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-primary hover:bg-primary/10 hover:text-primary"
         >
-          تواصل الان
+          {t("contactCta")}
         </a>
       </div>
     </motion.article>

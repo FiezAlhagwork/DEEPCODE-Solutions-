@@ -1,3 +1,4 @@
+import { setRequestLocale } from "next-intl/server";
 import Hero from "@/features/home/components/Hero";
 import About from "@/features/home/components/About";
 import Features from "@/features/home/components/Features";
@@ -10,7 +11,12 @@ import VPSSection from "@/features/hosting/components/VPSSection";
 // import DedicatedSection from "@/features/hosting/components/DedicatedSection";
 import ScrollToTop from "@/components/shared/ScrollToTop";
 
-export default function Home() {
+type Props = { params: Promise<{ locale: string }> };
+
+export default async function Home({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   return (
     <main className="min-h-screen">
       <Hero />

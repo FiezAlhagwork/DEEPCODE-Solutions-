@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 
 
 // أنميشن خاص بحاوية النصوص (تظهر من اليمين إلى اليسار بسلاسة)
@@ -45,12 +46,13 @@ const imageVariants = {
 };
 
 const About = () => {
+  const t = useTranslations("about");
+
   return (
     <section
       id="about"
-      aria-label="من نحن"
+      aria-label={t("sectionLabel")}
       className="relative w-full px-6 py-10 md:py-20 bg-transparent "
-      dir="rtl"
     >
       <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
         {/* العمود: حاوية الصورة والخطوط التقاطعية */}
@@ -75,7 +77,7 @@ const About = () => {
           <div className="animate-float relative p-6">
             <Image
               src="/mingcute_safety-certificate-line.webp"
-              alt="درع الأمان والموثوقية"
+              alt={t("imageAlt")}
               width={280}
               height={280}
               className="h-auto w-55 md:w-70 drop-shadow-[0_0_40px_rgba(168,85,247,0.4)]"
@@ -90,14 +92,14 @@ const About = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }} // amount: 0.3 يبدأ الأنميشن عند ظهور 30% من القسم في الشاشة
-          className="flex flex-col items-center text-center lg:items-start lg:text-right gap-6 order-1 lg:order-2"
+          className="flex flex-col items-center text-center lg:items-start lg:text-start gap-6 order-1 lg:order-2"
         >
           {/* الشارة العلوية (Badge) */}
           <motion.span
             variants={textItemVariants}
             className="rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-medium tracking-wide text-primary"
           >
-            من نحن؟
+            {t("badge")}
           </motion.span>
 
           {/* العنوان الفرعي */}
@@ -105,7 +107,7 @@ const About = () => {
             variants={textItemVariants}
             className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl text-balance"
           >
-            نبتكر اليوم حلولاً لمشاكل الغد
+            {t("title")}
           </motion.h2>
 
           {/* اسم الهوية البرمجية */}
@@ -123,14 +125,13 @@ const About = () => {
             variants={textItemVariants}
             className="max-w-xl text-base font-light leading-relaxed text-muted-foreground text-pretty"
           >
-            نحن أكثر من مجرد شركة برمجيات - نحن نبتكر - نحل المشاكل - نبني حلول
-            رقمية تقود للنجاح
+            {t("description")}
           </motion.p>
 
           {/* زر اتخاذ الإجراء */}
           <motion.div variants={textItemVariants}>
             <Button size="lg" variant="default">
-              ابدأ مشروعك الآن
+              {t("cta")}
             </Button>
           </motion.div>
         </motion.div>

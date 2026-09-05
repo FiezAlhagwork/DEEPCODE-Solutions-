@@ -2,16 +2,19 @@
 
 import { motion } from "motion/react";
 import { ArrowLeft, ShieldCheck, Gauge, ServerCog } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import type { ProductCardProps } from "@/features/hosting/types/Hosting";
 
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const t = useTranslations("hosting.card");
+
   const specs = [
-    { label: "CPU", value: product.specifications.cpu },
-    { label: "الذاكرة", value: product.specifications.memory },
-    { label: "التخزين", value: product.specifications.storage },
-    { label: "النطاق", value: product.specifications.bandwidth },
+    { label: t("cpu"), value: product.specifications.cpu },
+    { label: t("memory"), value: product.specifications.memory },
+    { label: t("storage"), value: product.specifications.storage },
+    { label: t("bandwidth"), value: product.specifications.bandwidth },
   ];
 
   return (
@@ -26,7 +29,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(rgba(255,255,255,0.9)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.9)_1px,transparent_1px)] bg-size-[24px_24px]" />
 
       {/* المحتوى العلوي والمواصفات */}
-      <div className="relative z-10 flex flex-1 flex-col text-right">
+      <div className="relative z-10 flex flex-1 flex-col text-start">
         <div className="mb-5 flex items-center gap-3 text-primary">
           <ServerCog className="h-5 w-5" />
           <h3 className="text-xl font-semibold text-white">{product.name}</h3>
@@ -34,9 +37,9 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         <div className="mb-6 rounded-2xl border border-white/10 bg-white/5 p-4">
           <div className="flex items-end justify-between gap-4">
-            <div className="text-right">
+            <div className="text-start">
               <p className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                السعر
+                {t("price")}
               </p>
               <div className="mt-1 flex items-center gap-2 text-white">
                 <span className="text-2xl font-bold">
@@ -50,7 +53,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 text-right text-xs text-muted-foreground">
+        <div className="grid grid-cols-2 gap-3 text-start text-xs text-muted-foreground">
           {specs.map((item) => (
             <div
               key={item.label}
@@ -77,8 +80,8 @@ export default function ProductCard({ product }: ProductCardProps) {
       </div>
 
       <Button className="relative z-10 mt-6 w-full" variant="default">
-        اطلب الخادم
-        <ArrowLeft className="h-4 w-4" />
+        {t("cta")}
+        <ArrowLeft className="h-4 w-4 ltr:rotate-180" />
       </Button>
     </motion.article>
   );

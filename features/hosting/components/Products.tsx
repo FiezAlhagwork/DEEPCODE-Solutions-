@@ -1,11 +1,13 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useProducts } from "@/features/hosting/hooks/UseProducts";
 import ProductList from "./ProductList";
 import { ProductsProps } from "@/features/hosting/types/Hosting";
 
 export default function Products({ type, category, limit }: ProductsProps) {
+  const t = useTranslations("hosting");
   const { data: products = [], isLoading, error } = useProducts(type, category);
   const displayedProducts = limit ? products.slice(0, limit) : products;
   if (isLoading) {
@@ -20,8 +22,8 @@ export default function Products({ type, category, limit }: ProductsProps) {
 
   if (error) {
     return (
-      <div className="rounded-3xl border border-destructive/30 bg-destructive/10 p-6 text-right text-sm text-destructive">
-        حدث خطأ أثناء جلب الباقات: {error.message}
+      <div className="rounded-3xl border border-destructive/30 bg-destructive/10 p-6 text-start text-sm text-destructive">
+        {t("loadError", { message: error.message })}
       </div>
     );
   }

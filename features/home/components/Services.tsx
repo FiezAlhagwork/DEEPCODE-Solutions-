@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import { services } from "@/features/home/constants/Home";
+import { useTranslations } from "next-intl";
+import { serviceItems } from "@/features/home/constants/Home";
 import ServicesList from "./ServicesList";
 
 const headerContainerVariants = {
@@ -27,19 +28,20 @@ const headerItemVariants = {
 };
 
 export default function Services() {
+  const t = useTranslations("services");
+
   return (
     <section
       id="services"
       aria-labelledby="services-heading"
       className="relative w-full px-6 py-16 md:py-24"
-      dir="rtl"
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-0 bottom-[-10%] z-0 h-125 w-60 opacity-40 mix-blend-screen select-none md:h-140 md:w-150"
+        className="pointer-events-none absolute inset-s-0 bottom-[-10%] z-0 h-125 w-60 opacity-40 mix-blend-screen select-none md:h-140 md:w-150"
       >
-        <div className="absolute inset-0 bg-[url('/Ellipse1.webp')] bg-contain bg-left bg-no-repeat blur-[100px]" />
-        <div className="absolute inset-0 bg-[url('/Ellipse2.webp')] bg-contain bg-left bg-no-repeat blur-[80px]" />
+        <div className="absolute inset-0 bg-[url('/Ellipse1.webp')] bg-contain rtl:bg-left ltr:bg-right bg-no-repeat blur-[100px]" />
+        <div className="absolute inset-0 bg-[url('/Ellipse2.webp')] bg-contain rtl:bg-left ltr:bg-right bg-no-repeat blur-[80px]" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-6xl">
@@ -54,7 +56,7 @@ export default function Services() {
             variants={headerItemVariants}
             className="rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-medium tracking-wide text-primary"
           >
-            خدماتنا
+            {t("badge")}
           </motion.span>
 
           <motion.h2
@@ -62,19 +64,18 @@ export default function Services() {
             variants={headerItemVariants}
             className="text-3xl font-medium text-white md:text-4xl"
           >
-            حلول رقمية متكاملة لنجاح أعمالك
+            {t("title")}
           </motion.h2>
 
           <motion.p
             variants={headerItemVariants}
             className="max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base"
           >
-            نقدم مجموعة شاملة من الخدمات التقنية والإبداعية لتحويل رؤيتك إلى
-            واقع رقمي يحقق أهدافك
+            {t("description")}
           </motion.p>
         </motion.div>
 
-        <ServicesList services={services} />
+        <ServicesList services={serviceItems} />
       </div>
     </section>
   );

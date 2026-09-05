@@ -27,7 +27,7 @@ export default function TeamList({ members }: TeamListProps) {
     >
       {members.map((member, index) => (
         <TeamCard
-          key={member.id}
+          key={member.key}
           member={member}
           isOrphan={isOddCount && index === members.length - 1}
         />

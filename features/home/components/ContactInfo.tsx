@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import { contactInfoItems } from "@/constants/Site";
 import ContactInfoItem from "./ContactInfoItem";
 
@@ -25,10 +26,12 @@ const itemVariants = {
 };
 
 export default function ContactInfo() {
+  const t = useTranslations("contact");
+
   return (
-    <div className="flex flex-col gap-8 text-right">
+    <div className="flex flex-col gap-8 text-start">
       <h2 className="text-2xl font-semibold text-primary md:text-3xl">
-        معلومات الاتصال
+        {t("infoTitle")}
       </h2>
 
       <motion.div
@@ -39,8 +42,12 @@ export default function ContactInfo() {
         className="flex flex-col gap-13"
       >
         {contactInfoItems.map((item) => (
-          <motion.div key={item.title} variants={itemVariants}>
-            <ContactInfoItem item={item} />
+          <motion.div key={item.key} variants={itemVariants}>
+            <ContactInfoItem
+              iconName={item.iconName}
+              title={t(`info.${item.key}.title`)}
+              detail={t(`info.${item.key}.detail`)}
+            />
           </motion.div>
         ))}
       </motion.div>

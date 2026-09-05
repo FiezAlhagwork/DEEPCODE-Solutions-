@@ -14,6 +14,7 @@ The frontend is a Next.js application serving the public marketing site, soon ex
 - **UI components:** shadcn/ui (Radix UI primitives + class-variance-authority + tailwind-merge + lucide-react)
 - **Forms:** react-hook-form + zod + @hookform/resolvers
 - **Data fetching / server state:** axios + TanStack Query (React Query) v5
+- **Internationalization:** next-intl v4 (`ar` / `en`, locale-prefixed routes)
 - **Notifications:** sonner (toasts)
 - **Theming:** next-themes
 - **Animation:** motion (Framer Motion)
@@ -29,10 +30,22 @@ Migrated from a flat, type-based structure (`components/`, `hooks/`, `services/`
 
 ```
 app/                         # Next.js routes ONLY — no business logic
-  hosting/{page.tsx, vps/page.tsx, dedicated/page.tsx}
-  layout.tsx
-  page.tsx
   globals.css
+  [locale]/                   # every route lives under the locale segment
+    layout.tsx                # the root layout: <html lang dir> + providers
+    page.tsx
+    not-found.tsx
+    hosting/{page.tsx, vps/page.tsx, dedicated/page.tsx}
+
+messages/                    # all UI copy, one file per locale
+  ar.json
+  en.json
+i18n/
+  routing.ts                  # locales + defaultLocale
+  navigation.ts               # locale-aware Link / useRouter / usePathname
+  request.ts                  # loads messages/<locale>.json per request
+  metadata.ts                 # canonical + hreflang helper
+proxy.ts                      # next-intl middleware (Next 16 "proxy" convention)
 
 features/
   home/
@@ -165,6 +178,39 @@ export const useDeleteProject = () =>
 
 **Why the shadcn exception:** `npx shadcn add <component>` always writes lowercase filenames. Renaming them means every future `add` silently recreates a duplicate file differing only in case — which resolves fine on Windows but breaks the deploy, since the CI in `.github/workflows/deploy.yml` builds on Ubuntu where imports are case-sensitive. Our own code stays PascalCase; generated primitives stay as generated. The `components.json` aliases point at our PascalCase paths (`"utils": "@/lib/Utils"`) so newly added primitives import them correctly.
 
+## Internationalization (next-intl)
+
+The site ships in Arabic and English at `/ar/...` and `/en/...`. `/` redirects to `/ar`. Both locales are prerendered statically.
+
+**Hard rules:**
+
+1. **No user-facing string literal ever appears in JSX.** Every label, heading, placeholder, `aria-label`, `alt`, and error message comes from `messages/<locale>.json` via `useTranslations`. The only literals left in components are brand names (DEEPCODE, Ryzen, GitHub) and data from the external hosting API.
+2. **Import `Link` and the navigation hooks from `@/i18n/navigation`, never from `next/link` or `next/navigation`** — otherwise the locale prefix is dropped and the user is bounced back to the default locale.
+3. **Constants hold structure, messages hold text.** A constants file keeps ids, icons, hrefs, images, and prices, plus a `key` that resolves against a message namespace. See `features/home/constants/Home.ts` (`serviceItems`, `pricingPlans`) and `features/team/constants/Team.ts`.
+4. Message namespaces mirror the features: `metadata`, `nav`, `hero`, `about`, `features`, `services`, `pricing`, `projects`, `team`, `contact`, `footer`, `hosting`, `common`, `notFound`.
+5. `useTranslations` works in **both** server and client components — no prop threading. Async server functions (`generateMetadata`) use `getTranslations({locale, namespace})` instead.
+6. Every page and layout calls `setRequestLocale(locale)` **before** any translation call, otherwise it opts out of static rendering. (`next/root-params` would replace this, but it needs Next 16.3+ and we are on 16.2.6.)
+7. Interpolated numbers are passed as strings (`{ year: String(...) }`) — ICU would otherwise group them as `2,026`.
+8. Highlighted fragments inside a heading use `t.rich("title", { hl: (c) => <span…>{c}</span> })` with `<hl>` in the message, never string concatenation.
+
+### Direction (RTL ⇄ LTR)
+
+`<html dir>` is set from the locale in `app/[locale]/layout.tsx`. **No component sets `dir="rtl"` itself.**
+
+Use logical utilities so the layout mirrors automatically. The design was authored in RTL, so the mapping is **`right` → start, `left` → end**:
+
+| Physical | Logical |
+|---|---|
+| `text-right` / `text-left` | `text-start` / `text-end` |
+| `ml-*` / `mr-*` | `me-*` / `ms-*` |
+| `pl-*` / `pr-*` | `pe-*` / `ps-*` |
+| `left-0` / `right-0` | `inset-e-0` / `inset-s-0` |
+| `border-l` | `border-e` |
+
+For properties with no logical equivalent — `bg-left`/`bg-right`, `translate-x-*`, `divide-x-reverse` — use Tailwind's `rtl:` / `ltr:` variants. Directional icons (`ArrowLeft` used as a "go" arrow) get `ltr:rotate-180` rather than a swapped component.
+
+`dir="ltr"` is applied deliberately, and stays, on latin-only islands: the name/email inputs, the price, and the animated stat counters.
+
 ## Data Casing Policy
 
 - **Third-party/external API data** (e.g. the reseller/hosting provider): kept exactly as received (snake_case) — we don't control that schema.
@@ -175,8 +221,9 @@ export const useDeleteProject = () =>
 | Variable | Purpose |
 |---|---|
 | `NEXT_PUBLIC_API_URL` | Base URL for the backend API, used by the axios instance in `lib/Api.ts` |
+| `NEXT_PUBLIC_SITE_URL` | Public origin, used as `metadataBase` for canonical and `hreflang` links. **Must be set on the server** — without it those links are emitted as `http://localhost:3000/...`. |
 
-No others exist yet. A Clerk publishable key will be added once Clerk is integrated on the frontend.
+A Clerk publishable key will be added once Clerk is integrated on the frontend.
 
 ## Commands
 
@@ -196,15 +243,17 @@ npm run optimize-images    # convert images to webp (scripts/convert-images-to-w
 | Hosting | **Migrated.** `features/hosting/` implements the full five-layer pattern: `lib/Api.ts` (shared error handler + axios) → `services/Hosting.ts` → `hooks/UseProducts.ts` → components, with query keys in `features/hosting/QueryKeys.ts` (`productKeys.all` / `productKeys.list(type, category)`). Public, read-only — no mutations yet. |
 | Projects | **Structure ready, backend not wired.** `features/projects/` exists with components, types, and a static `constants/Projects.ts`. Still to build once the backend endpoint lands: `services/Projects.ts`, `hooks/UseProjects.ts`, `QueryKeys.ts`, and the admin add/delete mutations. |
 | Team | **Migrated.** `features/team/` — static data, presentational only. |
+| i18n (ar / en) | **Done.** Every route is prerendered in both locales; all copy lives in `messages/`. The language button in the navbar and the mobile overlay is `components/shared/LocaleSwitcher.tsx`, which swaps the locale while staying on the current route. |
 | Auth (Clerk on frontend) | Not implemented yet. Public site needs no auth currently. Will be scoped to admin routes only. |
 
 ## Known Issues / Cleanup Backlog
 
 - `next.config.mjs` sets `typescript.ignoreBuildErrors: true`, so **`npm run build` does not catch type errors or broken imports**. Always verify with `npx tsc --noEmit` (currently clean). Turning the flag off is the eventual goal.
 - `npm run lint` runs `eslint .` but there is no ESLint config file in the repo, so it fails. Either add a config or drop the script.
-- `app/hosting/page.tsx` is still a placeholder returning `<div>hosting</div>`.
-- `features/hosting/constants/Hosting.ts` (`VPS_CATEGORIES`) is unused — `app/hosting/vps/page.tsx` hardcodes the same category list in its tabs. Worth driving the tabs from the constant.
+- `app/[locale]/hosting/page.tsx` is still a placeholder rendering a single translated word.
 - `components/ui/` still contains many unused shadcn primitives. They are harmless (tree-shaken) but can be pruned; anything removed is one `npx shadcn add` away.
+- `messages/en.json` is a first-pass translation of the Arabic marketing copy and should be reviewed by a native speaker before launch.
+- The contact form still has an empty `onSubmit` — nothing is sent anywhere.
 
 ## Pending Decisions (TBD)
 
@@ -228,3 +277,9 @@ npm run optimize-images    # convert images to webp (scripts/convert-images-to-w
 - **2026-09-05** — The Radix toast stack (`components/ui/toast.tsx`, `toaster.tsx`, `hooks/use-toast.ts` and their duplicates under `components/ui/`) was deleted; **sonner** is the only notification library. `<Toaster />` gets mounted in `app/layout.tsx` with the first real mutation.
 - **2026-09-05** — `components/ui/sidebar.tsx` and `input-group.tsx` were deleted: unused, and already broken (they imported a non-existent `@/components/ui/textarea` and a named `Input` export that never existed). Re-add with `npx shadcn add` if ever needed.
 - **2026-09-05** — Animation imports are standardized on `motion/react`. `framer-motion` was being imported in two components even though it is only a transitive dependency of `motion` and is not in `package.json`.
+- **2026-09-05** — Internationalization uses **next-intl with a locale prefix on every route** (`/ar`, `/en`), not a cookie-only client toggle. Both locales are then indexable with `hreflang`, links carry their language, and 24 of our 42 components can stay client components while still translating through the same `useTranslations` hook.
+- **2026-09-05** — Arabic is the default locale; `/` redirects to `/ar`.
+- **2026-09-05** — The middleware lives in **`proxy.ts`**, the Next.js 16 name for the old `middleware.ts` convention. It runs on the `nodejs` runtime, which is fine for the self-hosted pm2 deploy.
+- **2026-09-05** — Static rendering is kept via `generateStaticParams` + `setRequestLocale`. next-intl now prefers `next/root-params`, but that needs Next 16.3+ and the project is on 16.2.6 — revisit after the next Next.js upgrade.
+- **2026-09-05** — Direction is handled with Tailwind logical properties plus `rtl:`/`ltr:` variants; no component hardcodes `dir`, except deliberate `dir="ltr"` islands for latin input, prices, and counters.
+- **2026-09-05** — `app/[locale]/hosting/vps/page.tsx` was converted from a client page to a server page plus a `VpsCategoryTabs` client child, so the page can export `generateMetadata`. Its tabs are now driven by `VPS_CATEGORIES` in `features/hosting/constants/Hosting.ts`, which had been dead code.

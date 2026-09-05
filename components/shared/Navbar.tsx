@@ -1,24 +1,27 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { Menu } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/Utils";
+import { Link } from "@/i18n/navigation";
 import { NavigationOverlay } from "./NavigationOverlay";
+import LocaleSwitcher from "./LocaleSwitcher";
 
 const navLinks = [
-  { label: "الرئيسية", href: "/" },
-  { label: "من نحن", href: "/#about" },
-  { label: "خدماتنا", href: "/#services" },
-  { label: "السيرفرات", href: "/#server" },
-  { label: "التسعير", href: "/#pricing" },
-  { label: "تواصل", href: "/#contact" },
-];
+  { key: "home", href: "/" },
+  { key: "about", href: "/#about" },
+  { key: "services", href: "/#services" },
+  { key: "servers", href: "/#server" },
+  { key: "pricing", href: "/#pricing" },
+  { key: "contact", href: "/#contact" },
+] as const;
 
 const SCROLL_THRESHOLD = 60;
 
 const Navbar = () => {
+  const t = useTranslations("nav");
   const [isOpen, setIsOpen] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
@@ -96,14 +99,14 @@ const Navbar = () => {
                   href={link.href}
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  {link.label}
+                  {t(link.key)}
                 </Link>
               ))}
             </div>
 
             <div className="hidden items-center gap-4 md:flex">
-              <Button variant="outline">English</Button>
-              <Button variant="default">اتصل بنا</Button>
+              <LocaleSwitcher />
+              <Button variant="default">{t("cta")}</Button>
             </div>
 
             <button
@@ -115,7 +118,7 @@ const Navbar = () => {
                   : "border-border/30 bg-secondary/50",
               )}
               onClick={openMenu}
-              aria-label="فتح القائمة"
+              aria-label={t("openMenu")}
               aria-expanded={isOpen}
             >
               <Menu size={22} />
