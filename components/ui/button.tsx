@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/Utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 max-md:w-full px-8 py-6 text-base  rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center gap-2 max-md:w-full px-8 py-5 text-base  rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
@@ -19,8 +19,17 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
+        // Compact pill used for secondary in-card actions (e.g. a team
+        // member's contact link) — quieter than `outline`, tints primary on hover.
+        soft: "border border-white/10 bg-white/5 text-foreground hover:border-primary hover:bg-primary/10 hover:text-primary",
+        // Icon-only badge links (social icons) — no fill, just a border that
+        // tints primary on hover.
+        icon: "rounded-lg border border-white/10 bg-[#121115]/80 text-muted-foreground hover:border-primary/30 hover:text-primary",
       },
       size: {
+        // Pairs with `variant="soft"`. Unlike the other sizes, it never grows
+        // full-width on small screens — it's a compact pill, not a page CTA.
+        xs: "h-7 max-md:w-auto rounded-lg px-4 text-xs has-[>svg]:px-3",
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",

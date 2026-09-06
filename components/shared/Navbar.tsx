@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/shared/Button";
 import { cn } from "@/lib/Utils";
 import { useIsMobile } from "@/hooks/UseMobile";
 import { Link } from "@/i18n/navigation";
@@ -112,8 +112,8 @@ const Navbar = () => {
 
             <div className="hidden items-center gap-4 md:flex">
               <LocaleSwitcher />
-              <Button asChild variant="default">
-                <Link href="/#contact">{t("cta")}</Link>
+              <Button href="/#contact" variant="default">
+                {t("cta")}
               </Button>
             </div>
 

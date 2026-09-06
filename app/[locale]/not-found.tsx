@@ -1,6 +1,5 @@
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
+import Button from "@/components/shared/Button";
 
 export default function NotFound() {
   const t = useTranslations("notFound");
@@ -15,8 +14,8 @@ export default function NotFound() {
         {t("description")}
       </p>
 
-      <Button asChild variant="default" className="mt-2">
-        <Link href="/">{t("cta")}</Link>
+      <Button href="/" variant="default" className="mt-2">
+        {t("cta")}
       </Button>
     </main>
   );

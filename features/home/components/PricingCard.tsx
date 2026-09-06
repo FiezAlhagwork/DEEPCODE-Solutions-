@@ -5,8 +5,7 @@ import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/Utils";
 import { PricingCardProps } from "@/features/home/types/Home";
-import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
+import Button from "@/components/shared/Button";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -106,11 +105,11 @@ export default function PricingCard({ plan }: PricingCardProps) {
           </ul>
 
           <Button
-            asChild
+            href="/#contact"
             variant={featured ? "default" : "outline"}
             className="mt-10"
           >
-            <Link href="/#contact">{t("cta")}</Link>
+            {t("cta")}
           </Button>
         </div>
       </div>

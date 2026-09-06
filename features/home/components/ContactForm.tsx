@@ -3,7 +3,7 @@
 import { FormEvent } from "react";
 import { useTranslations } from "next-intl";
 
-import { Button } from "@/components/ui/button";
+import Button from "@/components/shared/Button";
 import Field from "./Field";
 import Input from "./Input";
 import Textarea from "./Textarea";

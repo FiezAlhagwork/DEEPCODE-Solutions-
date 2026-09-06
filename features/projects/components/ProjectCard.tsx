@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/shared/Button";
 import type { ProjectCardProps } from "@/features/projects/types/Projects";
 
 const cardVariants = {
@@ -60,14 +60,12 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
         
           <Button
-            asChild
+            href={link}
             variant="default"
             className="w-full self-end mt-auto"
           >
-            <a href={link} target="_blank" rel="noopener noreferrer">
-              {t("cta")}
-              <ArrowLeft className="h-4 w-4 ltr:rotate-180" />
-            </a>
+            {t("cta")}
+            <ArrowLeft className="h-4 w-4 ltr:rotate-180" />
           </Button>
       </div>
     </motion.article>

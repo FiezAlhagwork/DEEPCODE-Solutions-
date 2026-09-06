@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { FocusTrap } from "focus-trap-react";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/shared/Button";
 import { cn } from "@/lib/Utils";
 import { Link } from "@/i18n/navigation";
 import type { NavigationOverlayProps } from "@/types/Shared";
@@ -124,10 +124,13 @@ export function NavigationOverlay({ isOpen, onClose }: NavigationOverlayProps) {
                 className="w-full justify-center"
                 onSwitch={onClose}
               />
-              <Button asChild variant="default" className="w-full justify-center">
-                <Link href="/#contact" onClick={onClose}>
-                  {t("cta")}
-                </Link>
+              <Button
+                href="/#contact"
+                onClick={onClose}
+                variant="default"
+                className="w-full justify-center"
+              >
+                {t("cta")}
               </Button>
             </div>
           </div>

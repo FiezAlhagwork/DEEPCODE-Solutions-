@@ -1,8 +1,7 @@
 import { ArrowLeft, Sparkles } from "lucide-react";
 import Products from "./Products";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/shared/Button";
 
 export default function VPSSection() {
   const t = useTranslations("hosting.vpsSection");
@@ -30,11 +29,9 @@ export default function VPSSection() {
         <Products type="kvm" limit={3} />
 
         <div className="flex justify-center items-center">
-          <Button asChild className="relative z-10 mt-6 text-md  " variant="default">
-            <Link href="/hosting/vps">
-              {t("cta")}
-              <ArrowLeft className="h-4 w-4 ltr:rotate-180" />
-            </Link>
+          <Button href="/hosting/vps" className="relative z-10 mt-6 text-md  " variant="default">
+            {t("cta")}
+            <ArrowLeft className="h-4 w-4 ltr:rotate-180" />
           </Button>
         </div>
       </div>

@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
+import Button from "@/components/shared/Button";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 
@@ -131,8 +130,8 @@ const About = () => {
 
           {/* زر اتخاذ الإجراء */}
           <motion.div variants={textItemVariants}>
-            <Button asChild size="lg" variant="default">
-              <Link href="/#contact">{t("cta")}</Link>
+            <Button href="/#contact" size="lg" variant="default">
+              {t("cta")}
             </Button>
           </motion.div>
         </motion.div>

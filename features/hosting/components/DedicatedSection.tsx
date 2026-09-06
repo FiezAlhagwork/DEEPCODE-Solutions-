@@ -1,8 +1,7 @@
 import { Cpu, ArrowLeft } from "lucide-react";
 import Products from "./Products";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/shared/Button";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
 
 export default function DedicatedSection() {
   const t = useTranslations("hosting.dedicatedSection");
@@ -29,11 +28,9 @@ export default function DedicatedSection() {
         <Products type="kvm" category="dedicated" limit={3} />
 
         <div className="flex justify-center items-center">
-          <Button asChild className="relative z-10 mt-6 text-md  " variant="default">
-            <Link href="/hosting/dedicated">
-              {t("cta")}
-              <ArrowLeft className="h-4 w-4 ltr:rotate-180" />
-            </Link>
+          <Button href="/hosting/dedicated" className="relative z-10 mt-6 text-md  " variant="default">
+            {t("cta")}
+            <ArrowLeft className="h-4 w-4 ltr:rotate-180" />
           </Button>
         </div>
       </div>

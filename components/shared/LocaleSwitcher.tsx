@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/shared/Button";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 
