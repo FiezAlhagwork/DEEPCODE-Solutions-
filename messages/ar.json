@@ -239,7 +239,237 @@
     "loadError": "حدث خطأ أثناء جلب الباقات: {message}"
   },
   "common": {
-    "scrollToTop": "العودة للأعلى"
+    "scrollToTop": "العودة للأعلى",
+    "checking": "جاري التحقق من حسابك…",
+    "errorTitle": "صار في خطأ",
+    "errorDescription": "ما قدرنا نتواصل مع السيرفر. تأكد من اتصالك بالإنترنت وحاول مرة تانية.",
+    "retry": "حاول مرة تانية",
+    "backHome": "العودة للرئيسية"
+  },
+  "admin": {
+    "sidebar": {
+      "dashboard": "الرئيسية",
+      "projects": "المشاريع",
+      "categories": "الفئات",
+      "users": "المستخدمون",
+      "collapse": "طيّ القائمة",
+      "expand": "توسيع القائمة"
+    },
+    "header": {
+      "title": "لوحة التحكم",
+      "openSidebar": "فتح القائمة",
+      "profile": "الحساب",
+      "breadcrumb": "مسار التنقّل",
+      "closeSidebar": "إغلاق القائمة",
+      "signOut": "تسجيل الخروج"
+    },
+    "common": {
+      "add": "إضافة",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "save": "حفظ",
+      "cancel": "إلغاء",
+      "back": "رجوع",
+      "actions": "إجراءات",
+      "status": "الحالة",
+      "noResults": "لا توجد نتائج بعد",
+      "confirmDeleteTitle": "تأكيد الحذف",
+      "confirmDeleteDescription": "هذا الإجراء لا يمكن التراجع عنه.",
+      "statusDraft": "مسودة",
+      "statusPublished": "منشور",
+      "statusActive": "نشط",
+      "statusDeactivated": "موقوف",
+      "roleSuperAdmin": "مدير عام",
+      "roleAdmin": "مدير",
+      "roleUser": "مستخدم",
+      "required": "هذا الحقل مطلوب",
+      "invalidSlug": "حروف انكليزية صغيرة وأرقام وشرطات فقط",
+      "invalidEmail": "بريد إلكتروني غير صالح",
+      "noMatches": "ما في نتائج مطابقة",
+      "noMatchesHint": "جرّب تغيير كلمات البحث أو الفلاتر.",
+      "clearFilters": "مسح الفلاتر",
+      "saving": "عم يحفظ…",
+      "replace": "استبدال",
+      "remove": "إزالة",
+      "moveUp": "تقديم",
+      "moveDown": "تأخير",
+      "optional": "اختياري",
+      "confirm": "تأكيد",
+      "loading": "عم يحمّل…",
+      "loadError": "تعذر التحميل: {message}"
+    },
+    "pagination": {
+      "showing": "{from}–{to} من {total}",
+      "perPage": "لكل صفحة",
+      "previous": "السابق",
+      "next": "التالي"
+    },
+    "dashboard": {
+      "title": "لوحة التحكم",
+      "welcome": "أهلاً بعودتك",
+      "stats": {
+        "projects": "المشاريع",
+        "published": "المنشورة",
+        "categories": "الفئات",
+        "users": "المستخدمون"
+      },
+      "quickLinksTitle": "روابط سريعة",
+      "recentProjects": "آخر المشاريع",
+      "viewAll": "عرض الكل"
+    },
+    "projects": {
+      "title": "المشاريع",
+      "description": "إدارة المشاريع الظاهرة على الموقع",
+      "addNew": "مشروع جديد",
+      "table": {
+        "name": "الاسم",
+        "category": "الفئة",
+        "status": "الحالة",
+        "order": "الترتيب"
+      },
+      "form": {
+        "addTitle": "إضافة مشروع",
+        "editTitle": "تعديل مشروع",
+        "nameAr": "الاسم بالعربي",
+        "nameEn": "الاسم بالانكليزي",
+        "descriptionAr": "الوصف بالعربي",
+        "descriptionEn": "الوصف بالانكليزي",
+        "slug": "المعرّف بالرابط (slug)",
+        "slugHint": "يظهر ضمن رابط المشروع، حروف انكليزية صغيرة وشرطات فقط",
+        "coverImage": "صورة الغلاف",
+        "gallery": "معرض الصور",
+        "galleryHint": "اسحب الصور أو اخترها — الترتيب حسب ترتيب الإضافة",
+        "links": "الروابط",
+        "linkType": "نوع الرابط",
+        "linkUrl": "الرابط",
+        "addLink": "إضافة رابط",
+        "category": "الفئة",
+        "status": "الحالة",
+        "order": "الترتيب",
+        "sectionContent": "المحتوى",
+        "sectionMedia": "الصور",
+        "sectionSettings": "الإعدادات",
+        "dropzoneLabel": "اسحب صورة أو اضغط للاختيار",
+        "dropzoneHint": "JPG أو PNG أو WEBP — بحد أقصى ٥ ميغابايت",
+        "galleryDropzoneLabel": "اسحب صور أو اضغط لاختيارها",
+        "currentImage": "الصورة الحالية",
+        "coverRequired": "صورة الغلاف مطلوبة",
+        "galleryCurrentNote": "الصور المرفوعة — احذف واحدة بدون ما تتأثر الباقي.",
+        "selectCategory": "اختر فئة"
+      },
+      "searchPlaceholder": "ابحث بالاسم أو المعرّف…",
+      "allStatuses": "كل الحالات",
+      "allCategories": "كل الفئات",
+      "emptyTitle": "ما في مشاريع بعد",
+      "emptyDescription": "أضف أول مشروع ليظهر على الموقع.",
+      "viewLive": "فتح الموقع"
+    },
+    "categories": {
+      "title": "الفئات",
+      "description": "إدارة فئات المشاريع",
+      "addNew": "فئة جديدة",
+      "table": {
+        "name": "الاسم",
+        "slug": "المعرّف"
+      },
+      "form": {
+        "addTitle": "إضافة فئة",
+        "editTitle": "تعديل فئة",
+        "nameAr": "الاسم بالعربي",
+        "nameEn": "الاسم بالانكليزي",
+        "slug": "المعرّف بالرابط (slug)",
+        "sectionContent": "بيانات الفئة"
+      },
+      "searchPlaceholder": "ابحث بالاسم أو المعرّف…",
+      "emptyTitle": "ما في فئات بعد",
+      "emptyDescription": "أضف أول فئة حتى تقدر تصنّف فيها المشاريع.",
+      "messages": {
+        "created": "تمت إضافة الفئة.",
+        "updated": "تم تحديث الفئة.",
+        "deleted": "تم حذف الفئة.",
+        "inUse": "ما فيك تحذف هالفئة لأنها مستخدمة في مشاريع. غيّر فئة هالمشاريع أول شي.",
+        "genericError": "صار في خطأ، حاول مرة تانية.",
+        "duplicateSlug": "هذا المعرّف (slug) مستخدم من قبل. اختر معرّفاً غيره."
+      }
+    },
+    "users": {
+      "title": "المستخدمون",
+      "description": "إدارة حسابات وأدوار فريق العمل",
+      "invite": "دعوة مستخدم",
+      "table": {
+        "name": "الاسم",
+        "email": "البريد الإلكتروني",
+        "role": "الدور",
+        "status": "الحالة",
+        "joined": "تاريخ الانضمام"
+      },
+      "searchPlaceholder": "ابحث بالاسم أو البريد…",
+      "emptyTitle": "ما في مستخدمين",
+      "emptyDescription": "ادعُ عضو من الفريق ليظهر هون.",
+      "allRoles": "كل الأدوار",
+      "changeRole": "تغيير الدور",
+      "changeRoleTitle": "تغيير دور المستخدم",
+      "changeRoleDescription": "الدور بيحدّد شو مسموح للمستخدم يعمل بلوحة التحكم.",
+      "deactivate": "إيقاف الحساب",
+      "deactivateTitle": "إيقاف حساب المستخدم",
+      "deactivateDescription": "رح يفقد صلاحية الدخول للوحة، بس حسابه وبياناته بيضلوا محفوظين.",
+      "inviteTitle": "دعوة مستخدم جديد",
+      "inviteDescription": "بيوصله رابط دعوة على بريده، ودوره بينتحدّد من هون.",
+      "inviteEmail": "البريد الإلكتروني",
+      "inviteRole": "الدور",
+      "inviteSubmit": "إرسال الدعوة",
+      "superAdminOnly": "الإجراءات متاحة للمدير العام فقط",
+      "selfActionHint": "ما فيك تغيّر دورك أو توقف حسابك بنفسك",
+      "messages": {
+        "invited": "تم إرسال الدعوة.",
+        "roleUpdated": "تم تحديث الدور.",
+        "deactivated": "تم إيقاف الحساب.",
+        "forbidden": "ما عندك صلاحية لهالإجراء — للمدير العام فقط.",
+        "notFound": "ما لقينا هالمستخدم. يمكن تم إيقافه من مكان تاني.",
+        "genericError": "صار في خطأ، حاول مرة تانية."
+      }
+    }
+  },
+  "auth": {
+    "common": {
+      "required": "هذا الحقل مطلوب.",
+      "invalidEmail": "بريد إلكتروني غير صالح.",
+      "emailLabel": "البريد الإلكتروني",
+      "firstNameLabel": "الاسم الأول",
+      "lastNameLabel": "الاسم الأخير",
+      "codeLabel": "كود التحقق",
+      "codeSentTo": "أرسلنا كود مكوّن من ٦ أرقام إلى {email}",
+      "continueButton": "متابعة",
+      "verifyButton": "تحقق",
+      "resendCode": "إعادة إرسال الكود",
+      "codeResent": "تم إرسال الكود من جديد.",
+      "orDivider": "أو",
+      "googleButton": "متابعة عبر جوجل",
+      "genericError": "صار في خطأ، حاول مرة تانية.",
+      "finishingSignIn": "جاري إتمام تسجيل الدخول...",
+      "timeoutError": "تأخر الاتصال بخدمة تسجيل الدخول. تأكد من الإنترنت وحاول مرة تانية."
+    },
+    "signIn": {
+      "title": "تسجيل الدخول",
+      "subtitle": "سجّل دخولك لإدارة لوحة التحكم",
+      "noAccount": "ما عندك حساب؟",
+      "signUpLink": "إنشاء حساب",
+      "changeEmail": "تغيير البريد الإلكتروني"
+    },
+    "signUp": {
+      "title": "إنشاء حساب",
+      "subtitle": "أنشئ حساباً للمتابعة",
+      "haveAccount": "عندك حساب أصلاً؟",
+      "signInLink": "تسجيل الدخول"
+    },
+    "acceptInvitation": {
+      "title": "تمت دعوتك للانضمام",
+      "subtitle": "أكمل إنشاء حسابك للانضمام إلى فريق DEEPCODE",
+      "detailsSubtitle": "أكمل بياناتك للمتابعة",
+      "invalidLink": "رابط الدعوة غير صالح أو منتهي الصلاحية.",
+      "signedInTitle": "انت مسجّل دخول أصلاً",
+      "signedInDescription": "انت داخل بحساب {email}. سجّل خروج أول شي مشان تقدر تقبل هالدعوة."
+    }
   },
   "notFound": {
     "title": "الصفحة غير موجودة",

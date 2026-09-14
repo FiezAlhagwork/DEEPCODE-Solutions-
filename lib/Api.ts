@@ -1,7 +1,23 @@
 import axios, { AxiosError } from "axios";
+import { getClerkToken } from "./ClerkTokenBridge";
 
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
+});
+
+// Attaches the signed-in user's Clerk session token to every request — what
+// makes the feature hooks (`useProjects`, `useCategories`, `useUsers`, …)
+// actually authenticate once someone is signed in, since every admin
+// mutation the backend exposes requires it. `getClerkToken()` resolves to
+// `null` on the server and before `ClerkTokenSync` has mounted client-side —
+// both cases just send the request unauthenticated, same as signed out.
+// Server-side calls (only `getMyProfile` in `app/[locale]/admin/layout.tsx`
+// today) pass their own token explicitly per-request instead, since there's
+// no client component tree to read it from there.
+api.interceptors.request.use(async (config) => {
+  const token = await getClerkToken();
+  if (token) config.headers.set("Authorization", `Bearer ${token}`);
+  return config;
 });
 
 export class ApiError extends Error {

@@ -5,11 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-
-type LocaleSwitcherProps = {
-  className?: string;
-  onSwitch?: () => void;
-};
+import type { LocaleSwitcherProps } from "@/types/Shared";
 
 export default function LocaleSwitcher({
   className,

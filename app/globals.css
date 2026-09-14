@@ -21,6 +21,36 @@
   --input: #374151;
   --ring: #880fd2;
   --radius: 0.625rem;
+
+  /* --- Admin dashboard surfaces -------------------------------------------
+     A four-step elevation scale, cool-tinted so it sits under the brand's
+     violet without competing with it. These replace the hardcoded #0D0D0E /
+     #1F1E20 / #0B0A0E hexes that used to be repeated across every admin file,
+     so the whole panel's depth can be retuned from one place. */
+  --surface-0: #0a0910; /* page background */
+  --surface-1: #0f0e15; /* sidebar, header */
+  --surface-2: #15131c; /* panels, tables, cards */
+  --surface-3: #1c1926; /* row hover, focused field, raised chip */
+  --hairline: #241f31; /* default 1px divider */
+  --hairline-strong: #332c44; /* emphasised divider, input border */
+
+  /* Text scale — `--muted-foreground` (#d4d3d4) is tuned for marketing copy on
+     large type; dense admin UI needs a real three-step hierarchy instead. */
+  --ink: #f5f4f7;
+  --ink-muted: #a8a3b5;
+  --ink-faint: #6f6980;
+
+  /* Status accents (published / draft / destructive actions). */
+  --success: #3fbf7f;
+  --warning: #e0a33c;
+  --danger: #f2555a;
+
+  /* Sidebar geometry. `--admin-sidebar-w` is flipped between these two by
+     `AdminShell`, and both the sidebar and the content column read it, so the
+     width lives in exactly one place. */
+  --admin-sidebar-expanded: 16rem;
+  --admin-sidebar-collapsed: 4.5rem;
+  --admin-sidebar-w: var(--admin-sidebar-expanded);
 }
 
 /* English pages only. Higher specificity than the `:root` default above. */
@@ -44,6 +74,18 @@ html[lang="en"] {
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-surface-0: var(--surface-0);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -70,6 +112,22 @@ html[lang="en"] {
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Sonner reads its palette from these custom properties, so the toasts are
+     themed here rather than through a className on every `toast.*` call site.
+     Same admin tokens the rest of the dark surfaces use. */
+  [data-sonner-toaster] {
+    --normal-bg: var(--surface-2);
+    --normal-text: var(--ink);
+    --normal-border: var(--hairline-strong);
+    --success-bg: var(--surface-2);
+    --success-text: var(--success);
+    --success-border: var(--hairline-strong);
+    --error-bg: var(--surface-2);
+    --error-text: var(--danger);
+    --error-border: var(--hairline-strong);
+    font-family: var(--app-font);
   }
 }
 
