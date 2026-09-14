@@ -239,7 +239,237 @@
     "loadError": "Something went wrong while loading the plans: {message}"
   },
   "common": {
-    "scrollToTop": "Back to top"
+    "scrollToTop": "Back to top",
+    "checking": "Checking your account…",
+    "errorTitle": "Something went wrong",
+    "errorDescription": "We couldn't reach the server. Check your connection and try again.",
+    "retry": "Try again",
+    "backHome": "Back to home"
+  },
+  "admin": {
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "projects": "Projects",
+      "categories": "Categories",
+      "users": "Users",
+      "collapse": "Collapse",
+      "expand": "Expand"
+    },
+    "header": {
+      "title": "Dashboard",
+      "openSidebar": "Open menu",
+      "profile": "Account",
+      "breadcrumb": "Breadcrumb",
+      "closeSidebar": "Close menu",
+      "signOut": "Sign out"
+    },
+    "common": {
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel",
+      "back": "Back",
+      "actions": "Actions",
+      "status": "Status",
+      "noResults": "No results yet",
+      "confirmDeleteTitle": "Confirm delete",
+      "confirmDeleteDescription": "This action cannot be undone.",
+      "statusDraft": "Draft",
+      "statusPublished": "Published",
+      "statusActive": "Active",
+      "statusDeactivated": "Deactivated",
+      "roleSuperAdmin": "Super admin",
+      "roleAdmin": "Admin",
+      "roleUser": "User",
+      "required": "This field is required",
+      "invalidSlug": "Lowercase letters, numbers and dashes only",
+      "invalidEmail": "Enter a valid email address",
+      "noMatches": "No matching results",
+      "noMatchesHint": "Try different search terms or filters.",
+      "clearFilters": "Clear filters",
+      "saving": "Saving…",
+      "replace": "Replace",
+      "remove": "Remove",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "optional": "Optional",
+      "confirm": "Confirm",
+      "loading": "Loading…",
+      "loadError": "Couldn't load: {message}"
+    },
+    "pagination": {
+      "showing": "{from}–{to} of {total}",
+      "perPage": "Per page",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "welcome": "Welcome back",
+      "stats": {
+        "projects": "Projects",
+        "published": "Published",
+        "categories": "Categories",
+        "users": "Users"
+      },
+      "quickLinksTitle": "Quick links",
+      "recentProjects": "Recent projects",
+      "viewAll": "View all"
+    },
+    "projects": {
+      "title": "Projects",
+      "description": "Manage the projects shown on the site",
+      "addNew": "New project",
+      "table": {
+        "name": "Name",
+        "category": "Category",
+        "status": "Status",
+        "order": "Order"
+      },
+      "form": {
+        "addTitle": "Add project",
+        "editTitle": "Edit project",
+        "nameAr": "Name (Arabic)",
+        "nameEn": "Name (English)",
+        "descriptionAr": "Description (Arabic)",
+        "descriptionEn": "Description (English)",
+        "slug": "Slug",
+        "slugHint": "Used in the project's URL — lowercase letters and dashes only",
+        "coverImage": "Cover image",
+        "gallery": "Gallery",
+        "galleryHint": "Drag images in or pick them — order follows the order you add them",
+        "links": "Links",
+        "linkType": "Link type",
+        "linkUrl": "URL",
+        "addLink": "Add link",
+        "category": "Category",
+        "status": "Status",
+        "order": "Order",
+        "sectionContent": "Content",
+        "sectionMedia": "Images",
+        "sectionSettings": "Settings",
+        "dropzoneLabel": "Drag an image here or click to pick one",
+        "dropzoneHint": "JPG, PNG or WEBP — 5MB max",
+        "galleryDropzoneLabel": "Drag images here or click to pick them",
+        "currentImage": "Current image",
+        "coverRequired": "A cover image is required",
+        "galleryCurrentNote": "Already uploaded — remove one without affecting the rest.",
+        "selectCategory": "Choose a category"
+      },
+      "searchPlaceholder": "Search by name or slug…",
+      "allStatuses": "All statuses",
+      "allCategories": "All categories",
+      "emptyTitle": "No projects yet",
+      "emptyDescription": "Add your first project to show it on the site.",
+      "viewLive": "Open live site"
+    },
+    "categories": {
+      "title": "Categories",
+      "description": "Manage project categories",
+      "addNew": "New category",
+      "table": {
+        "name": "Name",
+        "slug": "Slug"
+      },
+      "form": {
+        "addTitle": "Add category",
+        "editTitle": "Edit category",
+        "nameAr": "Name (Arabic)",
+        "nameEn": "Name (English)",
+        "slug": "Slug",
+        "sectionContent": "Category details"
+      },
+      "searchPlaceholder": "Search by name or slug…",
+      "emptyTitle": "No categories yet",
+      "emptyDescription": "Add your first category so projects can be grouped.",
+      "messages": {
+        "created": "Category created.",
+        "updated": "Category updated.",
+        "deleted": "Category deleted.",
+        "inUse": "This category can't be deleted while projects are still using it. Move those projects to another category first.",
+        "genericError": "Something went wrong. Please try again.",
+        "duplicateSlug": "That slug is already taken. Pick a different one."
+      }
+    },
+    "users": {
+      "title": "Users",
+      "description": "Manage team accounts and roles",
+      "invite": "Invite user",
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "joined": "Joined"
+      },
+      "searchPlaceholder": "Search by name or email…",
+      "emptyTitle": "No users",
+      "emptyDescription": "Invite a teammate to see them here.",
+      "allRoles": "All roles",
+      "changeRole": "Change role",
+      "changeRoleTitle": "Change user role",
+      "changeRoleDescription": "The role decides what this user may do in the dashboard.",
+      "deactivate": "Deactivate",
+      "deactivateTitle": "Deactivate this account",
+      "deactivateDescription": "They lose access to the dashboard, but the account and its history are kept.",
+      "inviteTitle": "Invite a new user",
+      "inviteDescription": "They get an invitation link by email, and their role is set here.",
+      "inviteEmail": "Email address",
+      "inviteRole": "Role",
+      "inviteSubmit": "Send invitation",
+      "superAdminOnly": "Only a super admin can manage users",
+      "selfActionHint": "You can't change your own role or deactivate yourself",
+      "messages": {
+        "invited": "Invitation sent.",
+        "roleUpdated": "Role updated.",
+        "deactivated": "Account deactivated.",
+        "forbidden": "You don't have permission for this — super admins only.",
+        "notFound": "That user no longer exists. They may have been deactivated elsewhere.",
+        "genericError": "Something went wrong. Please try again."
+      }
+    }
+  },
+  "auth": {
+    "common": {
+      "required": "This field is required.",
+      "invalidEmail": "Enter a valid email address.",
+      "emailLabel": "Email address",
+      "firstNameLabel": "First name",
+      "lastNameLabel": "Last name",
+      "codeLabel": "Verification code",
+      "codeSentTo": "We sent a 6-digit code to {email}",
+      "continueButton": "Continue",
+      "verifyButton": "Verify",
+      "resendCode": "Resend code",
+      "codeResent": "Code resent.",
+      "orDivider": "or",
+      "googleButton": "Continue with Google",
+      "genericError": "Something went wrong. Please try again.",
+      "finishingSignIn": "Finishing sign-in...",
+      "timeoutError": "The sign-in service took too long to respond. Check your connection and try again."
+    },
+    "signIn": {
+      "title": "Sign in",
+      "subtitle": "Sign in to manage the dashboard",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Create one",
+      "changeEmail": "Change email address"
+    },
+    "signUp": {
+      "title": "Create an account",
+      "subtitle": "Sign up to continue",
+      "haveAccount": "Already have an account?",
+      "signInLink": "Sign in"
+    },
+    "acceptInvitation": {
+      "title": "You've been invited",
+      "subtitle": "Finish setting up your account to join the DEEPCODE team",
+      "detailsSubtitle": "Complete your details to continue",
+      "invalidLink": "This invitation link is invalid or has expired.",
+      "signedInTitle": "You're already signed in",
+      "signedInDescription": "You're signed in as {email}. Sign out first to accept this invitation."
+    }
   },
   "notFound": {
     "title": "Page not found",
