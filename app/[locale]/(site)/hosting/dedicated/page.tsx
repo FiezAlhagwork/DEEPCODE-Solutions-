@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import HostingHero from "@/features/hosting/components/HostingHero";
+import PageHero from "@/components/shared/PageHero";
 import Products from "@/features/hosting/components/Products";
 import { localeAlternates } from "@/i18n/metadata";
 import { requireLocale } from "@/i18n/Locale";
@@ -29,7 +29,7 @@ export default async function DedicatedPage({ params }: LocaleRouteProps) {
   return (
     <div className="relative overflow-hidden px-6 py-14 bg-[#0D0D0E] ">
       <div className="mx-auto  max-w-7xl  ">
-        <HostingHero
+        <PageHero
           badge={t("badge")}
           title={t("title")}
           description={t("description")}

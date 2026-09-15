@@ -1,9 +1,16 @@
 "use client";
 
+import { ArrowLeft } from "lucide-react";
 import { motion } from "motion/react";
-import ProjectList from "./ProjectList";
 import { useTranslations } from "next-intl";
-import { projects } from "@/features/projects/constants/Projects";
+
+import { Button } from "@/components/ui/button";
+import { useProjects } from "@/features/projects/hooks/UseProjects";
+import { Link } from "@/i18n/navigation";
+import ProjectList from "./ProjectList";
+
+/** The home page is a teaser, not the archive — the rest live at `/projects`. */
+const HOME_PROJECT_LIMIT = 6;
 
 const headerContainerVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -29,6 +36,17 @@ const headerItemVariants = {
 
  const ProjectsSection = () => {
   const t = useTranslations("projects");
+  // The backend already sorts by `order` then newest, so "the first six" is
+  // whatever was arranged in the admin panel — no client-side sorting here.
+  const projectsQuery = useProjects({ page: 1, limit: HOME_PROJECT_LIMIT });
+
+  const projects = projectsQuery.data?.data ?? [];
+  const total = projectsQuery.data?.pagination.total ?? 0;
+  const isLoading = projectsQuery.isPending && !projectsQuery.data;
+
+  // A heading floating above an empty grid reads as a broken page, so the
+  // whole section stands down when there is genuinely nothing to show.
+  if (!isLoading && !projectsQuery.isError && projects.length === 0) return null;
 
   return (
     <section
@@ -75,11 +93,51 @@ const headerItemVariants = {
           </motion.p>
         </motion.div>
 
-        <ProjectList projects={projects} />
+        {isLoading ? (
+          <div
+            className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+            aria-busy
+          >
+            <span className="sr-only">{t("loading")}</span>
+            {Array.from({ length: HOME_PROJECT_LIMIT }, (_, index) => (
+              <div
+                key={index}
+                className="h-72 animate-pulse rounded-3xl bg-white/5 md:h-80"
+              />
+            ))}
+          </div>
+        ) : projectsQuery.isError ? (
+          <p className="text-center text-sm text-muted-foreground">
+            {t("loadError")}
+          </p>
+        ) : (
+          <>
+            <ProjectList projects={projects} />
+
+            {total > HOME_PROJECT_LIMIT && (
+              // Deliberately identical to the VPS section's button: both take
+              // you from a trimmed section on the home page to the full
+              // listing, so they should not look like two different kinds of
+              // action.
+              <div className="flex items-center justify-center">
+                <Button
+                  asChild
+                  className="relative z-10 mt-6 text-md"
+                  variant="default"
+                >
+                  <Link href="/projects">
+                    {t("viewAll")}
+                    <ArrowLeft className="h-4 w-4 ltr:rotate-180" />
+                  </Link>
+                </Button>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </section>
   );
-} 
+}
 
 
 export default ProjectsSection

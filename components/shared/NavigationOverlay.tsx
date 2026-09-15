@@ -52,10 +52,18 @@ export function NavigationOverlay({ isOpen, onClose }: NavigationOverlayProps) {
       }}
     >
       {/* The panel stays mounted so it can animate, so `inert` is what keeps
-          its links out of the tab order and the accessibility tree. */}
+          its links out of the tab order and the accessibility tree.
+
+          `overflow-hidden` clips the panel while it is parked off-canvas —
+          the same fix `AdminMobileSidebar` needed, where an unclipped closed
+          drawer sat 288px past the edge and made every admin page scrollable
+          sideways. It doesn't bite here today (in LTR the panel parks at a
+          negative offset, which no browser counts), but it is the same latent
+          gap and costs nothing. Clipping does nothing once the drawer is
+          open: it is then translated to 0, fully inside this container. */}
       <div
         className={cn(
-          "fixed inset-0 z-999 flex justify-start md:hidden",
+          "fixed inset-0 z-999 flex justify-start overflow-hidden md:hidden",
           !isOpen && "pointer-events-none",
         )}
         inert={!isOpen}

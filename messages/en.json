@@ -127,7 +127,23 @@
     "badge": "Our work",
     "title": "Digital projects that stand out",
     "description": "Explore a selection of the most recent projects we delivered for clients, where creativity, technology, and performance meet.",
-    "cta": "View project"
+    "viewAll": "View more",
+    "allCategories": "All",
+    "loadMore": "Load more",
+    "loading": "Loading projects…",
+    "empty": "No published projects yet.",
+    "emptyCategory": "No projects in this category yet.",
+    "loadError": "We couldn't load the projects. Please try again in a moment.",
+    "pageBadge": "Portfolio",
+    "pageTitle": "All our projects",
+    "pageDescription": "Browse everything we have delivered, filtered by the kind of project.",
+    "detail": {
+      "back": "Back to projects",
+      "gallery": "Project images",
+      "links": "Project links",
+      "related": "Related projects",
+      "visit": "Open link"
+    }
   },
   "team": {
     "badge": "Meet our team",

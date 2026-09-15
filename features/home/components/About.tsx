@@ -50,10 +50,18 @@ const About = () => {
   const t = useTranslations("about");
 
   return (
+    // `overflow-x-clip` is load-bearing, not tidying: the text column below
+    // enters from `x: 50`, and until it scrolls into view it sits 50px to the
+    // right of its own column — 26px past a 390px viewport, which made the
+    // whole page scrollable sideways in English. (In Arabic the same 26px
+    // falls on the inline *start* side, which browsers don't count towards
+    // `scrollWidth` — which is why only `/en` ever measured as broken.)
+    // Clipping leaves the animation looking exactly the same: that part of the
+    // column is off-screen either way.
     <section
       id="about"
       aria-label={t("sectionLabel")}
-      className="relative w-full px-6 py-10 md:py-20 bg-transparent "
+      className="relative w-full overflow-x-clip px-6 py-10 md:py-20 bg-transparent "
     >
       <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
         {/* العمود: حاوية الصورة والخطوط التقاطعية */}

@@ -1,33 +1,6 @@
 import type { Category } from "@/features/categories/types/Categories";
 import type { ListQueryParams, LocalizedText } from "@/types/Shared";
 
-export type Project = {
-  id: number;
-  title: string;
-  year: string;
-  tags: string[];
-  image: string;
-  color: string;
-  link: string;
-};
-
-export type ProjectCardProps = {
-  project: Project;
-};
-
-export type ProjectListProps = {
-  projects: Project[];
-};
-
-// --- Admin dashboard shape -------------------------------------------------
-// `Project` above is the public site's current simplified mock; the admin
-// dashboard is modeled on the real backend schema instead, since that is
-// what it will eventually read/write once the API is wired up. The two will
-// be reconciled — and the public feature migrated onto the real API — in a
-// later phase (see CLAUDE.md: Projects is "structure ready, backend not
-// wired"). Keeping them separate for now avoids breaking the live public
-// site while the admin UI is designed against the true shape.
-
 export type ProjectStatus = "draft" | "published";
 
 /**
@@ -59,7 +32,15 @@ export type ProjectsQueryParams = ListQueryParams & {
   status?: ProjectStatus;
 };
 
-export type AdminProject = {
+/**
+ * The backend's `Project`, and the only project shape in the codebase — the
+ * public site and the admin panel render the same records now. It used to be
+ * `AdminProject`, sitting next to a separate hand-written `Project` mock with
+ * `year`/`tags`/`color` fields the API has no equivalent for; that mock is
+ * gone, so the plain name is free and the public components no longer import
+ * a type called "Admin…".
+ */
+export type Project = {
   _id: string;
   name: LocalizedText;
   description: LocalizedText;
@@ -75,6 +56,35 @@ export type AdminProject = {
   category: Category;
   status: ProjectStatus;
   order: number;
+};
+
+// --- Public site component props -------------------------------------------
+
+export type ProjectCardProps = {
+  project: Project;
+};
+
+export type ProjectListProps = {
+  projects: Project[];
+};
+
+export type ProjectCoverProps = {
+  src: string;
+  alt: string;
+};
+
+export type ProjectGalleryProps = {
+  images: ProjectGalleryImage[];
+  /** Used to build each image's `alt`, since the gallery stores no caption. */
+  projectName: string;
+};
+
+export type ProjectLinksProps = {
+  links: ProjectLink[];
+};
+
+export type RelatedProjectsProps = {
+  projects: Project[];
 };
 
 // --- Admin component props -------------------------------------------------

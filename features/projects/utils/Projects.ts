@@ -1,5 +1,5 @@
 import type { ProjectFormValues } from "../schemas/Projects";
-import type { AdminProject } from "../types/Projects";
+import type { Project } from "../types/Projects";
 
 /**
  * Dashboard helpers. These used to run inline inside `app/[locale]/admin/page.tsx`,
@@ -7,11 +7,11 @@ import type { AdminProject } from "../types/Projects";
  * logic of their own.
  */
 
-export const countPublished = (projects: AdminProject[]) =>
+export const countPublished = (projects: Project[]) =>
   projects.filter((project) => project.status === "published").length;
 
 /** The first `limit` projects in display order, for the dashboard's recent list. */
-export const recentProjects = (projects: AdminProject[], limit = 5) =>
+export const recentProjects = (projects: Project[], limit = 5) =>
   [...projects].sort((a, b) => a.order - b.order).slice(0, limit);
 
 /**

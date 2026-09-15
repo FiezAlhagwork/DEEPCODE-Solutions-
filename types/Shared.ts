@@ -86,9 +86,25 @@ export type LocaleIdRouteProps = {
   params: Promise<{ locale: string; id: string }>;
 };
 
+/**
+ * The same, for a public route addressed by slug (`[slug]`) — the projects
+ * detail page. A slug rather than an id because it is a URL people see and
+ * share, and the API looks a project up by either.
+ */
+export type LocaleSlugRouteProps = {
+  params: Promise<{ locale: string; slug: string }>;
+};
+
 /** Layouts and providers that only wrap children. */
 export type ChildrenProps = {
   children: ReactNode;
+};
+
+/** `components/shared/PageHero.tsx` — the header on the hosting and projects pages. */
+export type PageHeroProps = {
+  badge: string;
+  title: string;
+  description: string;
 };
 
 /** Options for `lib/Images.ts`'s `compressImage`. */

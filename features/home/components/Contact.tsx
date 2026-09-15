@@ -65,10 +65,15 @@ export default function Contact() {
   const t = useTranslations("contact");
 
   return (
+    // `overflow-x-clip` for the same reason as `About`: the info column enters
+    // from `x: 50` and the form column from `x: -50`, so both sit half a
+    // hundred pixels outside their own column until they scroll into view.
+    // The section already clipped the Y axis; the X axis was the one that
+    // actually widened the document.
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="relative w-full overflow-y-hidden  px-6 py-16 md:py-24"
+      className="relative w-full overflow-x-clip overflow-y-hidden  px-6 py-16 md:py-24"
     >
 
 

@@ -1,5 +1,6 @@
 import {
   keepPreviousData,
+  useInfiniteQuery,
   useMutation,
   useQuery,
   useQueryClient,
@@ -24,6 +25,23 @@ export const useProjects = (params?: ProjectsQueryParams) =>
     queryKey: projectKeys.list(params),
     queryFn: () => getProjects(params),
     placeholderData: keepPreviousData,
+  });
+
+/**
+ * The public projects page's "load more": each page is appended to the ones
+ * already on screen instead of replacing them.
+ *
+ * `getNextPageParam` returning `undefined` is what sets `hasNextPage` to
+ * false, so the button hides itself on the last page — the component never
+ * has to compare counts.
+ */
+export const useInfiniteProjects = (params?: ProjectsQueryParams) =>
+  useInfiniteQuery({
+    queryKey: projectKeys.infinite(params),
+    queryFn: ({ pageParam }) => getProjects({ ...params, page: pageParam }),
+    initialPageParam: 1,
+    getNextPageParam: ({ pagination }) =>
+      pagination.page < pagination.totalPages ? pagination.page + 1 : undefined,
   });
 
 export const useProject = (id: string) =>

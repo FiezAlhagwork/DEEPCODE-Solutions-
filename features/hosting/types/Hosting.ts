@@ -42,12 +42,6 @@ export type ProductListProps = {
   products: Product[];
 };
 
-export type HostingHeroProps = {
-  badge: string;
-  title: string;
-  description: string;
-};
-
 export type Type = "kvm" | "game_server";
 
 export type Category =

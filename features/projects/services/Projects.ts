@@ -1,15 +1,15 @@
 import { api } from "@/lib/Api";
 import type { PageInfo, Paginated } from "@/types/Shared";
 import type { ProjectFormValues } from "../schemas/Projects";
-import type { AdminProject, ProjectsQueryParams } from "../types/Projects";
+import type { Project, ProjectsQueryParams } from "../types/Projects";
 import { buildProjectFormData } from "../utils/Projects";
 
 export const getProjects = async (
   params?: ProjectsQueryParams,
-): Promise<Paginated<AdminProject>> => {
+): Promise<Paginated<Project>> => {
   const { data } = await api.get<{
     success: boolean;
-    data: AdminProject[];
+    data: Project[];
     pagination: PageInfo;
   }>("/projects", { params });
   return { data: data.data, pagination: data.pagination };
@@ -19,8 +19,8 @@ export const getProjects = async (
  * `GET /api/projects/:idOrSlug` accepts either an `_id` or a `slug` — the
  * backend tells them apart by shape, so passing an `_id` here just works.
  */
-export const getProjectById = async (id: string): Promise<AdminProject> => {
-  const { data } = await api.get<{ success: boolean; data: AdminProject }>(
+export const getProjectById = async (id: string): Promise<Project> => {
+  const { data } = await api.get<{ success: boolean; data: Project }>(
     `/projects/${id}`,
   );
   return data.data;
@@ -30,9 +30,9 @@ export const getProjectById = async (id: string): Promise<AdminProject> => {
 export const createProject = async (
   values: ProjectFormValues,
   galleryFiles: File[],
-): Promise<AdminProject> => {
+): Promise<Project> => {
   const formData = buildProjectFormData(values, galleryFiles);
-  const { data } = await api.post<{ success: boolean; data: AdminProject }>(
+  const { data } = await api.post<{ success: boolean; data: Project }>(
     "/projects",
     formData,
   );
@@ -48,9 +48,9 @@ export const updateProject = async (
   id: string,
   values: Partial<ProjectFormValues>,
   galleryFiles: File[],
-): Promise<AdminProject> => {
+): Promise<Project> => {
   const formData = buildProjectFormData(values, galleryFiles);
-  const { data } = await api.patch<{ success: boolean; data: AdminProject }>(
+  const { data } = await api.patch<{ success: boolean; data: Project }>(
     `/projects/${id}`,
     formData,
   );
@@ -66,8 +66,8 @@ export const deleteProject = async (id: string): Promise<void> => {
 export const deleteProjectGalleryImage = async (
   projectId: string,
   imageId: string,
-): Promise<AdminProject> => {
-  const { data } = await api.delete<{ success: boolean; data: AdminProject }>(
+): Promise<Project> => {
+  const { data } = await api.delete<{ success: boolean; data: Project }>(
     `/projects/${projectId}/gallery/${imageId}`,
   );
   return data.data;

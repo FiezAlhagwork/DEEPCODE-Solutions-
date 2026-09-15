@@ -23,7 +23,7 @@ import {
   useProjects,
 } from "@/features/projects/hooks/UseProjects";
 import type {
-  AdminProject,
+  Project,
   ProjectStatus,
 } from "@/features/projects/types/Projects";
 import { ApiError } from "@/lib/Api";
@@ -41,7 +41,7 @@ export default function ProjectsTable() {
   const [category, setCategory] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(ADMIN_PAGE_SIZE);
-  const [pendingDelete, setPendingDelete] = useState<AdminProject | null>(null);
+  const [pendingDelete, setPendingDelete] = useState<Project | null>(null);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -78,7 +78,7 @@ export default function ProjectsTable() {
     setPage(1);
   }
 
-  const columns: Column<AdminProject>[] = [
+  const columns: Column<Project>[] = [
     {
       id: "name",
       header: t("table.name"),
@@ -126,7 +126,7 @@ export default function ProjectsTable() {
     },
   ];
 
-  const liveLink = (project: AdminProject) =>
+  const liveLink = (project: Project) =>
     project.links.find((link) => link.type === "live")?.url;
 
   const loadError =

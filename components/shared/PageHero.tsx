@@ -1,6 +1,10 @@
-import { HostingHeroProps } from "@/features/hosting/types/Hosting";
+import type { PageHeroProps } from "@/types/Shared";
 
-const HostingHero = ({ badge, title, description }: HostingHeroProps) => {
+// Was `features/hosting/components/HostingHero.tsx`. It renders nothing
+// hosting-specific — a badge, a title and a line of copy — and the projects
+// archive needs the same header, so by this project's own rule (shared by two
+// or more features ⇒ it lives at the root) it moved here.
+export default function PageHero({ badge, title, description }: PageHeroProps) {
   return (
     <section className="relative overflow-hidden pt-20 pb-16">
       <div className="max-w-7xl  mx-auto">
@@ -16,6 +20,4 @@ const HostingHero = ({ badge, title, description }: HostingHeroProps) => {
       </div>
     </section>
   );
-};
-
-export default HostingHero;
+}
