@@ -68,9 +68,15 @@ export default async function ProjectDetailPage({
 
   // Same category, minus this project. Four are requested so three remain
   // even when the current one is among them.
+  //
+  // `status` is redundant today — this call runs on the server, where there is
+  // no Clerk token to attach, so the backend already limits it to published
+  // work. It is stated anyway so the guarantee survives this ever moving to
+  // the client, where the token would come with it.
   const related = await getProjects({
     category: project.category._id,
     limit: 4,
+    status: "published",
   });
   const relatedProjects = related.data
     .filter((item) => item._id !== project._id)

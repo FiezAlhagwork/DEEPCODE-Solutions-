@@ -38,7 +38,17 @@ const headerItemVariants = {
   const t = useTranslations("projects");
   // The backend already sorts by `order` then newest, so "the first six" is
   // whatever was arranged in the admin panel — no client-side sorting here.
-  const projectsQuery = useProjects({ page: 1, limit: HOME_PROJECT_LIMIT });
+  //
+  // `status` is load-bearing, not decoration: `lib/Api.ts` attaches the Clerk
+  // token to every browser request, including this one, and the backend shows
+  // drafts to any request carrying an admin session. Without it a signed-in
+  // admin browsing the public site sees a different site than a visitor does —
+  // including draft cards whose detail pages answer 404.
+  const projectsQuery = useProjects({
+    page: 1,
+    limit: HOME_PROJECT_LIMIT,
+    status: "published",
+  });
 
   const projects = projectsQuery.data?.data ?? [];
   const total = projectsQuery.data?.pagination.total ?? 0;
