@@ -1,8 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
-import { ExternalLink, FolderKanban, Pencil, Search, Trash2 } from "lucide-react";
+import {
+  ExternalLink,
+  FolderKanban,
+  Pencil,
+  Search,
+  Trash2,
+} from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
@@ -14,9 +19,10 @@ import IconButton from "@/components/admin/ui/IconButton";
 import Pagination from "@/components/admin/ui/Pagination";
 import { Panel } from "@/components/admin/ui/Panel";
 import SelectInput from "@/components/admin/ui/SelectInput";
+import TableState from "@/components/admin/ui/TableState";
 import TableToolbar from "@/components/admin/ui/TableToolbar";
 import TextInput from "@/components/admin/ui/TextInput";
-import { ADMIN_PAGE_SIZE, ADMIN_SELECT_LIMIT } from "@/constants/Admin";
+import { ADMIN_SELECT_LIMIT } from "@/constants/Admin";
 import { useCategories } from "@/features/categories/hooks/UseCategories";
 import {
   useDeleteProject,
@@ -24,9 +30,10 @@ import {
 } from "@/features/projects/hooks/UseProjects";
 import type {
   Project,
-  ProjectStatus,
+  ProjectTableFilters,
 } from "@/features/projects/types/Projects";
-import { ApiError } from "@/lib/Api";
+import { useConfirmedAction } from "@/hooks/UseConfirmedAction";
+import { useListControls } from "@/hooks/UseListControls";
 import { cloudinaryLoader } from "@/lib/CloudinaryLoader";
 import type { Column } from "@/types/AdminUi";
 
@@ -35,48 +42,21 @@ export default function ProjectsTable() {
   const tCommon = useTranslations("admin.common");
   const locale = useLocale() as "ar" | "en";
 
-  const [search, setSearch] = useState("");
-  const [q, setQ] = useState("");
-  const [status, setStatus] = useState<"" | ProjectStatus>("");
-  const [category, setCategory] = useState("");
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(ADMIN_PAGE_SIZE);
-  const [pendingDelete, setPendingDelete] = useState<Project | null>(null);
+  const list = useListControls<ProjectTableFilters>({
+    status: "",
+    category: "",
+  });
 
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      setQ(search.trim());
-      setPage(1);
-    }, 300);
-    return () => window.clearTimeout(timer);
-  }, [search]);
-
-  const params = {
-    page,
-    limit,
-    ...(q !== "" ? { q } : {}),
-    ...(status !== "" ? { status } : {}),
-    ...(category !== "" ? { category } : {}),
-  };
-
-  const projectsQuery = useProjects(params);
+  const projectsQuery = useProjects(list.params);
   const categoriesQuery = useCategories({ limit: ADMIN_SELECT_LIMIT });
   const deleteProject = useDeleteProject();
+  const remove = useConfirmedAction(deleteProject, (p: Project) => p._id);
 
   const projects = projectsQuery.data?.data ?? [];
   const pagination = projectsQuery.data?.pagination;
   const categories = categoriesQuery.data?.data ?? [];
   const total = pagination?.total ?? 0;
   const totalPages = pagination?.totalPages ?? 1;
-  const isFiltered = q !== "" || status !== "" || category !== "";
-
-  function resetFilters() {
-    setSearch("");
-    setQ("");
-    setStatus("");
-    setCategory("");
-    setPage(1);
-  }
 
   const columns: Column<Project>[] = [
     {
@@ -129,11 +109,6 @@ export default function ProjectsTable() {
   const liveLink = (project: Project) =>
     project.links.find((link) => link.type === "live")?.url;
 
-  const loadError =
-    projectsQuery.error instanceof ApiError
-      ? projectsQuery.error.message
-      : undefined;
-
   return (
     <>
       <Panel flush>
@@ -141,8 +116,8 @@ export default function ProjectsTable() {
           search={
             <TextInput
               icon={Search}
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
+              value={list.search}
+              onChange={(event) => list.setSearch(event.target.value)}
               placeholder={t("searchPlaceholder")}
               aria-label={t("searchPlaceholder")}
             />
@@ -150,11 +125,14 @@ export default function ProjectsTable() {
           filters={
             <>
               <SelectInput
-                value={status}
-                onChange={(event) => {
-                  setStatus(event.target.value as "" | ProjectStatus);
-                  setPage(1);
-                }}
+                value={list.filters.status}
+                onChange={(event) =>
+                  list.setFilter(
+                    "status",
+                    // The options below are the only values this can produce.
+                    event.target.value as ProjectTableFilters["status"],
+                  )
+                }
                 aria-label={t("table.status")}
                 className="w-36"
               >
@@ -164,11 +142,10 @@ export default function ProjectsTable() {
               </SelectInput>
 
               <SelectInput
-                value={category}
-                onChange={(event) => {
-                  setCategory(event.target.value);
-                  setPage(1);
-                }}
+                value={list.filters.category}
+                onChange={(event) =>
+                  list.setFilter("category", event.target.value)
+                }
                 aria-label={t("table.category")}
                 className="w-44"
               >
@@ -183,116 +160,99 @@ export default function ProjectsTable() {
           }
         />
 
-        {projectsQuery.isPending && !projectsQuery.data ? (
-          <div className="flex flex-col gap-3 px-4 py-6" aria-busy>
-            <span className="sr-only">{tCommon("loading")}</span>
-            {Array.from({ length: 5 }, (_, index) => (
-              <div
-                key={index}
-                className="h-12 animate-pulse rounded-lg bg-surface-3"
+        <TableState
+          isLoading={projectsQuery.isPending && !projectsQuery.data}
+          error={projectsQuery.error}
+          icon={FolderKanban}
+        >
+          <DataTable
+            columns={columns}
+            rows={projects}
+            rowKey={(project) => project._id}
+            actionsLabel={tCommon("actions")}
+            empty={
+              <EmptyState
+                icon={FolderKanban}
+                title={list.isFiltered ? tCommon("noMatches") : t("emptyTitle")}
+                description={
+                  list.isFiltered
+                    ? tCommon("noMatchesHint")
+                    : t("emptyDescription")
+                }
+                action={
+                  list.isFiltered ? (
+                    <Button variant="outline" size="sm" onClick={list.reset}>
+                      {tCommon("clearFilters")}
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      href="/admin/projects/new"
+                    >
+                      {t("addNew")}
+                    </Button>
+                  )
+                }
               />
-            ))}
-          </div>
-        ) : projectsQuery.isError ? (
-          <EmptyState
-            icon={FolderKanban}
-            title={tCommon("loadError", {
-              message: loadError ?? tCommon("noResults"),
-            })}
+            }
+            rowActions={(project) => {
+              const live = liveLink(project);
+
+              return (
+                <>
+                  {live && (
+                    <IconButton
+                      size="sm"
+                      href={live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={t("viewLive")}
+                    >
+                      <ExternalLink aria-hidden />
+                    </IconButton>
+                  )}
+                  <IconButton
+                    size="sm"
+                    href={`/admin/projects/${project._id}`}
+                    aria-label={tCommon("edit")}
+                  >
+                    <Pencil aria-hidden />
+                  </IconButton>
+                  <IconButton
+                    size="sm"
+                    variant="danger"
+                    aria-label={tCommon("delete")}
+                    onClick={() => remove.ask(project)}
+                  >
+                    <Trash2 aria-hidden />
+                  </IconButton>
+                </>
+              );
+            }}
           />
-        ) : (
-          <>
-            <DataTable
-              columns={columns}
-              rows={projects}
-              rowKey={(project) => project._id}
-              actionsLabel={tCommon("actions")}
-              empty={
-                <EmptyState
-                  icon={FolderKanban}
-                  title={isFiltered ? tCommon("noMatches") : t("emptyTitle")}
-                  description={
-                    isFiltered ? tCommon("noMatchesHint") : t("emptyDescription")
-                  }
-                  action={
-                    isFiltered ? (
-                      <Button variant="outline" size="sm" onClick={resetFilters}>
-                        {tCommon("clearFilters")}
-                      </Button>
-                    ) : (
-                      <Button variant="primary" size="sm" href="/admin/projects/new">
-                        {t("addNew")}
-                      </Button>
-                    )
-                  }
-                />
-              }
-              rowActions={(project) => {
-                const live = liveLink(project);
 
-                return (
-                  <>
-                    {live && (
-                      <IconButton
-                        size="sm"
-                        href={live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={t("viewLive")}
-                      >
-                        <ExternalLink aria-hidden />
-                      </IconButton>
-                    )}
-                    <IconButton
-                      size="sm"
-                      href={`/admin/projects/${project._id}`}
-                      aria-label={tCommon("edit")}
-                    >
-                      <Pencil aria-hidden />
-                    </IconButton>
-                    <IconButton
-                      size="sm"
-                      variant="danger"
-                      aria-label={tCommon("delete")}
-                      onClick={() => setPendingDelete(project)}
-                    >
-                      <Trash2 aria-hidden />
-                    </IconButton>
-                  </>
-                );
-              }}
+          {projects.length > 0 && pagination && (
+            <Pagination
+              page={pagination.page}
+              limit={list.limit}
+              total={total}
+              totalPages={totalPages}
+              onPageChange={list.setPage}
+              onLimitChange={list.setLimit}
             />
-
-            {projects.length > 0 && pagination && (
-              <Pagination
-                page={pagination.page}
-                limit={limit}
-                total={total}
-                totalPages={totalPages}
-                onPageChange={setPage}
-                onLimitChange={(next) => {
-                  setLimit(next);
-                  setPage(1);
-                }}
-              />
-            )}
-          </>
-        )}
+          )}
+        </TableState>
       </Panel>
 
       <DeleteConfirmDialog
-        open={pendingDelete !== null}
-        loading={deleteProject.isPending}
+        open={remove.target !== null}
+        loading={remove.isPending}
         onOpenChange={(open) => {
-          if (!open && !deleteProject.isPending) setPendingDelete(null);
+          if (!open) remove.dismiss();
         }}
-        onConfirm={() => {
-          if (!pendingDelete) return;
-          deleteProject.mutate(pendingDelete._id, {
-            onSuccess: () => setPendingDelete(null),
-          });
-        }}
-        itemName={pendingDelete?.name[locale]}
+        onConfirm={remove.confirm}
+        itemName={remove.target?.name[locale]}
       />
     </>
   );

@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 
 import type { ProjectStatus } from "@/features/projects/types/Projects";
 import type { AdminRole, AdminUserStatus } from "@/features/users/types/Users";
+import type { ListQueryParams } from "./Shared";
 
 /**
  * Types for the admin chrome in `components/admin/` — the shell, its navigation
@@ -84,4 +85,61 @@ export type StatusBadgeProps = {
 
 export type RoleBadgeProps = {
   role: AdminRole;
+};
+
+// --- Shared admin-grid hooks ------------------------------------------------
+
+/**
+ * What a table actually sends: every filter is optional, and the `""` that
+ * means "no filter" in the UI is excluded — the API reads an absent key as
+ * "no filter", while `?status=` is a validation error.
+ */
+type ActiveFilters<TFilters> = {
+  [K in keyof TFilters]?: Exclude<TFilters[K], "">;
+};
+
+/**
+ * `hooks/UseListControls.ts`'s return value — the search/paging/filter state
+ * every admin grid needs, plus the `params` object to hand straight to its
+ * query hook.
+ *
+ * `setFilter` and `setLimit` reset the page themselves. That is the whole
+ * point of the hook rather than a convenience: remembering it at each call
+ * site is what left a user on page 3 staring at "no results" for a filter
+ * whose matches were all on page 1.
+ */
+export type ListControls<TFilters extends Record<string, string>> = {
+  /** The raw input value; `params.q` is its debounced, trimmed form. */
+  search: string;
+  setSearch: (value: string) => void;
+  filters: TFilters;
+  setFilter: <K extends keyof TFilters>(key: K, value: TFilters[K]) => void;
+  page: number;
+  setPage: (page: number) => void;
+  limit: number;
+  setLimit: (limit: number) => void;
+  params: ListQueryParams & ActiveFilters<TFilters>;
+  /** True when a search term or any filter is set — drives the empty-state copy. */
+  isFiltered: boolean;
+  reset: () => void;
+};
+
+/**
+ * The slice of a TanStack mutation `useConfirmedAction` actually uses. Declared
+ * structurally rather than as `UseMutationResult<…>` so the hook states its
+ * real requirement instead of inheriting four generic parameters it ignores.
+ */
+export type ConfirmableMutation = {
+  mutate: (id: string, options?: { onSuccess?: () => void }) => void;
+  isPending: boolean;
+};
+
+/** `hooks/UseConfirmedAction.ts` — a record awaiting confirmation, plus its verbs. */
+export type ConfirmedAction<TRecord> = {
+  /** The record the dialog is asking about, or `null` when it is closed. */
+  target: TRecord | null;
+  isPending: boolean;
+  ask: (record: TRecord) => void;
+  dismiss: () => void;
+  confirm: () => void;
 };

@@ -89,6 +89,16 @@ export type RelatedProjectsProps = {
 
 // --- Admin component props -------------------------------------------------
 
+/**
+ * The filters `ProjectsTable` keeps, where `""` is the UI's "no filter".
+ * Named rather than inlined so `useListControls` can derive the query params
+ * from it — `Exclude<…, "">` turns `status` back into a plain `ProjectStatus`.
+ */
+export type ProjectTableFilters = {
+  status: "" | ProjectStatus;
+  category: string;
+};
+
 export type ProjectFormProps = {
   /** When set, the form loads that record and PATCHes it; omit for create. */
   projectId?: string;

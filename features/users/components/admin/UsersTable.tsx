@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Search, ShieldCheck, UserRound, UserX } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 
@@ -14,21 +14,19 @@ import Modal from "@/components/admin/ui/Modal";
 import Pagination from "@/components/admin/ui/Pagination";
 import { Panel } from "@/components/admin/ui/Panel";
 import SelectInput from "@/components/admin/ui/SelectInput";
+import TableState from "@/components/admin/ui/TableState";
 import TableToolbar from "@/components/admin/ui/TableToolbar";
 import TextInput from "@/components/admin/ui/TextInput";
 import Tooltip from "@/components/admin/ui/Tooltip";
-import { ADMIN_PAGE_SIZE } from "@/constants/Admin";
-import {
-  useDeactivateUser,
-  useUsers,
-} from "@/features/users/hooks/UseUsers";
+import { useDeactivateUser, useUsers } from "@/features/users/hooks/UseUsers";
 import type {
-  AdminRole,
   AdminUser,
   UsersTableProps,
+  UserTableFilters,
 } from "@/features/users/types/Users";
 import { fullName } from "@/features/users/utils/Users";
-import { ApiError } from "@/lib/Api";
+import { useConfirmedAction } from "@/hooks/UseConfirmedAction";
+import { useListControls } from "@/hooks/UseListControls";
 import type { Column } from "@/types/AdminUi";
 import ChangeRoleModal from "./ChangeRoleModal";
 
@@ -45,45 +43,19 @@ export default function UsersTable({ canManage, viewerId }: UsersTableProps) {
   const tCommon = useTranslations("admin.common");
   const format = useFormatter();
 
-  const [search, setSearch] = useState("");
-  const [q, setQ] = useState("");
-  const [role, setRole] = useState("");
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(ADMIN_PAGE_SIZE);
+  const list = useListControls<UserTableFilters>({ role: "" });
+
   const [pendingRole, setPendingRole] = useState<AdminUser | null>(null);
-  const [pendingDeactivate, setPendingDeactivate] = useState<AdminUser | null>(
-    null,
-  );
 
-  // Debounced so a request isn't fired on every keystroke.
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      setQ(search.trim());
-      setPage(1);
-    }, 300);
-    return () => window.clearTimeout(timer);
-  }, [search]);
-
-  const usersQuery = useUsers({
-    page,
-    limit,
-    ...(q !== "" ? { q } : {}),
-    ...(role !== "" ? { role: role as AdminRole } : {}),
-  });
+  const usersQuery = useUsers(list.params);
   const deactivateUser = useDeactivateUser();
+  const deactivate = useConfirmedAction(
+    deactivateUser,
+    (user: AdminUser) => user._id,
+  );
 
   const rows = usersQuery.data?.data ?? [];
   const pagination = usersQuery.data?.pagination;
-  const loadError =
-    usersQuery.error instanceof ApiError ? usersQuery.error.message : undefined;
-  const isFiltered = q !== "" || role !== "";
-
-  function resetFilters() {
-    setSearch("");
-    setQ("");
-    setRole("");
-    setPage(1);
-  }
 
   /**
    * Why a row's actions are withheld, or `undefined` when they are available.
@@ -137,19 +109,22 @@ export default function UsersTable({ canManage, viewerId }: UsersTableProps) {
           search={
             <TextInput
               icon={Search}
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
+              value={list.search}
+              onChange={(event) => list.setSearch(event.target.value)}
               placeholder={t("searchPlaceholder")}
               aria-label={t("searchPlaceholder")}
             />
           }
           filters={
             <SelectInput
-              value={role}
-              onChange={(event) => {
-                setRole(event.target.value);
-                setPage(1);
-              }}
+              value={list.filters.role}
+              onChange={(event) =>
+                // The options below are the only values this can produce.
+                list.setFilter(
+                  "role",
+                  event.target.value as UserTableFilters["role"],
+                )
+              }
               aria-label={t("table.role")}
               className="w-40"
             >
@@ -171,104 +146,86 @@ export default function UsersTable({ canManage, viewerId }: UsersTableProps) {
           }
         />
 
-        {usersQuery.isPending && !usersQuery.data ? (
-          <div className="flex flex-col gap-3 px-4 py-6" aria-busy>
-            <span className="sr-only">{tCommon("loading")}</span>
-            {Array.from({ length: 5 }, (_, index) => (
-              <div
-                key={index}
-                className="h-12 animate-pulse rounded-lg bg-surface-3"
+        <TableState
+          isLoading={usersQuery.isPending && !usersQuery.data}
+          error={usersQuery.error}
+          icon={UserRound}
+        >
+          <DataTable
+            columns={columns}
+            rows={rows}
+            rowKey={(user) => user._id}
+            actionsLabel={tCommon("actions")}
+            empty={
+              <EmptyState
+                icon={UserRound}
+                title={list.isFiltered ? tCommon("noMatches") : t("emptyTitle")}
+                description={
+                  list.isFiltered
+                    ? tCommon("noMatchesHint")
+                    : t("emptyDescription")
+                }
+                action={
+                  list.isFiltered ? (
+                    <Button variant="outline" size="sm" onClick={list.reset}>
+                      {tCommon("clearFilters")}
+                    </Button>
+                  ) : undefined
+                }
               />
-            ))}
-          </div>
-        ) : usersQuery.isError ? (
-          <EmptyState
-            icon={UserRound}
-            title={tCommon("loadError", {
-              message: loadError ?? tCommon("noResults"),
-            })}
+            }
+            rowActions={(user) => {
+              const reason = blockedReason(user);
+
+              return (
+                <>
+                  <Tooltip
+                    label={reason ?? t("changeRole")}
+                    side="start"
+                    enabled={reason !== undefined}
+                  >
+                    <IconButton
+                      size="sm"
+                      aria-label={t("changeRole")}
+                      disabled={reason !== undefined}
+                      onClick={() => setPendingRole(user)}
+                    >
+                      <ShieldCheck aria-hidden />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip
+                    label={reason ?? t("deactivate")}
+                    side="start"
+                    enabled={reason !== undefined}
+                  >
+                    <IconButton
+                      size="sm"
+                      variant="danger"
+                      aria-label={t("deactivate")}
+                      disabled={
+                        reason !== undefined || user.status === "deactivated"
+                      }
+                      onClick={() => deactivate.ask(user)}
+                    >
+                      <UserX aria-hidden />
+                    </IconButton>
+                  </Tooltip>
+                </>
+              );
+            }}
           />
-        ) : (
-          <>
-            <DataTable
-              columns={columns}
-              rows={rows}
-              rowKey={(user) => user._id}
-              actionsLabel={tCommon("actions")}
-              empty={
-                <EmptyState
-                  icon={UserRound}
-                  title={isFiltered ? tCommon("noMatches") : t("emptyTitle")}
-                  description={
-                    isFiltered
-                      ? tCommon("noMatchesHint")
-                      : t("emptyDescription")
-                  }
-                  action={
-                    isFiltered ? (
-                      <Button variant="outline" size="sm" onClick={resetFilters}>
-                        {tCommon("clearFilters")}
-                      </Button>
-                    ) : undefined
-                  }
-                />
-              }
-              rowActions={(user) => {
-                const reason = blockedReason(user);
 
-                return (
-                  <>
-                    <Tooltip
-                      label={reason ?? t("changeRole")}
-                      side="start"
-                      enabled={reason !== undefined}
-                    >
-                      <IconButton
-                        size="sm"
-                        aria-label={t("changeRole")}
-                        disabled={reason !== undefined}
-                        onClick={() => setPendingRole(user)}
-                      >
-                        <ShieldCheck aria-hidden />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip
-                      label={reason ?? t("deactivate")}
-                      side="start"
-                      enabled={reason !== undefined}
-                    >
-                      <IconButton
-                        size="sm"
-                        variant="danger"
-                        aria-label={t("deactivate")}
-                        disabled={
-                          reason !== undefined || user.status === "deactivated"
-                        }
-                        onClick={() => setPendingDeactivate(user)}
-                      >
-                        <UserX aria-hidden />
-                      </IconButton>
-                    </Tooltip>
-                  </>
-                );
-              }}
+          {rows.length > 0 && pagination && (
+            <Pagination
+              page={pagination.page}
+              limit={list.limit}
+              total={pagination.total}
+              totalPages={pagination.totalPages}
+              onPageChange={list.setPage}
+              onLimitChange={list.setLimit}
             />
-
-            {rows.length > 0 && pagination && (
-              <Pagination
-                page={pagination.page}
-                limit={limit}
-                total={pagination.total}
-                totalPages={pagination.totalPages}
-                onPageChange={setPage}
-                onLimitChange={(next) => {
-                  setLimit(next);
-                  setPage(1);
-                }}
-              />
-            )}
-          </>
-        )}
+          )}
+        </TableState>
       </Panel>
 
       {/* Keyed by the selected user so opening a different row remounts the
@@ -279,39 +236,33 @@ export default function UsersTable({ canManage, viewerId }: UsersTableProps) {
         onClose={() => setPendingRole(null)}
       />
 
+      {/* Its own `Modal` rather than `DeleteConfirmDialog` — the copy is about
+          suspending an account, not deleting a record — but the state and the
+          two rules behind it (no dismiss mid-flight, close on success only)
+          are the same ones `useConfirmedAction` owns for the other tables. */}
       <Modal
-        open={pendingDeactivate !== null}
-        onClose={() => {
-          if (!deactivateUser.isPending) setPendingDeactivate(null);
-        }}
+        open={deactivate.target !== null}
+        onClose={deactivate.dismiss}
         closeLabel={tCommon("cancel")}
         title={t("deactivateTitle")}
         description={
-          pendingDeactivate
-            ? `${fullName(pendingDeactivate)} — ${t("deactivateDescription")}`
+          deactivate.target
+            ? `${fullName(deactivate.target)} — ${t("deactivateDescription")}`
             : undefined
         }
         footer={
           <>
             <Button
               variant="ghost"
-              disabled={deactivateUser.isPending}
-              onClick={() => setPendingDeactivate(null)}
+              disabled={deactivate.isPending}
+              onClick={deactivate.dismiss}
             >
               {tCommon("cancel")}
             </Button>
             <Button
               variant="danger"
-              loading={deactivateUser.isPending}
-              onClick={() => {
-                if (!pendingDeactivate) return;
-                // Closed from `onSuccess` only: a failed call keeps the dialog
-                // open so the toast's explanation lands next to the action it
-                // is about, instead of behind a dialog that already closed.
-                deactivateUser.mutate(pendingDeactivate._id, {
-                  onSuccess: () => setPendingDeactivate(null),
-                });
-              }}
+              loading={deactivate.isPending}
+              onClick={deactivate.confirm}
             >
               {t("deactivate")}
             </Button>

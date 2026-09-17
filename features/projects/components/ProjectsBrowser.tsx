@@ -32,8 +32,12 @@ export default function ProjectsBrowser() {
   const categoriesQuery = useCategories({ page: 1, limit: 100 });
   const categories = categoriesQuery.data?.data ?? [];
 
+  // `status` for the same reason as the home section: this request carries the
+  // signed-in admin's token, and the backend hands drafts to anyone holding
+  // one. The public archive must answer the same for everybody.
   const projectsQuery = useInfiniteProjects({
     limit: PAGE_SIZE,
+    status: "published",
     ...(category !== ALL ? { category } : {}),
   });
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Pencil, Search, Tags, Trash2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -11,15 +10,16 @@ import EmptyState from "@/components/admin/ui/EmptyState";
 import IconButton from "@/components/admin/ui/IconButton";
 import Pagination from "@/components/admin/ui/Pagination";
 import { Panel } from "@/components/admin/ui/Panel";
+import TableState from "@/components/admin/ui/TableState";
 import TableToolbar from "@/components/admin/ui/TableToolbar";
 import TextInput from "@/components/admin/ui/TextInput";
-import { ADMIN_PAGE_SIZE } from "@/constants/Admin";
 import {
   useCategories,
   useDeleteCategory,
 } from "@/features/categories/hooks/UseCategories";
 import type { Category } from "@/features/categories/types/Categories";
-import { ApiError } from "@/lib/Api";
+import { useConfirmedAction } from "@/hooks/UseConfirmedAction";
+import { useListControls } from "@/hooks/UseListControls";
 import type { Column } from "@/types/AdminUi";
 
 // Same shape as the projects grid, minus the filters a category has nothing to
@@ -32,40 +32,16 @@ export default function CategoriesTable() {
   const tCommon = useTranslations("admin.common");
   const locale = useLocale() as "ar" | "en";
 
-  const [search, setSearch] = useState("");
-  const [q, setQ] = useState("");
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(ADMIN_PAGE_SIZE);
-  const [pendingDelete, setPendingDelete] = useState<Category | null>(null);
+  // No filters of its own — a category has nothing to filter on — so the
+  // controls are just search and paging.
+  const list = useListControls({});
 
-  // Debounced so a request isn't fired on every keystroke.
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      setQ(search.trim());
-      setPage(1);
-    }, 300);
-    return () => window.clearTimeout(timer);
-  }, [search]);
-
-  const categoriesQuery = useCategories({
-    page,
-    limit,
-    ...(q !== "" ? { q } : {}),
-  });
+  const categoriesQuery = useCategories(list.params);
   const deleteCategory = useDeleteCategory();
+  const remove = useConfirmedAction(deleteCategory, (c: Category) => c._id);
 
   const rows = categoriesQuery.data?.data ?? [];
   const pagination = categoriesQuery.data?.pagination;
-  const loadError =
-    categoriesQuery.error instanceof ApiError
-      ? categoriesQuery.error.message
-      : undefined;
-
-  function resetSearch() {
-    setSearch("");
-    setQ("");
-    setPage(1);
-  }
 
   const columns: Column<Category>[] = [
     {
@@ -105,116 +81,95 @@ export default function CategoriesTable() {
           search={
             <TextInput
               icon={Search}
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
+              value={list.search}
+              onChange={(event) => list.setSearch(event.target.value)}
               placeholder={t("searchPlaceholder")}
               aria-label={t("searchPlaceholder")}
             />
           }
         />
 
-        {categoriesQuery.isPending && !categoriesQuery.data ? (
-          <div className="flex flex-col gap-3 px-4 py-6" aria-busy>
-            <span className="sr-only">{tCommon("loading")}</span>
-            {Array.from({ length: 5 }, (_, index) => (
-              <div
-                key={index}
-                className="h-12 animate-pulse rounded-lg bg-surface-3"
+        <TableState
+          isLoading={categoriesQuery.isPending && !categoriesQuery.data}
+          error={categoriesQuery.error}
+          icon={Tags}
+        >
+          <DataTable
+            columns={columns}
+            rows={rows}
+            rowKey={(category) => category._id}
+            actionsLabel={tCommon("actions")}
+            empty={
+              <EmptyState
+                icon={Tags}
+                title={list.isFiltered ? tCommon("noMatches") : t("emptyTitle")}
+                description={
+                  list.isFiltered
+                    ? tCommon("noMatchesHint")
+                    : t("emptyDescription")
+                }
+                action={
+                  list.isFiltered ? (
+                    <Button variant="outline" size="sm" onClick={list.reset}>
+                      {tCommon("clearFilters")}
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      href="/admin/categories/new"
+                    >
+                      {t("addNew")}
+                    </Button>
+                  )
+                }
               />
-            ))}
-          </div>
-        ) : categoriesQuery.isError ? (
-          <EmptyState
-            icon={Tags}
-            title={tCommon("loadError", {
-              message: loadError ?? tCommon("noResults"),
-            })}
-          />
-        ) : (
-          <>
-            <DataTable
-              columns={columns}
-              rows={rows}
-              rowKey={(category) => category._id}
-              actionsLabel={tCommon("actions")}
-              empty={
-                <EmptyState
-                  icon={Tags}
-                  title={q !== "" ? tCommon("noMatches") : t("emptyTitle")}
-                  description={
-                    q !== "" ? tCommon("noMatchesHint") : t("emptyDescription")
-                  }
-                  action={
-                    q !== "" ? (
-                      <Button variant="outline" size="sm" onClick={resetSearch}>
-                        {tCommon("clearFilters")}
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        href="/admin/categories/new"
-                      >
-                        {t("addNew")}
-                      </Button>
-                    )
-                  }
-                />
-              }
-              rowActions={(category) => (
-                <>
-                  <IconButton
-                    size="sm"
-                    href={`/admin/categories/${category._id}`}
-                    aria-label={tCommon("edit")}
-                  >
-                    <Pencil aria-hidden />
-                  </IconButton>
-                  <IconButton
-                    size="sm"
-                    variant="danger"
-                    aria-label={tCommon("delete")}
-                    onClick={() => setPendingDelete(category)}
-                  >
-                    <Trash2 aria-hidden />
-                  </IconButton>
-                </>
-              )}
-            />
-
-            {rows.length > 0 && pagination && (
-              <Pagination
-                page={pagination.page}
-                limit={limit}
-                total={pagination.total}
-                totalPages={pagination.totalPages}
-                onPageChange={setPage}
-                onLimitChange={(next) => {
-                  setLimit(next);
-                  setPage(1);
-                }}
-              />
+            }
+            rowActions={(category) => (
+              <>
+                <IconButton
+                  size="sm"
+                  href={`/admin/categories/${category._id}`}
+                  aria-label={tCommon("edit")}
+                >
+                  <Pencil aria-hidden />
+                </IconButton>
+                <IconButton
+                  size="sm"
+                  variant="danger"
+                  aria-label={tCommon("delete")}
+                  onClick={() => remove.ask(category)}
+                >
+                  <Trash2 aria-hidden />
+                </IconButton>
+              </>
             )}
-          </>
-        )}
+          />
+
+          {rows.length > 0 && pagination && (
+            <Pagination
+              page={pagination.page}
+              limit={list.limit}
+              total={pagination.total}
+              totalPages={pagination.totalPages}
+              onPageChange={list.setPage}
+              onLimitChange={list.setLimit}
+            />
+          )}
+        </TableState>
       </Panel>
 
       {/* The backend refuses with 409 CATEGORY_IN_USE while a project still
           references the category; `useDeleteCategory` turns that into its own
           explanatory message rather than a generic failure. */}
       <DeleteConfirmDialog
-        open={pendingDelete !== null}
-        loading={deleteCategory.isPending}
+        open={remove.target !== null}
+        loading={remove.isPending}
         onOpenChange={(open) => {
-          if (!open && !deleteCategory.isPending) setPendingDelete(null);
+          if (!open) remove.dismiss();
         }}
-        onConfirm={() => {
-          if (!pendingDelete) return;
-          deleteCategory.mutate(pendingDelete._id, {
-            onSuccess: () => setPendingDelete(null),
-          });
-        }}
-        itemName={pendingDelete?.name[locale]}
+        onConfirm={remove.confirm}
+        itemName={remove.target?.name[locale]}
       />
     </>
   );

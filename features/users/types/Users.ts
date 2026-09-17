@@ -49,6 +49,11 @@ export type ChangeUserRolePayload = { role: AdminRole };
 
 // --- Admin component props -------------------------------------------------
 
+/** The filters `UsersTable` keeps; `""` is the UI's "all roles". */
+export type UserTableFilters = {
+  role: "" | AdminRole;
+};
+
 /**
  * Both flags come from the server (`app/[locale]/admin/users/page.tsx` reads
  * `GET /api/auth/me`), not from a client-side guess:

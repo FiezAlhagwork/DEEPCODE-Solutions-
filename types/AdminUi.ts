@@ -166,6 +166,20 @@ export type DataTableProps<T> = {
   stickyOffset?: string;
 };
 
+/**
+ * Wraps a grid's body and owns its two non-content states. Every admin table
+ * had the same skeleton block and the same `ApiError`-message extraction
+ * inline; the only thing that differed between them was the icon.
+ */
+export type TableStateProps = {
+  isLoading: boolean;
+  /** The query's `error`. An `ApiError`'s own message is shown when there is one. */
+  error: unknown;
+  /** Matches the icon the table's `EmptyState` uses, so the states look related. */
+  icon: ElementType;
+  children: ReactNode;
+};
+
 export type PrimaryCellProps = {
   media?: ReactNode;
   title: ReactNode;
