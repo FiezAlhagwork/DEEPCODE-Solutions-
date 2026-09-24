@@ -265,12 +265,79 @@
     "retry": "Try again",
     "backHome": "Back to home"
   },
+  "requests": {
+    "modal": {
+      "title": "Request a server",
+      "description": "Send us your request and our team will get back to you on the number you give.",
+      "price": "Price",
+      "signInPrompt": "You need to sign in to finish this request. We'll bring you straight back here with it open.",
+      "signIn": "Sign in to continue",
+      "noAccount": "No account yet?",
+      "signUp": "Create one",
+      "submit": "Send request",
+      "sending": "Sending…",
+      "cancel": "Cancel",
+      "close": "Close"
+    },
+    "form": {
+      "type": "Request type",
+      "purchase": "Purchase",
+      "purchaseHint": "I want to buy this server",
+      "inquiry": "Inquiry",
+      "inquiryHint": "I have a question first",
+      "phone": "Phone number",
+      "country": "Country",
+      "phoneHint": "We'll reach you on it by call or WhatsApp.",
+      "notes": "Notes",
+      "notesPlaceholder": "Anything you'd like us to know (optional)",
+      "phoneRequired": "Phone number is required.",
+      "phoneInvalid": "That number isn't valid for this country. Check the number and the selected country.",
+      "notesTooLong": "Notes are too long — 1000 characters at most."
+    },
+    "types": {
+      "purchase": "Purchase",
+      "inquiry": "Inquiry"
+    },
+    "statuses": {
+      "pending": "Pending",
+      "contacted": "Contacted"
+    },
+    "table": {
+      "product": "Server",
+      "type": "Type",
+      "price": "Price",
+      "date": "Requested",
+      "status": "Status"
+    },
+    "empty": {
+      "title": "No requests yet",
+      "description": "When you request a server, it shows up here with its status.",
+      "action": "Browse servers"
+    },
+    "messages": {
+      "submitted": "Request received — we'll be in touch soon.",
+      "rateLimited": "You've reached today's limit (10 requests). Try again tomorrow or contact us directly.",
+      "notSynced": "Your account is still being set up. Please try again in a moment.",
+      "invalidPhone": "That phone number isn't valid for this country.",
+      "genericError": "Something went wrong. Please try again."
+    }
+  },
+  "myAccount": {
+    "title": "My account",
+    "description": "Your requests and where they stand, in one place.",
+    "navLabel": "Account sections",
+    "nav": {
+      "requests": "My requests"
+    },
+    "signOut": "Sign out"
+  },
   "admin": {
     "sidebar": {
       "dashboard": "Dashboard",
       "projects": "Projects",
       "categories": "Categories",
       "users": "Users",
+      "requests": "Requests",
       "account": "My account",
       "collapse": "Collapse",
       "expand": "Expand"
@@ -448,6 +515,12 @@
         "notFound": "That user no longer exists. They may have been deactivated elsewhere.",
         "genericError": "Something went wrong. Please try again."
       }
+    },
+    "requests": {
+      "title": "Requests",
+      "description": "Customers' requests for server plans",
+      "comingSoonTitle": "Coming soon",
+      "comingSoonDescription": "Customer requests will be listed here shortly."
     },
     "account": {
       "title": "My account",

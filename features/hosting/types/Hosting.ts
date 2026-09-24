@@ -36,10 +36,13 @@ export type ProductsResponse = {
 
 export type ProductCardProps = {
   product: Product;
+  /** Opens the order modal — owned by the list, one modal for every card. */
+  onOrder: (product: Product) => void;
 };
 
 export type ProductListProps = {
   products: Product[];
+  onOrder: (product: Product) => void;
 };
 
 export type Type = "kvm" | "game_server";

@@ -1,5 +1,47 @@
 import { isClerkAPIResponseError } from "@clerk/nextjs/errors";
+import { routing } from "@/i18n/routing";
 import type { MyProfile } from "../types/Auth";
+
+/** Longer than any real path on this site; anything past it is not ours. */
+const RETURN_TO_MAX_LENGTH = 512;
+
+/** `/ar` or `/en` at the start of a path, followed by `/`, `?` or nothing. */
+const LOCALE_PREFIX = new RegExp(
+  `^/(${routing.locales.join("|")})(?=/|\\?|$)`,
+);
+
+/**
+ * Validates a `?returnTo=` value before anything navigates to it — it arrives
+ * from the URL, so anyone can put anything there, and redirecting to it
+ * unchecked would make the sign-in page an open redirect ("sign in here" →
+ * someone else's site).
+ *
+ * Only an internal, root-relative path passes: it must start with `/`, and not
+ * with `//` or `/\`, which browsers read as "another host". The result carries
+ * no locale, because every caller hands it to the locale-aware router or
+ * `redirect()` from `@/i18n/navigation`, which adds one — so a stray prefix is
+ * stripped rather than doubled into `/ar/ar/...`.
+ */
+export const safeReturnTo = (value: unknown): string | undefined => {
+  if (typeof value !== "string") return undefined;
+  if (value.length === 0 || value.length > RETURN_TO_MAX_LENGTH) return undefined;
+  if (!value.startsWith("/") || value.startsWith("//")) return undefined;
+  if (value.includes("\\")) return undefined;
+
+  const path = value.replace(LOCALE_PREFIX, "") || "/";
+  return path.startsWith("/") ? path : `/${path}`;
+};
+
+/**
+ * `/sign-in` or `/sign-up`, carrying `returnTo` along when there is one — used
+ * by the link between the two pages, the order modal and the navbar, so the
+ * query-string encoding is written once.
+ */
+export const authPageHref = (
+  page: "/sign-in" | "/sign-up",
+  returnTo?: string,
+): string =>
+  returnTo ? `${page}?returnTo=${encodeURIComponent(returnTo)}` : page;
 
 /**
  * Where a signed-in visitor belongs, decided from their real role. This is the

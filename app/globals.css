@@ -147,3 +147,15 @@ html[lang="en"] {
       focus-visible:ring-[3px];
   }
 }
+
+/* Scrolls, but draws no scrollbar. For short strips that overflow sideways on
+   a narrow screen (the account area's section tabs), where a scrollbar widget
+   only ever showed up as a stray ▲▬▼ next to one or two tabs. Touch swipe,
+   trackpads and shift+wheel still scroll the strip. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

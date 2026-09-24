@@ -5,9 +5,12 @@ import { requireLocale } from "@/i18n/Locale";
 import { localeAlternates } from "@/i18n/metadata";
 import { redirect } from "@/i18n/navigation";
 import { getMyProfileWithRetry } from "@/features/auth/services/Auth";
-import { landingPathForProfile } from "@/features/auth/utils/Auth";
+import {
+  landingPathForProfile,
+  safeReturnTo,
+} from "@/features/auth/utils/Auth";
 import SignInView from "@/features/auth/components/SignInView";
-import type { LocaleRouteProps } from "@/types/Shared";
+import type { LocaleRouteProps, LocaleSearchRouteProps } from "@/types/Shared";
 
 export async function generateMetadata({
   params,
@@ -21,9 +24,16 @@ export async function generateMetadata({
   };
 }
 
-export default async function SignInPage({ params }: LocaleRouteProps) {
+export default async function SignInPage({
+  params,
+  searchParams,
+}: LocaleSearchRouteProps) {
   const locale = requireLocale((await params).locale);
   setRequestLocale(locale);
+
+  // Where to go once signed in — the product a visitor was about to order,
+  // say. Validated here, once, so nothing downstream handles a raw URL value.
+  const returnTo = safeReturnTo((await searchParams).returnTo);
 
   // This Clerk instance runs in single-session mode, so every sign-in call an
   // already-signed-in visitor makes — the email form and the Google button
@@ -37,8 +47,11 @@ export default async function SignInPage({ params }: LocaleRouteProps) {
     const profile = await getMyProfileWithRetry((await getToken()) ?? undefined);
     // Outside any try/catch on purpose: `redirect()` works by throwing, and a
     // catch around it would swallow the redirect itself.
-    redirect({ href: landingPathForProfile(profile), locale });
+    // A `returnTo` wins over the role default: someone already signed in who
+    // follows an "order this server" link should land on that server, not be
+    // detoured through the panel or the home page.
+    redirect({ href: returnTo ?? landingPathForProfile(profile), locale });
   }
 
-  return <SignInView locale={locale} />;
+  return <SignInView locale={locale} returnTo={returnTo} />;
 }

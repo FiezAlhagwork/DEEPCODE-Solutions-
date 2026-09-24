@@ -2,7 +2,7 @@ import { Product, ProductListProps } from "@/features/hosting/types/Hosting";
 import { motion } from "motion/react";
 import ProductCard from "./ProductCard";
 
-const ProductList = ({ products }: ProductListProps) => {
+const ProductList = ({ products, onOrder }: ProductListProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
@@ -11,7 +11,7 @@ const ProductList = ({ products }: ProductListProps) => {
       className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 "
     >
       {products.map((product: Product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard key={product.id} product={product} onOrder={onOrder} />
       ))}
     </motion.div>
   );
