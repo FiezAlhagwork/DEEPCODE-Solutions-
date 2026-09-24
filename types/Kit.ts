@@ -6,9 +6,12 @@ import type {
 } from "react";
 
 /**
- * Props and variant unions for the admin component library in
- * `components/admin/ui/`. Mirrors how `components/shared/` takes its props from
- * `types/Shared.ts` — a component file declares no types of its own.
+ * Props and variant unions for our own component library in `components/kit/`.
+ * It started as the admin panel's library and still looks like it, but the
+ * auth pages, the error screen, the order modal and the customer's "my
+ * requests" page all use it too — hence the neutral name. Mirrors how
+ * `components/shared/` takes its props from `types/Shared.ts`: a component
+ * file declares no types of its own.
  */
 
 // --- Button ----------------------------------------------------------------

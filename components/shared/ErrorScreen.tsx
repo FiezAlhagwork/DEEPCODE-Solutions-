@@ -2,7 +2,7 @@
 
 import { AlertTriangle } from "lucide-react";
 
-import Button from "@/components/admin/ui/Button";
+import Button from "@/components/kit/Button";
 import type { ErrorScreenProps } from "@/types/Shared";
 
 // A failed server render used to surface Next's raw "A server error occurred"

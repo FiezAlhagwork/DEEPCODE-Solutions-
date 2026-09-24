@@ -6,7 +6,7 @@ import type {
   ButtonProps,
   ButtonSize,
   ButtonVariant,
-} from "@/types/AdminUi";
+} from "@/types/Kit";
 
 // The admin panel's own button, deliberately NOT `components/ui/button.tsx`:
 // that one is a marketing CTA (`px-8 py-6 text-base`, `max-md:w-full`) built

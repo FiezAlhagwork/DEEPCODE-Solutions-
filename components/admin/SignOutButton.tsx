@@ -5,9 +5,9 @@ import { useClerk } from "@clerk/nextjs";
 import { LogOut } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
-import Button from "@/components/admin/ui/Button";
-import IconButton from "@/components/admin/ui/IconButton";
-import Tooltip from "@/components/admin/ui/Tooltip";
+import Button from "@/components/kit/Button";
+import IconButton from "@/components/kit/IconButton";
+import Tooltip from "@/components/kit/Tooltip";
 import type { SignOutButtonProps } from "@/types/Admin";
 
 // Its own component, not inlined into `AdminHeader` — sign-out belongs

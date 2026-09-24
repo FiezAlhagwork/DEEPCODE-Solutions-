@@ -2,7 +2,7 @@ import { Plus } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import PageHeader from "@/components/admin/PageHeader";
-import Button from "@/components/admin/ui/Button";
+import Button from "@/components/kit/Button";
 import ProjectsTable from "@/features/projects/components/admin/ProjectsTable";
 import { requireLocale } from "@/i18n/Locale";
 import type { LocaleRouteProps } from "@/types/Shared";

@@ -3,7 +3,7 @@
 import { PanelLeftClose } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import Tooltip from "@/components/admin/ui/Tooltip";
+import Tooltip from "@/components/kit/Tooltip";
 import { setSidebarCollapsed } from "@/hooks/UseSidebarCollapsed";
 import { cn } from "@/lib/Utils";
 import type { AdminSidebarProps } from "@/types/Admin";

@@ -2,8 +2,8 @@
 
 import { useTranslations } from "next-intl";
 
-import Button from "@/components/admin/ui/Button";
-import Modal from "@/components/admin/ui/Modal";
+import Button from "@/components/kit/Button";
+import Modal from "@/components/kit/Modal";
 import type { DeleteConfirmDialogProps } from "@/types/Admin";
 
 export default function DeleteConfirmDialog({

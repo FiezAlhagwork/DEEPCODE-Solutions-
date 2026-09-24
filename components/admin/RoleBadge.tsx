@@ -1,9 +1,9 @@
 import { useTranslations } from "next-intl";
 
-import Badge from "@/components/admin/ui/Badge";
+import Badge from "@/components/kit/Badge";
 import type { AdminRole } from "@/features/users/types/Users";
 import type { RoleBadgeProps } from "@/types/Admin";
-import type { BadgeTone } from "@/types/AdminUi";
+import type { BadgeTone } from "@/types/Kit";
 
 // `super_admin` is the only role that can invite, change roles or remove users,
 // so it gets the brand tone to stand out in the list.

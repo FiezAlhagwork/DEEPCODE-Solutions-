@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/Utils";
-import type { PaginationProps } from "@/types/AdminUi";
+import type { PaginationProps } from "@/types/Kit";
 import IconButton from "./IconButton";
 
 // Driven by the backend's pagination envelope: `{ page, limit, total, totalPages }`

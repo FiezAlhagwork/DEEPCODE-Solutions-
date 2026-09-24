@@ -5,19 +5,19 @@ import { Search, ShieldCheck, UserRound, UserX } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 
 import RoleBadge from "@/components/admin/RoleBadge";
-import Avatar from "@/components/admin/ui/Avatar";
-import Button from "@/components/admin/ui/Button";
-import DataTable, { PrimaryCell } from "@/components/admin/ui/DataTable";
-import EmptyState from "@/components/admin/ui/EmptyState";
-import IconButton from "@/components/admin/ui/IconButton";
-import Modal from "@/components/admin/ui/Modal";
-import Pagination from "@/components/admin/ui/Pagination";
-import { Panel } from "@/components/admin/ui/Panel";
-import SelectInput from "@/components/admin/ui/SelectInput";
-import TableState from "@/components/admin/ui/TableState";
-import TableToolbar from "@/components/admin/ui/TableToolbar";
-import TextInput from "@/components/admin/ui/TextInput";
-import Tooltip from "@/components/admin/ui/Tooltip";
+import Avatar from "@/components/kit/Avatar";
+import Button from "@/components/kit/Button";
+import DataTable, { PrimaryCell } from "@/components/kit/DataTable";
+import EmptyState from "@/components/kit/EmptyState";
+import IconButton from "@/components/kit/IconButton";
+import Modal from "@/components/kit/Modal";
+import Pagination from "@/components/kit/Pagination";
+import { Panel } from "@/components/kit/Panel";
+import SelectInput from "@/components/kit/SelectInput";
+import TableState from "@/components/kit/TableState";
+import TableToolbar from "@/components/kit/TableToolbar";
+import TextInput from "@/components/kit/TextInput";
+import Tooltip from "@/components/kit/Tooltip";
 import { useDeactivateUser, useUsers } from "@/features/users/hooks/UseUsers";
 import type {
   AdminUser,
@@ -27,7 +27,7 @@ import type {
 import { fullName } from "@/features/users/utils/Users";
 import { useConfirmedAction } from "@/hooks/UseConfirmedAction";
 import { useListControls } from "@/hooks/UseListControls";
-import type { Column } from "@/types/AdminUi";
+import type { Column } from "@/types/Kit";
 import ChangeRoleModal from "./ChangeRoleModal";
 
 // Searching, filtering and paging all happen on the server, same as the

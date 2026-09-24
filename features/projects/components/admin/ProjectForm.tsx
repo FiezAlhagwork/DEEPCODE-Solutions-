@@ -9,19 +9,19 @@ import { useLocale, useTranslations } from "next-intl";
 import { useFieldArray, useForm } from "react-hook-form";
 
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
-import Button from "@/components/admin/ui/Button";
-import Field from "@/components/admin/ui/Field";
-import FileDropzone from "@/components/admin/ui/FileDropzone";
+import Button from "@/components/kit/Button";
+import Field from "@/components/kit/Field";
+import FileDropzone from "@/components/kit/FileDropzone";
 import {
   FormActions,
   FormLayout,
   FormSection,
-} from "@/components/admin/ui/FormLayout";
-import IconButton from "@/components/admin/ui/IconButton";
-import { Panel } from "@/components/admin/ui/Panel";
-import SelectInput from "@/components/admin/ui/SelectInput";
-import TextArea from "@/components/admin/ui/TextArea";
-import TextInput from "@/components/admin/ui/TextInput";
+} from "@/components/kit/FormLayout";
+import IconButton from "@/components/kit/IconButton";
+import { Panel } from "@/components/kit/Panel";
+import SelectInput from "@/components/kit/SelectInput";
+import TextArea from "@/components/kit/TextArea";
+import TextInput from "@/components/kit/TextInput";
 import { ADMIN_SELECT_LIMIT } from "@/constants/Admin";
 import { useCategories } from "@/features/categories/hooks/UseCategories";
 import {

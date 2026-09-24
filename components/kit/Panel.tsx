@@ -1,5 +1,5 @@
 import { cn } from "@/lib/Utils";
-import type { PanelHeaderProps, PanelProps } from "@/types/AdminUi";
+import type { PanelHeaderProps, PanelProps } from "@/types/Kit";
 
 // One surface component for every boxed region in the admin panel. Replaces the
 // `rounded-xl border border-white/5 bg-[#1F1E20]` string that used to be

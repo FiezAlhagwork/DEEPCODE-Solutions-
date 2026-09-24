@@ -12,9 +12,9 @@ import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import Button from "@/components/admin/ui/Button";
-import Field from "@/components/admin/ui/Field";
-import TextInput from "@/components/admin/ui/TextInput";
+import Button from "@/components/kit/Button";
+import Field from "@/components/kit/Field";
+import TextInput from "@/components/kit/TextInput";
 import { useRouter } from "@/i18n/navigation";
 import { createNameSchema } from "../schemas/Auth";
 import { clerkErrorMessage, withTimeout } from "../utils/Auth";

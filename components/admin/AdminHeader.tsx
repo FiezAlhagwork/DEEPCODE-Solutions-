@@ -4,8 +4,8 @@ import { ChevronRight, Menu, UserRound } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import SignOutButton from "@/components/admin/SignOutButton";
-import Avatar from "@/components/admin/ui/Avatar";
-import IconButton from "@/components/admin/ui/IconButton";
+import Avatar from "@/components/kit/Avatar";
+import IconButton from "@/components/kit/IconButton";
 import LocaleSwitcher from "@/components/shared/LocaleSwitcher";
 import { activeSection } from "@/constants/AdminNav";
 import { usePathname } from "@/i18n/navigation";

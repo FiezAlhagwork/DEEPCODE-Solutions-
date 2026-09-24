@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/Utils";
-import type { TooltipProps } from "@/types/AdminUi";
+import type { TooltipProps } from "@/types/Kit";
 
 // A CSS-only tooltip: no portal, no positioning library, no extra dependency.
 // It exists mainly for the collapsed sidebar rail, where the icons lose their

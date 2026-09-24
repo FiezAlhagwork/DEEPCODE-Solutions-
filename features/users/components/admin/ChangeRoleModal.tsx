@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
-import Button from "@/components/admin/ui/Button";
-import Field from "@/components/admin/ui/Field";
-import Modal from "@/components/admin/ui/Modal";
-import SelectInput from "@/components/admin/ui/SelectInput";
+import Button from "@/components/kit/Button";
+import Field from "@/components/kit/Field";
+import Modal from "@/components/kit/Modal";
+import SelectInput from "@/components/kit/SelectInput";
 import { useChangeUserRole } from "@/features/users/hooks/UseUsers";
 import type {
   AdminRole,

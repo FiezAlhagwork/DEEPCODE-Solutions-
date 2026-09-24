@@ -6,15 +6,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
-import Button from "@/components/admin/ui/Button";
-import Field from "@/components/admin/ui/Field";
+import Button from "@/components/kit/Button";
+import Field from "@/components/kit/Field";
 import {
   FormActions,
   FormLayout,
   FormSection,
-} from "@/components/admin/ui/FormLayout";
-import { Panel } from "@/components/admin/ui/Panel";
-import TextInput from "@/components/admin/ui/TextInput";
+} from "@/components/kit/FormLayout";
+import { Panel } from "@/components/kit/Panel";
+import TextInput from "@/components/kit/TextInput";
 import {
   useCategory,
   useCreateCategory,

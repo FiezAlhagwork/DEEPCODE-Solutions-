@@ -5,11 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
-import Button from "@/components/admin/ui/Button";
-import Field from "@/components/admin/ui/Field";
-import Modal from "@/components/admin/ui/Modal";
-import SelectInput from "@/components/admin/ui/SelectInput";
-import TextInput from "@/components/admin/ui/TextInput";
+import Button from "@/components/kit/Button";
+import Field from "@/components/kit/Field";
+import Modal from "@/components/kit/Modal";
+import SelectInput from "@/components/kit/SelectInput";
+import TextInput from "@/components/kit/TextInput";
 import { useInviteUser } from "@/features/users/hooks/UseUsers";
 import {
   createInviteUserSchema,

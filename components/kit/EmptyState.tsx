@@ -1,5 +1,5 @@
 import { cn } from "@/lib/Utils";
-import type { EmptyStateProps } from "@/types/AdminUi";
+import type { EmptyStateProps } from "@/types/Kit";
 
 // Replaces the bare dashed box the tables used to render. An empty table is a
 // dead end unless it says why it's empty and offers the way out, so `action`

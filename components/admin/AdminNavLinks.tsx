@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 
-import Tooltip from "@/components/admin/ui/Tooltip";
+import Tooltip from "@/components/kit/Tooltip";
 import { adminNavItems, isActiveHref } from "@/constants/AdminNav";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/Utils";
