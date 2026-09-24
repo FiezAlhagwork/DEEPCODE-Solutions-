@@ -9,7 +9,7 @@ import type { ListQueryParams } from "./Shared";
 /**
  * Types for the admin chrome in `components/admin/` — the shell, its navigation
  * and the shared badges. The component library's own types live beside these in
- * `types/AdminUi.ts`.
+ * `types/Kit.ts`.
  */
 
 // --- Navigation ------------------------------------------------------------

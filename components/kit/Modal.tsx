@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 import { FocusTrap } from "focus-trap-react";
 
 import { cn } from "@/lib/Utils";
-import type { ModalProps } from "@/types/AdminUi";
+import type { ModalProps } from "@/types/Kit";
 import IconButton from "./IconButton";
 
 // Built on `focus-trap-react` + the `inert` attribute — the same mechanism the

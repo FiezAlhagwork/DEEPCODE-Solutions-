@@ -12,16 +12,16 @@ import { useLocale, useTranslations } from "next-intl";
 
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import StatusBadge from "@/components/admin/StatusBadge";
-import Button from "@/components/admin/ui/Button";
-import DataTable, { PrimaryCell } from "@/components/admin/ui/DataTable";
-import EmptyState from "@/components/admin/ui/EmptyState";
-import IconButton from "@/components/admin/ui/IconButton";
-import Pagination from "@/components/admin/ui/Pagination";
-import { Panel } from "@/components/admin/ui/Panel";
-import SelectInput from "@/components/admin/ui/SelectInput";
-import TableState from "@/components/admin/ui/TableState";
-import TableToolbar from "@/components/admin/ui/TableToolbar";
-import TextInput from "@/components/admin/ui/TextInput";
+import Button from "@/components/kit/Button";
+import DataTable, { PrimaryCell } from "@/components/kit/DataTable";
+import EmptyState from "@/components/kit/EmptyState";
+import IconButton from "@/components/kit/IconButton";
+import Pagination from "@/components/kit/Pagination";
+import { Panel } from "@/components/kit/Panel";
+import SelectInput from "@/components/kit/SelectInput";
+import TableState from "@/components/kit/TableState";
+import TableToolbar from "@/components/kit/TableToolbar";
+import TextInput from "@/components/kit/TextInput";
 import { ADMIN_SELECT_LIMIT } from "@/constants/Admin";
 import { useCategories } from "@/features/categories/hooks/UseCategories";
 import {
@@ -35,7 +35,7 @@ import type {
 import { useConfirmedAction } from "@/hooks/UseConfirmedAction";
 import { useListControls } from "@/hooks/UseListControls";
 import { cloudinaryLoader } from "@/lib/CloudinaryLoader";
-import type { Column } from "@/types/AdminUi";
+import type { Column } from "@/types/Kit";
 
 export default function ProjectsTable() {
   const t = useTranslations("admin.projects");

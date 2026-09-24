@@ -5,8 +5,8 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 
 import StatusBadge from "@/components/admin/StatusBadge";
-import Button from "@/components/admin/ui/Button";
-import { Panel } from "@/components/admin/ui/Panel";
+import Button from "@/components/kit/Button";
+import { Panel } from "@/components/kit/Panel";
 import { useProjects } from "@/features/projects/hooks/UseProjects";
 import { ApiError } from "@/lib/Api";
 import { cloudinaryLoader } from "@/lib/CloudinaryLoader";

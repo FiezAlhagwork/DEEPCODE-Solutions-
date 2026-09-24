@@ -1,5 +1,5 @@
 import { cn } from "@/lib/Utils";
-import type { TextAreaProps } from "@/types/AdminUi";
+import type { TextAreaProps } from "@/types/Kit";
 import { fieldBase } from "./TextInput";
 
 // Shares `fieldBase` with `TextInput` so a textarea and an input sitting next to

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/Utils";
-import type { DataTableProps, PrimaryCellProps } from "@/types/AdminUi";
+import type { DataTableProps, PrimaryCellProps } from "@/types/Kit";
 
 // The dense data grid the whole admin panel shares. One definition, so the
 // three tables can't drift apart the way the hand-rolled ones did.

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/Utils";
-import type { BadgeProps, BadgeTone } from "@/types/AdminUi";
+import type { BadgeProps, BadgeTone } from "@/types/Kit";
 
 // Status/role pills. `dot` renders the small leading indicator used in the
 // projects grid, where a coloured dot reads faster than a filled pill.

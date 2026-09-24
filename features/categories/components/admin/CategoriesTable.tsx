@@ -4,15 +4,15 @@ import { Pencil, Search, Tags, Trash2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
-import Button from "@/components/admin/ui/Button";
-import DataTable, { PrimaryCell } from "@/components/admin/ui/DataTable";
-import EmptyState from "@/components/admin/ui/EmptyState";
-import IconButton from "@/components/admin/ui/IconButton";
-import Pagination from "@/components/admin/ui/Pagination";
-import { Panel } from "@/components/admin/ui/Panel";
-import TableState from "@/components/admin/ui/TableState";
-import TableToolbar from "@/components/admin/ui/TableToolbar";
-import TextInput from "@/components/admin/ui/TextInput";
+import Button from "@/components/kit/Button";
+import DataTable, { PrimaryCell } from "@/components/kit/DataTable";
+import EmptyState from "@/components/kit/EmptyState";
+import IconButton from "@/components/kit/IconButton";
+import Pagination from "@/components/kit/Pagination";
+import { Panel } from "@/components/kit/Panel";
+import TableState from "@/components/kit/TableState";
+import TableToolbar from "@/components/kit/TableToolbar";
+import TextInput from "@/components/kit/TextInput";
 import {
   useCategories,
   useDeleteCategory,
@@ -20,7 +20,7 @@ import {
 import type { Category } from "@/features/categories/types/Categories";
 import { useConfirmedAction } from "@/hooks/UseConfirmedAction";
 import { useListControls } from "@/hooks/UseListControls";
-import type { Column } from "@/types/AdminUi";
+import type { Column } from "@/types/Kit";
 
 // Same shape as the projects grid, minus the filters a category has nothing to
 // filter on. Searching and paging both happen on the server: filtering the

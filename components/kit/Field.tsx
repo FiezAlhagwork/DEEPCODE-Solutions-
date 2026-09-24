@@ -1,5 +1,5 @@
 import { cn } from "@/lib/Utils";
-import type { FormFieldProps } from "@/types/AdminUi";
+import type { FormFieldProps } from "@/types/Kit";
 
 // One field wrapper for the whole admin panel. The old forms repeated a
 // label/input/error trio eleven times by hand, and none of them wired the error

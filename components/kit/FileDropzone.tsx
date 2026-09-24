@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ImagePlus } from "lucide-react";
 
 import { cn } from "@/lib/Utils";
-import type { FileDropEvent, FileDropzoneProps } from "@/types/AdminUi";
+import type { FileDropEvent, FileDropzoneProps } from "@/types/Kit";
 
 // Drag-and-drop / click file picker. The backend takes images as real uploads
 // (`multipart/form-data`), so the form needs a file control rather than the

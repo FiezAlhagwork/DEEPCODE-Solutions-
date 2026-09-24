@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import { cn } from "@/lib/Utils";
-import type { AvatarProps } from "@/types/AdminUi";
+import type { AvatarProps } from "@/types/Kit";
 
 // Falls back to initials when the account has no `imageUrl` — which is the
 // normal case for users invited by email who never uploaded a picture.

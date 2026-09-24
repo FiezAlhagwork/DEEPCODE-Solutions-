@@ -3,7 +3,7 @@ import type {
   FormActionsProps,
   FormLayoutProps,
   FormSectionProps,
-} from "@/types/AdminUi";
+} from "@/types/Kit";
 
 // The editing layout used by the project and category forms: a wide content
 // column plus a narrower settings column, the arrangement Shopify/Strapi use.

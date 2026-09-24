@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import { ApiError } from "@/lib/Api";
-import type { TableStateProps } from "@/types/AdminUi";
+import type { TableStateProps } from "@/types/Kit";
 import EmptyState from "./EmptyState";
 
 /** Enough rows to fill the grid while it loads, without pretending to know the page size. */

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/Utils";
-import type { TextInputProps } from "@/types/AdminUi";
+import type { TextInputProps } from "@/types/Kit";
 
 // Compact admin field. Deliberately not `.input-base` from globals.css — that
 // recipe is `px-4 py-3` for the marketing contact form, which is far too tall

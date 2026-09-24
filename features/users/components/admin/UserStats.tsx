@@ -3,7 +3,7 @@
 import { Users as UsersIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { Panel } from "@/components/admin/ui/Panel";
+import { Panel } from "@/components/kit/Panel";
 import { useUsers } from "@/features/users/hooks/UseUsers";
 
 // Only the count is needed, so it asks for a single row and reads

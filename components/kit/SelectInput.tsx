@@ -1,7 +1,7 @@
 import { ChevronDown } from "lucide-react";
 
 import { cn } from "@/lib/Utils";
-import type { SelectInputProps } from "@/types/AdminUi";
+import type { SelectInputProps } from "@/types/Kit";
 import { fieldBase } from "./TextInput";
 
 // A styled native `<select>`. A custom listbox would mean managing focus,

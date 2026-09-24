@@ -1,5 +1,5 @@
 import { cn } from "@/lib/Utils";
-import type { TableToolbarProps } from "@/types/AdminUi";
+import type { TableToolbarProps } from "@/types/Kit";
 
 // Search + filters strip that sits above a grid, inside the same panel so the
 // controls read as part of the table rather than floating above it.

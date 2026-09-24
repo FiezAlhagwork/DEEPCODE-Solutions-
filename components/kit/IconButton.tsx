@@ -4,7 +4,7 @@ import type {
   IconButtonProps,
   IconButtonSize,
   IconButtonVariant,
-} from "@/types/AdminUi";
+} from "@/types/Kit";
 
 // Square, icon-only control for table rows, the header and the sidebar.
 // `aria-label` is required rather than optional: an icon with no text is

@@ -1,8 +1,8 @@
 import { useTranslations } from "next-intl";
 
-import Badge from "@/components/admin/ui/Badge";
+import Badge from "@/components/kit/Badge";
 import type { BadgeStatus, StatusBadgeProps } from "@/types/Admin";
-import type { BadgeTone } from "@/types/AdminUi";
+import type { BadgeTone } from "@/types/Kit";
 
 const tones: Record<BadgeStatus, BadgeTone> = {
   published: "success",

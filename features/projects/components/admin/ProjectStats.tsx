@@ -3,7 +3,7 @@
 import { FolderKanban, Layers } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { Panel } from "@/components/admin/ui/Panel";
+import { Panel } from "@/components/kit/Panel";
 import { useProjects } from "@/features/projects/hooks/UseProjects";
 
 export default function ProjectStats() {

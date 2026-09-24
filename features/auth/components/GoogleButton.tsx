@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import Button from "@/components/admin/ui/Button";
+import Button from "@/components/kit/Button";
 import type { GoogleButtonProps } from "../types/Auth";
 
 /**

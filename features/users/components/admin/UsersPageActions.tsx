@@ -4,8 +4,8 @@ import { useState } from "react";
 import { UserPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import Button from "@/components/admin/ui/Button";
-import Tooltip from "@/components/admin/ui/Tooltip";
+import Button from "@/components/kit/Button";
+import Tooltip from "@/components/kit/Tooltip";
 import type { UsersPageActionsProps } from "@/features/users/types/Users";
 import InviteUserModal from "./InviteUserModal";
 
