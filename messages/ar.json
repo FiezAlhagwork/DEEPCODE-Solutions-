@@ -98,7 +98,10 @@
     "plans": {
       "startup": {
         "name": "البداية",
-        "features": ["حتى 5 صفحات", "تصميم صفحات مخصص"]
+        "features": [
+          "حتى 5 صفحات",
+          "تصميم صفحات مخصص"
+        ]
       },
       "professional": {
         "name": "الاحترافية",
@@ -268,6 +271,7 @@
       "projects": "المشاريع",
       "categories": "الفئات",
       "users": "المستخدمون",
+      "account": "حسابي",
       "collapse": "طيّ القائمة",
       "expand": "توسيع القائمة"
     },
@@ -442,6 +446,41 @@
         "deactivated": "تم إيقاف الحساب.",
         "forbidden": "ما عندك صلاحية لهالإجراء — للمدير العام فقط.",
         "notFound": "ما لقينا هالمستخدم. يمكن تم إيقافه من مكان تاني.",
+        "genericError": "صار في خطأ، حاول مرة تانية."
+      }
+    },
+    "account": {
+      "title": "حسابي",
+      "description": "معلومات حسابك والأجهزة المسجّل عليها",
+      "profileTitle": "المعلومات الشخصية",
+      "profileDescription": "الصورة والاسم بيظهروا بلوحة التحكم ولفريقك.",
+      "photo": "صورة الحساب",
+      "changePhoto": "تغيير الصورة",
+      "removePhoto": "حذف الصورة",
+      "photoHint": "PNG أو JPG أو WebP. بتنضغط تلقائياً قبل الرفع.",
+      "firstName": "الاسم الأول",
+      "lastName": "الاسم الأخير",
+      "email": "البريد الإلكتروني",
+      "emailHint": "ما فيك تغيّر بريدك من هون.",
+      "role": "الدور",
+      "accountStatus": "حالة الحساب",
+      "sessionsTitle": "الجلسات النشطة",
+      "sessionsDescription": "الأجهزة المسجّل دخولها على حسابك حالياً.",
+      "sessionsEmpty": "ما في جلسات نشطة تانية.",
+      "currentDevice": "الجهاز الحالي",
+      "currentDeviceHint": "هاي جلستك الحالية — استعمل زر تسجيل الخروج بالأعلى.",
+      "revoke": "إنهاء الجلسة",
+      "revokeTitle": "إنهاء هالجلسة",
+      "revokeDescription": "رح ينقطع دخول هالجهاز عن حسابك ولازم يسجّل دخول من جديد.",
+      "revokeDelayNote": "إنهاء الجلسة بياخد لحدّ دقيقة لحتى يوصل للجهاز التاني.",
+      "lastActive": "آخر نشاط",
+      "unknownDevice": "جهاز غير معروف",
+      "unknownLocation": "مكان غير معروف",
+      "messages": {
+        "profileUpdated": "تم تحديث معلوماتك.",
+        "photoUpdated": "تم تحديث الصورة.",
+        "photoRemoved": "تم حذف الصورة.",
+        "sessionRevoked": "تم إنهاء الجلسة.",
         "genericError": "صار في خطأ، حاول مرة تانية."
       }
     }

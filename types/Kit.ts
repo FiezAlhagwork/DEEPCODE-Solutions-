@@ -112,7 +112,8 @@ export type AvatarProps = {
   name: string;
   imageUrl?: string;
   icon?: ElementType;
-  size?: "sm" | "md";
+  /** `lg` is the account page's own portrait; the two smaller ones fit rows and the header. */
+  size?: "sm" | "md" | "lg";
   className?: string;
 };
 

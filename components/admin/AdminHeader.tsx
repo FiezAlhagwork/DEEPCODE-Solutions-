@@ -1,22 +1,23 @@
 "use client";
 
-import { ChevronRight, Menu, UserRound } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
+import { ChevronRight, Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import SignOutButton from "@/components/admin/SignOutButton";
 import Avatar from "@/components/kit/Avatar";
 import IconButton from "@/components/kit/IconButton";
+import Tooltip from "@/components/kit/Tooltip";
 import LocaleSwitcher from "@/components/shared/LocaleSwitcher";
 import { activeSection } from "@/constants/AdminNav";
-import { usePathname } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import type { AdminHeaderProps } from "@/types/Admin";
 
-// The avatar is still a placeholder icon rather than the real signed-in
-// admin's picture/initials — that wiring is a separate step from sign-out.
 export default function AdminHeader({ onOpenSidebar }: AdminHeaderProps) {
   const t = useTranslations("admin.header");
   const tNav = useTranslations("admin.sidebar");
   const pathname = usePathname();
+  const { user } = useUser();
 
   // The old header printed one constant string on every page. The crumb is
   // derived from the route instead, so it actually says where you are.
@@ -52,10 +53,26 @@ export default function AdminHeader({ onOpenSidebar }: AdminHeaderProps) {
 
       <div className="flex shrink-0 items-center gap-2">
         <LocaleSwitcher className="h-9 rounded-lg border-hairline-strong px-3 py-0 text-xs max-md:w-auto" />
-        {/* Icon rather than initials — the avatar isn't wired to the real
-            signed-in admin's name/picture yet, so there's no name to derive
-            initials from. */}
-        <Avatar name={t("profile")} icon={UserRound} />
+        {/* The real signed-in admin's picture, and the way into their account
+            page. `imageUrl` is always set — Clerk serves its own generated
+            avatar when nothing has been uploaded — so `Avatar`'s initials
+            fallback never comes up here. It stays `undefined` only for the
+            moment before Clerk has loaded. */}
+        <Tooltip label={tNav("account")} side="start">
+          <Link
+            href="/admin/account"
+            aria-label={tNav("account")}
+            className="rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+          >
+            <Avatar
+              name={
+                [user?.firstName, user?.lastName].filter(Boolean).join(" ") ||
+                t("profile")
+              }
+              imageUrl={user?.imageUrl}
+            />
+          </Link>
+        </Tooltip>
         <SignOutButton />
       </div>
     </header>

@@ -1,4 +1,10 @@
-import { FolderKanban, LayoutDashboard, Tags, Users } from "lucide-react";
+import {
+  FolderKanban,
+  LayoutDashboard,
+  Tags,
+  UserRound,
+  Users,
+} from "lucide-react";
 
 import type { AdminNavItem } from "@/types/Admin";
 
@@ -13,6 +19,7 @@ export const adminNavItems: AdminNavItem[] = [
   { key: "projects", href: "/admin/projects", icon: FolderKanban },
   { key: "categories", href: "/admin/categories", icon: Tags },
   { key: "users", href: "/admin/users", icon: Users },
+  { key: "account", href: "/admin/account", icon: UserRound },
 ];
 
 export function isActiveHref(pathname: string, href: string) {

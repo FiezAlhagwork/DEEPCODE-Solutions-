@@ -98,7 +98,10 @@
     "plans": {
       "startup": {
         "name": "Starter",
-        "features": ["Up to 5 pages", "Custom page design"]
+        "features": [
+          "Up to 5 pages",
+          "Custom page design"
+        ]
       },
       "professional": {
         "name": "Professional",
@@ -268,6 +271,7 @@
       "projects": "Projects",
       "categories": "Categories",
       "users": "Users",
+      "account": "My account",
       "collapse": "Collapse",
       "expand": "Expand"
     },
@@ -442,6 +446,41 @@
         "deactivated": "Account deactivated.",
         "forbidden": "You don't have permission for this — super admins only.",
         "notFound": "That user no longer exists. They may have been deactivated elsewhere.",
+        "genericError": "Something went wrong. Please try again."
+      }
+    },
+    "account": {
+      "title": "My account",
+      "description": "Your account details and the devices signed in to it",
+      "profileTitle": "Personal details",
+      "profileDescription": "Your photo and name are shown across the admin panel.",
+      "photo": "Account photo",
+      "changePhoto": "Change photo",
+      "removePhoto": "Remove photo",
+      "photoHint": "PNG, JPG or WebP. Compressed automatically before upload.",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email address",
+      "emailHint": "Your email can't be changed from here.",
+      "role": "Role",
+      "accountStatus": "Account status",
+      "sessionsTitle": "Active sessions",
+      "sessionsDescription": "Devices currently signed in to your account.",
+      "sessionsEmpty": "No other active sessions.",
+      "currentDevice": "This device",
+      "currentDeviceHint": "This is your current session — use the sign-out button above.",
+      "revoke": "End session",
+      "revokeTitle": "End this session",
+      "revokeDescription": "This device will be signed out and will have to sign in again.",
+      "revokeDelayNote": "Ending a session can take up to a minute to reach the other device.",
+      "lastActive": "Last active",
+      "unknownDevice": "Unknown device",
+      "unknownLocation": "Unknown location",
+      "messages": {
+        "profileUpdated": "Your details were updated.",
+        "photoUpdated": "Photo updated.",
+        "photoRemoved": "Photo removed.",
+        "sessionRevoked": "Session ended.",
         "genericError": "Something went wrong. Please try again."
       }
     }

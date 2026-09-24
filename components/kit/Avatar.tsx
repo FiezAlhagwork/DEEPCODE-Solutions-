@@ -12,6 +12,7 @@ import type { AvatarProps } from "@/types/Kit";
 const sizes = {
   sm: { box: "size-7 text-[0.625rem]", px: 28 },
   md: { box: "size-9 text-xs", px: 36 },
+  lg: { box: "size-20 text-xl", px: 80 },
 } as const;
 
 function initialsOf(name: string) {
