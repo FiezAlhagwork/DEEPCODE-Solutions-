@@ -6,4 +6,5 @@ export const teamMembers: TeamMember[] = [
   { key: "abdulrahman", image: "/gegrgeg.webp", contactHref: "/#contact" },
   { key: "fiez", image: "/egwegg4.webp", contactHref: "/#contact" },
   { key: "jeeda", image: "/eegweg.webp", contactHref: "/#contact" },
+  { key: "dima", image: "/dima-qasem.webp", contactHref: "/#contact" },
 ];

@@ -33,7 +33,7 @@ const EXCLUDE = new Set([
 const RULES = [
   {
     name: "team-photo", // full-bleed portrait cutouts, rendered at ~250-900px CSS width max
-    test: (f) => /^(eegweg|egwegg4|gegrgeg|rgrrhrh)\.png$/i.test(f),
+    test: (f) => /^(eegweg|egwegg4|gegrgeg|rgrrhrh|dima-qasem)\.png$/i.test(f),
     maxWidth: 1000,
     webp: { quality: 82, alphaQuality: 95, effort: 6 },
   },
