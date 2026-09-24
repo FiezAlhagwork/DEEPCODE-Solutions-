@@ -4,20 +4,13 @@ import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { FocusTrap } from "focus-trap-react";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import { siteNavLinks } from "@/constants/Site";
 import { cn } from "@/lib/Utils";
 import { Link } from "@/i18n/navigation";
 import type { NavigationOverlayProps } from "@/types/Shared";
+import AccountEntry from "./AccountEntry";
 import LocaleSwitcher from "./LocaleSwitcher";
 
-const navLinks = [
-  { key: "home", href: "/" },
-  { key: "about", href: "/#about" },
-  { key: "services", href: "/#services" },
-  { key: "servers", href: "/#server" },
-  { key: "pricing", href: "/#pricing" },
-  { key: "contact", href: "/#contact" },
-] as const;
 
 export function NavigationOverlay({ isOpen, onClose }: NavigationOverlayProps) {
   const t = useTranslations("nav");
@@ -102,7 +95,7 @@ export function NavigationOverlay({ isOpen, onClose }: NavigationOverlayProps) {
           </div>
 
           <nav className="mt-2 flex flex-1 flex-col items-start gap-4">
-            {navLinks.map((link, i) => (
+            {siteNavLinks.map((link, i) => (
               <Link
                 key={link.key}
                 href={link.href}
@@ -132,11 +125,7 @@ export function NavigationOverlay({ isOpen, onClose }: NavigationOverlayProps) {
                 className="w-full justify-center"
                 onSwitch={onClose}
               />
-              <Button asChild variant="default" className="w-full justify-center">
-                <Link href="/#contact" onClick={onClose}>
-                  {t("cta")}
-                </Link>
-              </Button>
+              <AccountEntry variant="block" onNavigate={onClose} />
             </div>
           </div>
         </div>

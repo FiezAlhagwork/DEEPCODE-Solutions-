@@ -3,21 +3,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
+import { siteNavLinks } from "@/constants/Site";
 import { cn } from "@/lib/Utils";
 import { useIsMobile } from "@/hooks/UseMobile";
 import { Link } from "@/i18n/navigation";
 import { NavigationOverlay } from "./NavigationOverlay";
+import AccountEntry from "./AccountEntry";
 import LocaleSwitcher from "./LocaleSwitcher";
 
-const navLinks = [
-  { key: "home", href: "/" },
-  { key: "about", href: "/#about" },
-  { key: "services", href: "/#services" },
-  { key: "servers", href: "/#server" },
-  { key: "pricing", href: "/#pricing" },
-  { key: "contact", href: "/#contact" },
-] as const;
 
 const SCROLL_THRESHOLD = 60;
 
@@ -99,7 +92,7 @@ const Navbar = () => {
             </Link>
 
             <div className="hidden items-center gap-8 md:flex">
-              {navLinks.map((link) => (
+              {siteNavLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -110,11 +103,12 @@ const Navbar = () => {
               ))}
             </div>
 
-            <div className="hidden items-center gap-4 md:flex">
-              <LocaleSwitcher />
-              <Button asChild variant="default">
-                <Link href="/#contact">{t("cta")}</Link>
-              </Button>
+            {/* Language, then the account — "sign in" for a visitor, the
+                avatar menu once signed in. The old "contact us" button is
+                gone: "contact" is already one of the links. */}
+            <div className="hidden items-center gap-3 md:flex">
+              <LocaleSwitcher compact />
+              <AccountEntry />
             </div>
 
             <button

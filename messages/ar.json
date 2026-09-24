@@ -4,18 +4,20 @@
     "description": "نحول أفكارك إلى تجارب رقمية استثنائية تلبي احتياجات عملائك وتدعم نجاحك وتطورك في عالم الاعمال"
   },
   "nav": {
-    "home": "الرئيسية",
     "about": "من نحن",
     "services": "خدماتنا",
+    "projects": "أعمالنا",
     "servers": "السيرفرات",
     "features": "الميزات",
-    "pricing": "التسعير",
     "contact": "تواصل",
-    "cta": "اتصل بنا",
     "switchLanguage": "English",
     "openMenu": "فتح القائمة",
     "closeMenu": "إغلاق القائمة",
-    "menuLabel": "قائمة التنقل"
+    "menuLabel": "قائمة التنقل",
+    "signIn": "تسجيل الدخول",
+    "myRequests": "طلباتي",
+    "accountMenu": "قائمة الحساب",
+    "signOut": "تسجيل الخروج"
   },
   "hero": {
     "pills": {

@@ -10,6 +10,18 @@ export type NavigationOverlayProps = {
 export type LocaleSwitcherProps = {
   className?: string;
   onSwitch?: () => void;
+  /**
+   * Two-letter code of the other language (`EN` / `AR`) with an icon, instead
+   * of its full name — the public navbar's version. The accessible name stays
+   * the full, translated one either way.
+   */
+  compact?: boolean;
+};
+
+/** One link in the public navbar and its mobile drawer; `key` resolves against `nav`. */
+export type SiteNavLink = {
+  key: keyof Messages["nav"];
+  href: string;
 };
 
 /** `key` resolves against the `footer.links` message namespace. */
@@ -162,4 +174,21 @@ export type AccountNavItem = {
   key: keyof Messages["myAccount"]["nav"];
   href: string;
   icon: typeof LucideIcons.Inbox;
+};
+
+/**
+ * The navbar's sign-in link / avatar. `inline` sits in the desktop bar;
+ * `block` is the full-width version in the mobile drawer, where `onNavigate`
+ * closes the drawer on the way out.
+ */
+export type AccountEntryProps = {
+  variant?: "inline" | "block";
+  onNavigate?: () => void;
+};
+
+/** The navbar's avatar menu for a signed-in visitor. */
+export type AccountMenuProps = {
+  name: string;
+  email?: string;
+  imageUrl: string;
 };

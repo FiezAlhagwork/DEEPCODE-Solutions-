@@ -4,18 +4,20 @@
     "description": "We turn your ideas into exceptional digital experiences that serve your customers and drive your growth in business."
   },
   "nav": {
-    "home": "Home",
     "about": "About",
     "services": "Services",
+    "projects": "Our work",
     "servers": "Servers",
     "features": "Features",
-    "pricing": "Pricing",
     "contact": "Contact",
-    "cta": "Contact us",
     "switchLanguage": "العربية",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
-    "menuLabel": "Navigation menu"
+    "menuLabel": "Navigation menu",
+    "signIn": "Sign in",
+    "myRequests": "My requests",
+    "accountMenu": "Account menu",
+    "signOut": "Sign out"
   },
   "hero": {
     "pills": {
