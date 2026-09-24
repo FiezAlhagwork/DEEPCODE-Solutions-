@@ -12,14 +12,19 @@ import Field from "@/components/kit/Field";
 import TextInput from "@/components/kit/TextInput";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createCodeSchema, createSignUpDetailsSchema } from "../schemas/Auth";
-import { clerkErrorMessage, clerkFieldError, withTimeout } from "../utils/Auth";
+import {
+  authPageHref,
+  clerkErrorMessage,
+  clerkFieldError,
+  withTimeout,
+} from "../utils/Auth";
 import CodeInput from "./CodeInput";
 import GoogleButton from "./GoogleButton";
 import type { AuthViewProps } from "../types/Auth";
 
 type Step = "details" | "code";
 
-export default function SignUpView({ locale }: AuthViewProps) {
+export default function SignUpView({ locale, returnTo }: AuthViewProps) {
   const t = useTranslations("auth.signUp");
   const tCommon = useTranslations("auth.common");
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -47,7 +52,7 @@ export default function SignUpView({ locale }: AuthViewProps) {
       await signUp.authenticateWithRedirect({
         strategy: "oauth_google",
         redirectUrl: `/${locale}/sso-callback`,
-        redirectUrlComplete: `/${locale}/admin`,
+        redirectUrlComplete: `/${locale}${returnTo ?? "/admin"}`,
       });
     } catch (error) {
       // Without this, a failed redirect (Clerk rejects the attempt for any
@@ -100,7 +105,7 @@ export default function SignUpView({ locale }: AuthViewProps) {
       );
       if (attempt.status === "complete") {
         await setActive({ session: attempt.createdSessionId });
-        router.push("/admin");
+        router.push(returnTo ?? "/admin");
         return;
       }
       toast.error(tCommon("genericError"));
@@ -231,7 +236,10 @@ export default function SignUpView({ locale }: AuthViewProps) {
 
       <p className="text-center text-xs text-ink-muted">
         {t("haveAccount")}{" "}
-        <Link href="/sign-in" className="text-primary hover:text-primary/80">
+        <Link
+          href={authPageHref("/sign-in", returnTo)}
+          className="text-primary hover:text-primary/80"
+        >
           {t("signInLink")}
         </Link>
       </p>

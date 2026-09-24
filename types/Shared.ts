@@ -10,6 +10,18 @@ export type NavigationOverlayProps = {
 export type LocaleSwitcherProps = {
   className?: string;
   onSwitch?: () => void;
+  /**
+   * Two-letter code of the other language (`EN` / `AR`) with an icon, instead
+   * of its full name — the public navbar's version. The accessible name stays
+   * the full, translated one either way.
+   */
+  compact?: boolean;
+};
+
+/** One link in the public navbar and its mobile drawer; `key` resolves against `nav`. */
+export type SiteNavLink = {
+  key: keyof Messages["nav"];
+  href: string;
 };
 
 /** `key` resolves against the `footer.links` message namespace. */
@@ -81,6 +93,15 @@ export type LocaleRouteProps = {
   params: Promise<{ locale: string }>;
 };
 
+/**
+ * A locale route that also reads its query string — the auth pages, for
+ * `?returnTo=`. Values are untyped on purpose: anything can arrive in a URL, so
+ * each one is validated where it is used rather than trusted here.
+ */
+export type LocaleSearchRouteProps = LocaleRouteProps & {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
+
 /** The same, for a route segment carrying a record id (`[id]`). */
 export type LocaleIdRouteProps = {
   params: Promise<{ locale: string; id: string }>;
@@ -139,4 +160,35 @@ export type ErrorScreenProps = {
   retryLabel: string;
   homeLabel: string;
   onRetry: () => void;
+};
+
+// --- Customer account area -------------------------------------------------
+
+/**
+ * One section of the customer's `/account` area. `key` resolves against the
+ * `myAccount.nav` message namespace, the same way `AdminNavItem` does against
+ * `admin.sidebar`. Only "my requests" exists today; the area is built as a
+ * list so the next section is one entry.
+ */
+export type AccountNavItem = {
+  key: keyof Messages["myAccount"]["nav"];
+  href: string;
+  icon: typeof LucideIcons.Inbox;
+};
+
+/**
+ * The navbar's sign-in link / avatar. `inline` sits in the desktop bar;
+ * `block` is the full-width version in the mobile drawer, where `onNavigate`
+ * closes the drawer on the way out.
+ */
+export type AccountEntryProps = {
+  variant?: "inline" | "block";
+  onNavigate?: () => void;
+};
+
+/** The navbar's avatar menu for a signed-in visitor. */
+export type AccountMenuProps = {
+  name: string;
+  email?: string;
+  imageUrl: string;
 };

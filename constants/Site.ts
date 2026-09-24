@@ -2,7 +2,20 @@ import type {
   ContactInfoData,
   FooterLink,
   FooterSocialLink,
+  SiteNavLink,
 } from "@/types/Shared";
+
+// The public navbar's links — read by both the desktop bar and the mobile
+// drawer, which used to carry two copies of this list. No "home" (the logo is
+// the home link) and no "pricing": the bar was crowded, and those two were the
+// ones to go. "Our work" is new — `/projects` had no way in from the navbar.
+export const siteNavLinks: SiteNavLink[] = [
+  { key: "about", href: "/#about" },
+  { key: "services", href: "/#services" },
+  { key: "projects", href: "/projects" },
+  { key: "servers", href: "/#server" },
+  { key: "contact", href: "/#contact" },
+];
 
 // Root-relative so the links resolve from any route, not just the home page.
 export const footerNavLinks: FooterLink[] = [

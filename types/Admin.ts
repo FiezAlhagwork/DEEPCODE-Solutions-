@@ -36,8 +36,12 @@ export type AdminHeaderProps = {
 };
 
 export type SignOutButtonProps = {
-  /** `"icon"` (default) fits the header's compact actions row; `"button"` renders icon + label for a roomier spot like an account menu. */
-  variant?: "icon" | "button";
+  /**
+   * `"icon"` (default) fits the header's compact actions row; `"button"`
+   * renders icon + label for a roomier spot; `"menuItem"` is a row inside the
+   * public navbar's account menu (`role="menuitem"`, full width).
+   */
+  variant?: "icon" | "button" | "menuItem";
   /**
    * Where to land after signing out. Defaults to the sign-in page. The
    * invitation flow overrides it with the invitation link itself, ticket and

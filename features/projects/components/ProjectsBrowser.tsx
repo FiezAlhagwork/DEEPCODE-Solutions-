@@ -52,8 +52,11 @@ export default function ProjectsBrowser() {
           value={category}
           onValueChange={setCategory}
           // The strip scrolls on its own when there are more categories than
-          // fit; the page itself must never scroll sideways.
-          className="mb-10 w-full overflow-x-auto pb-1"
+          // fit; the page itself must never scroll sideways. `overflow-y-hidden`
+          // because `overflow-x-auto` alone turns the other axis to `auto` too,
+          // which can draw a stray vertical scrollbar. The horizontal one stays
+          // on purpose: it is the only hint that more categories exist.
+          className="mb-10 w-full overflow-x-auto overflow-y-hidden pb-1"
         >
           <TabsList className="mx-auto w-fit">
             <TabsTrigger value={ALL}>{t("allCategories")}</TabsTrigger>

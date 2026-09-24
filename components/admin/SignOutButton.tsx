@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useClerk } from "@clerk/nextjs";
-import { LogOut } from "lucide-react";
+import { Loader2, LogOut } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
 import Button from "@/components/kit/Button";
@@ -31,6 +31,25 @@ export default function SignOutButton({
       // rather than leaving it stuck disabled on a failed sign-out.
       setLoading(false);
     }
+  }
+
+  if (variant === "menuItem") {
+    return (
+      <button
+        type="button"
+        role="menuitem"
+        onClick={handleSignOut}
+        disabled={loading}
+        className="flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-start text-sm text-ink-muted transition-colors outline-none hover:bg-surface-3 hover:text-ink focus-visible:bg-surface-3 focus-visible:text-ink disabled:opacity-50"
+      >
+        {loading ? (
+          <Loader2 className="size-4 animate-spin" aria-hidden />
+        ) : (
+          <LogOut className="size-4" aria-hidden />
+        )}
+        {t("signOut")}
+      </button>
+    );
   }
 
   if (variant === "button") {
