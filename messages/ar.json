@@ -346,7 +346,8 @@
       "requests": "الطلبات",
       "account": "حسابي",
       "collapse": "طيّ القائمة",
-      "expand": "توسيع القائمة"
+      "expand": "توسيع القائمة",
+      "pendingRequests": "{count, plural, one {طلب واحد بالانتظار} two {طلبين بالانتظار} few {# طلبات بالانتظار} many {# طلب بالانتظار} other {# طلب بالانتظار}}"
     },
     "header": {
       "title": "لوحة التحكم",
@@ -404,7 +405,8 @@
         "projects": "المشاريع",
         "published": "المنشورة",
         "categories": "الفئات",
-        "users": "المستخدمون"
+        "users": "المستخدمون",
+        "pendingRequests": "طلبات بالانتظار"
       },
       "quickLinksTitle": "روابط سريعة",
       "recentProjects": "آخر المشاريع",
@@ -525,8 +527,56 @@
     "requests": {
       "title": "الطلبات",
       "description": "طلبات الزبائن على خطط الخوادم",
-      "comingSoonTitle": "قيد التجهيز",
-      "comingSoonDescription": "رح تنعرض طلبات الزبائن هون قريباً."
+      "table": {
+        "customer": "الزبون",
+        "product": "المنتج",
+        "type": "النوع",
+        "phone": "الهاتف",
+        "date": "التاريخ",
+        "status": "الحالة"
+      },
+      "filters": {
+        "label": "الحالة",
+        "all": "كل الطلبات"
+      },
+      "empty": {
+        "title": "ما في طلبات لسا",
+        "description": "أول ما يطلب زبون سيرفر، بيطلع طلبو هون."
+      },
+      "emptyPending": {
+        "title": "ما في شي بالانتظار",
+        "description": "تواصلتوا مع كل الزبائن. الطلبات الجديدة بتطلع هون."
+      },
+      "details": {
+        "open": "عرض التفاصيل",
+        "title": "تفاصيل الطلب",
+        "customer": "الزبون",
+        "email": "الإيميل",
+        "product": "المنتج",
+        "price": "السعر",
+        "type": "نوع الطلب",
+        "date": "تاريخ الطلب",
+        "status": "الحالة",
+        "phone": "الهاتف",
+        "notes": "الملاحظات",
+        "noNotes": "ما كتب ملاحظات.",
+        "close": "إغلاق"
+      },
+      "phone": {
+        "call": "اتصال بـ {phone}",
+        "whatsapp": "مراسلة على واتساب",
+        "copy": "نسخ الرقم",
+        "copied": "انتسخ الرقم.",
+        "copyFailed": "ما قدرنا ننسخ الرقم."
+      },
+      "markContacted": "تم التواصل",
+      "confirmTitle": "تأكيد التواصل",
+      "confirmDescription": "متأكد إنك تواصلت مع {name} بخصوص {product}؟ ما في رجعة لـ «قيد الانتظار» بعدها.",
+      "messages": {
+        "contacted": "انعلّم الطلب «تم التواصل».",
+        "notFound": "هالطلب ما عاد موجود.",
+        "genericError": "صار في خطأ، حاول مرة تانية."
+      }
     },
     "account": {
       "title": "حسابي",

@@ -4,6 +4,7 @@ import PageHeader from "@/components/admin/PageHeader";
 import CategoryStats from "@/features/categories/components/admin/CategoryStats";
 import ProjectStats from "@/features/projects/components/admin/ProjectStats";
 import RecentProjectsPanel from "@/features/projects/components/admin/RecentProjectsPanel";
+import RequestStats from "@/features/requests/components/admin/RequestStats";
 import UserStats from "@/features/users/components/admin/UserStats";
 import { requireLocale } from "@/i18n/Locale";
 import type { LocaleRouteProps } from "@/types/Shared";
@@ -24,6 +25,7 @@ export default async function AdminDashboardPage({ params }: LocaleRouteProps) {
         <ProjectStats />
         <CategoryStats />
         <UserStats />
+        <RequestStats />
       </div>
 
       <RecentProjectsPanel />

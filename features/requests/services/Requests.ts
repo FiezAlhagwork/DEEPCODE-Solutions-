@@ -4,6 +4,7 @@ import type {
   CreateRequestPayload,
   PlanRequest,
   RequestsQueryParams,
+  RequestStatus,
 } from "../types/Requests";
 
 /**
@@ -39,3 +40,17 @@ export const createRequest = async (
   return data.data;
 };
 
+/**
+ * `PATCH /api/requests/:id/status` — `admin`/`super_admin` only. The panel
+ * only ever moves a request forward, to `contacted`; nothing sends `pending`.
+ */
+export const updateRequestStatus = async (
+  id: string,
+  status: RequestStatus,
+): Promise<PlanRequest> => {
+  const { data } = await api.patch<{ success: boolean; data: PlanRequest }>(
+    `/requests/${id}/status`,
+    { status },
+  );
+  return data.data;
+};

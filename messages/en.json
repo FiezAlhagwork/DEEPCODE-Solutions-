@@ -346,7 +346,8 @@
       "requests": "Requests",
       "account": "My account",
       "collapse": "Collapse",
-      "expand": "Expand"
+      "expand": "Expand",
+      "pendingRequests": "{count, plural, one {# pending request} other {# pending requests}}"
     },
     "header": {
       "title": "Dashboard",
@@ -404,7 +405,8 @@
         "projects": "Projects",
         "published": "Published",
         "categories": "Categories",
-        "users": "Users"
+        "users": "Users",
+        "pendingRequests": "Pending requests"
       },
       "quickLinksTitle": "Quick links",
       "recentProjects": "Recent projects",
@@ -525,8 +527,56 @@
     "requests": {
       "title": "Requests",
       "description": "Customers' requests for server plans",
-      "comingSoonTitle": "Coming soon",
-      "comingSoonDescription": "Customer requests will be listed here shortly."
+      "table": {
+        "customer": "Customer",
+        "product": "Product",
+        "type": "Type",
+        "phone": "Phone",
+        "date": "Date",
+        "status": "Status"
+      },
+      "filters": {
+        "label": "Status",
+        "all": "All requests"
+      },
+      "empty": {
+        "title": "No requests yet",
+        "description": "When a customer orders a server, their request shows up here."
+      },
+      "emptyPending": {
+        "title": "Nothing pending",
+        "description": "Every customer has been contacted. New requests will show up here."
+      },
+      "details": {
+        "open": "View details",
+        "title": "Request details",
+        "customer": "Customer",
+        "email": "Email",
+        "product": "Product",
+        "price": "Price",
+        "type": "Request type",
+        "date": "Requested on",
+        "status": "Status",
+        "phone": "Phone",
+        "notes": "Notes",
+        "noNotes": "No notes left.",
+        "close": "Close"
+      },
+      "phone": {
+        "call": "Call {phone}",
+        "whatsapp": "Message on WhatsApp",
+        "copy": "Copy number",
+        "copied": "Number copied.",
+        "copyFailed": "Couldn't copy the number."
+      },
+      "markContacted": "Mark contacted",
+      "confirmTitle": "Confirm contact",
+      "confirmDescription": "Did you contact {name} about {product}? This can't be moved back to pending.",
+      "messages": {
+        "contacted": "Request marked as contacted.",
+        "notFound": "This request no longer exists.",
+        "genericError": "Something went wrong. Please try again."
+      }
     },
     "account": {
       "title": "My account",

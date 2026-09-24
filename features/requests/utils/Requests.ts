@@ -4,6 +4,7 @@ import type { RequestFormValues } from "../schemas/Requests";
 import type {
   CountryOption,
   CreateRequestPayload,
+  RequestUser,
 } from "../types/Requests";
 
 /** Left-to-right mark — invisible, but pins the direction of what follows it. */
@@ -94,3 +95,15 @@ export const buildRequestPayload = (
   ...(values.notes.trim() !== "" ? { notes: values.notes.trim() } : {}),
 });
 
+/** `tel:` link for a stored number — already E.164, so it needs no reshaping. */
+export const telHref = (phone: string): string => `tel:${phone}`;
+
+/** WhatsApp's click-to-chat link wants the international number, digits only. */
+export const whatsappHref = (phone: string): string =>
+  `https://wa.me/${phone.replace(/\D/g, "")}`;
+
+/** The requester's full name, or their email when Clerk has no name for them. */
+export const requesterName = (user: RequestUser): string => {
+  const name = [user.firstName, user.lastName].filter(Boolean).join(" ").trim();
+  return name || user.email;
+};

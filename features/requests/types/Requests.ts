@@ -110,3 +110,33 @@ export type RequestStatusBadgeProps = {
   status: RequestStatus;
 };
 
+// --- Admin -----------------------------------------------------------------
+
+/** The team's grid filter. `""` is "every status", per `useListControls`. */
+export type RequestTableFilters = {
+  status: "" | RequestStatus;
+};
+
+/** `request` is `null` while closed — `Modal` stays mounted either way. */
+export type RequestDetailsModalProps = {
+  request: PlanRequest | null;
+  onClose: () => void;
+  /** Hands the request over to the confirmation dialog. */
+  onMarkContacted: (request: PlanRequest) => void;
+};
+
+export type MarkContactedDialogProps = {
+  request: PlanRequest | null;
+  isPending: boolean;
+  onCancel: () => void;
+  onConfirm: () => void;
+};
+
+export type PhoneActionsProps = {
+  phone: string;
+};
+
+export type PendingRequestsBadgeProps = {
+  /** The collapsed rail has no room for a number — it shows a dot instead. */
+  collapsed?: boolean;
+};
