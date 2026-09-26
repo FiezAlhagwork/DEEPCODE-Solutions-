@@ -64,6 +64,9 @@ export type FieldProps = {
   htmlFor?: string;
   children: ReactNode;
   className?: string;
+  /** Shown under the control in place of `hint`, at `<htmlFor>-error`. */
+  error?: string;
+  hint?: string;
 };
 
 export type InputProps = ComponentProps<"input">;

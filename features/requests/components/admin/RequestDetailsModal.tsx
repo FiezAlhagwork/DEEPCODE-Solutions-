@@ -2,12 +2,12 @@
 
 import { useFormatter, useTranslations } from "next-intl";
 
+import PhoneActions from "@/components/admin/PhoneActions";
 import Button from "@/components/kit/Button";
 import Modal from "@/components/kit/Modal";
+import LeadStatusBadge from "@/components/shared/LeadStatusBadge";
 import type { RequestDetailsModalProps } from "../../types/Requests";
 import { requesterName } from "../../utils/Requests";
-import RequestStatusBadge from "../RequestStatusBadge";
-import PhoneActions from "./PhoneActions";
 
 const row = "flex flex-col gap-1 sm:flex-row sm:items-start sm:gap-4";
 const label = "w-28 shrink-0 text-xs text-ink-faint sm:pt-0.5";
@@ -21,7 +21,7 @@ export default function RequestDetailsModal({
   onMarkContacted,
 }: RequestDetailsModalProps) {
   const t = useTranslations("admin.requests.details");
-  const tRequests = useTranslations("admin.requests");
+  const tCommon = useTranslations("admin.common");
   const tTypes = useTranslations("requests.types");
   const format = useFormatter();
 
@@ -39,7 +39,7 @@ export default function RequestDetailsModal({
           </Button>
           {request?.status === "pending" && (
             <Button variant="primary" onClick={() => onMarkContacted(request)}>
-              {tRequests("markContacted")}
+              {tCommon("markContacted")}
             </Button>
           )}
         </>
@@ -97,7 +97,7 @@ export default function RequestDetailsModal({
           <div className={row}>
             <dt className={label}>{t("status")}</dt>
             <dd>
-              <RequestStatusBadge status={request.status} />
+              <LeadStatusBadge status={request.status} />
             </dd>
           </div>
           <div className="flex flex-col gap-1.5 border-t border-hairline pt-3">

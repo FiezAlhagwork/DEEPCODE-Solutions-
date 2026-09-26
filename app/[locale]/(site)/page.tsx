@@ -4,7 +4,7 @@ import Hero from "@/features/home/components/Hero";
 import About from "@/features/home/components/About";
 import Features from "@/features/home/components/Features";
 import Services from "@/features/home/components/Services";
-import Pricing from "@/features/home/components/Pricing";
+// import Pricing from "@/features/home/components/Pricing";
 import Contact from "@/features/home/components/Contact";
 import ProjectsSection from "@/features/projects/components/ProjectsSection";
 import Team from "@/features/team/components/Team";
@@ -24,7 +24,9 @@ export default async function Home({ params }: LocaleRouteProps) {
       <Services />
       <ProjectsSection />
       <Team />
-      <Pricing />
+      {/* Hidden, not deleted: the packages section didn't read as professional
+          enough. The component and its copy are still in features/home. */}
+      {/* <Pricing /> */}
       <VPSSection />
       {/* <DedicatedSection /> */}
       <Contact />

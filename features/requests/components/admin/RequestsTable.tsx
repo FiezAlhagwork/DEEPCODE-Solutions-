@@ -4,6 +4,8 @@ import { useState } from "react";
 import { CheckCheck, Eye, Inbox } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 
+import MarkContactedDialog from "@/components/admin/MarkContactedDialog";
+import PhoneActions from "@/components/admin/PhoneActions";
 import DataTable, { PrimaryCell } from "@/components/kit/DataTable";
 import EmptyState from "@/components/kit/EmptyState";
 import IconButton from "@/components/kit/IconButton";
@@ -13,15 +15,13 @@ import SelectInput from "@/components/kit/SelectInput";
 import TableState from "@/components/kit/TableState";
 import TableToolbar from "@/components/kit/TableToolbar";
 import Tooltip from "@/components/kit/Tooltip";
+import LeadStatusBadge from "@/components/shared/LeadStatusBadge";
 import { useConfirmedAction } from "@/hooks/UseConfirmedAction";
 import { useListControls } from "@/hooks/UseListControls";
 import type { Column } from "@/types/Kit";
 import { useMarkContacted, useRequests } from "../../hooks/UseRequests";
 import type { PlanRequest, RequestTableFilters } from "../../types/Requests";
 import { requesterName } from "../../utils/Requests";
-import RequestStatusBadge from "../RequestStatusBadge";
-import MarkContactedDialog from "./MarkContactedDialog";
-import PhoneActions from "./PhoneActions";
 import RequestDetailsModal from "./RequestDetailsModal";
 
 // The team's queue. It opens on "pending", the work still to do, and the
@@ -36,7 +36,7 @@ import RequestDetailsModal from "./RequestDetailsModal";
 export default function RequestsTable() {
   const t = useTranslations("admin.requests");
   const tCommon = useTranslations("admin.common");
-  const tStatuses = useTranslations("requests.statuses");
+  const tStatuses = useTranslations("common.leadStatus");
   const tTypes = useTranslations("requests.types");
   const format = useFormatter();
 
@@ -118,7 +118,7 @@ export default function RequestsTable() {
       id: "status",
       header: t("table.status"),
       className: "w-32",
-      cell: (request) => <RequestStatusBadge status={request.status} />,
+      cell: (request) => <LeadStatusBadge status={request.status} />,
     },
   ];
 
@@ -187,10 +187,10 @@ export default function RequestsTable() {
                   </IconButton>
                 </Tooltip>
                 {request.status === "pending" && (
-                  <Tooltip label={t("markContacted")} side="start">
+                  <Tooltip label={tCommon("markContacted")} side="start">
                     <IconButton
                       size="sm"
-                      aria-label={t("markContacted")}
+                      aria-label={tCommon("markContacted")}
                       onClick={() => confirm.ask(request)}
                     >
                       <CheckCheck aria-hidden />
@@ -224,7 +224,15 @@ export default function RequestsTable() {
       />
 
       <MarkContactedDialog
-        request={confirm.target}
+        open={confirm.target !== null}
+        description={
+          confirm.target
+            ? t("confirmDescription", {
+                name: requesterName(confirm.target.user),
+                product: confirm.target.productName,
+              })
+            : undefined
+        }
         isPending={confirm.isPending}
         onCancel={confirm.dismiss}
         onConfirm={confirm.confirm}

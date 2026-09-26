@@ -1,7 +1,7 @@
 /**
  * Country calling codes for the phone field — data only. Names are not stored
  * here: they come from `Intl.DisplayNames` in the viewer's language (see
- * `countryOptions()` in `utils/Requests.ts`), which spares `messages/` from
+ * `countryOptions()` in `lib/Phone.ts`), which spares `messages/` from
  * carrying some 240 country names in two languages.
  *
  * `DEFAULT_COUNTRY` is pinned to the top of the list and preselected — the
@@ -239,3 +239,15 @@ export const COUNTRY_DIAL_CODES: readonly { iso: string; dial: string }[] = [
   { iso: "ZM", dial: "260" },
   { iso: "ZW", dial: "263" },
 ];
+
+/**
+ * The placeholder in the phone number input, written without the country code
+ * (the field shows that itself) and without the leading trunk `0`. Only the
+ * default country has a real-shaped example; any other gets a neutral one
+ * rather than a Syrian number under a different flag.
+ */
+export const EXAMPLE_NUMBERS: Record<string, string> = {
+  SY: "944 123 456",
+};
+
+export const DEFAULT_EXAMPLE_NUMBER = "123 456 789";

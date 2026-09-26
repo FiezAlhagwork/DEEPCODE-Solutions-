@@ -205,14 +205,30 @@
       "namePlaceholder": "Mohamed",
       "email": "Email",
       "emailPlaceholder": "example@gmail.com",
-      "company": "Company (optional)",
-      "companyPlaceholder": "Company name",
-      "subject": "Subject",
-      "subjectPlaceholder": "Building a website, for example",
+      "phone": "Phone number",
+      "country": "Country",
+      "phoneHint": "The country code is added for you — type your number the way you usually would.",
       "message": "Message",
       "messagePlaceholder": "Tell us about your project idea and your timeline",
       "submit": "Send message",
-      "note": "We usually reply within 24 hours. Your information stays confidential."
+      "sending": "Sending…",
+      "note": "We usually reply within 24 hours. Your information stays confidential.",
+      "website": "Website",
+      "nameRequired": "Enter your name.",
+      "emailInvalid": "Enter a valid email address.",
+      "phoneRequired": "Enter your phone number.",
+      "phoneInvalid": "That phone number isn't valid for this country.",
+      "messageRequired": "Write your message.",
+      "messageTooLong": "The message is too long (2000 characters max).",
+      "success": {
+        "title": "Message received",
+        "description": "Thanks for getting in touch. Someone from the team will reply soon.",
+        "again": "Send another message"
+      },
+      "errors": {
+        "rateLimited": "Too many messages in a short time. Try again in an hour, or call us directly.",
+        "genericError": "We couldn't send your message. Please try again."
+      }
     }
   },
   "footer": {
@@ -225,7 +241,7 @@
     "links": {
       "about": "About us",
       "services": "Services",
-      "pricing": "Website packages",
+      "projects": "Our work",
       "contact": "Contact us"
     }
   },
@@ -269,7 +285,11 @@
     "errorTitle": "Something went wrong",
     "errorDescription": "We couldn't reach the server. Check your connection and try again.",
     "retry": "Try again",
-    "backHome": "Back to home"
+    "backHome": "Back to home",
+    "leadStatus": {
+      "pending": "Pending",
+      "contacted": "Contacted"
+    }
   },
   "requests": {
     "modal": {
@@ -283,7 +303,8 @@
       "submit": "Send request",
       "sending": "Sending…",
       "cancel": "Cancel",
-      "close": "Close"
+      "close": "Close",
+      "preparing": "We're setting up your new account — you'll be able to order in a moment."
     },
     "form": {
       "type": "Request type",
@@ -303,10 +324,6 @@
     "types": {
       "purchase": "Purchase",
       "inquiry": "Inquiry"
-    },
-    "statuses": {
-      "pending": "Pending",
-      "contacted": "Contacted"
     },
     "table": {
       "product": "Server",
@@ -344,10 +361,12 @@
       "categories": "Categories",
       "users": "Users",
       "requests": "Requests",
+      "messages": "Messages",
       "account": "My account",
       "collapse": "Collapse",
       "expand": "Expand",
-      "pendingRequests": "{count, plural, one {# pending request} other {# pending requests}}"
+      "pendingRequests": "{count, plural, one {# pending request} other {# pending requests}}",
+      "pendingMessages": "{count, plural, one {# pending message} other {# pending messages}}"
     },
     "header": {
       "title": "Dashboard",
@@ -390,7 +409,16 @@
       "optional": "Optional",
       "confirm": "Confirm",
       "loading": "Loading…",
-      "loadError": "Couldn't load: {message}"
+      "loadError": "Couldn't load: {message}",
+      "markContacted": "Mark contacted",
+      "confirmContactTitle": "Confirm contact",
+      "phone": {
+        "call": "Call {phone}",
+        "whatsapp": "Message on WhatsApp",
+        "copy": "Copy number",
+        "copied": "Number copied.",
+        "copyFailed": "Couldn't copy the number."
+      }
     },
     "pagination": {
       "showing": "{from}–{to} of {total}",
@@ -406,7 +434,8 @@
         "published": "Published",
         "categories": "Categories",
         "users": "Users",
-        "pendingRequests": "Pending requests"
+        "pendingRequests": "Pending requests",
+        "pendingMessages": "Pending messages"
       },
       "quickLinksTitle": "Quick links",
       "recentProjects": "Recent projects",
@@ -521,6 +550,8 @@
         "deactivated": "Account deactivated.",
         "forbidden": "You don't have permission for this — super admins only.",
         "notFound": "That user no longer exists. They may have been deactivated elsewhere.",
+        "cannotModifySelf": "You can't change or deactivate your own account.",
+        "lastSuperAdmin": "You can't remove the last super admin.",
         "genericError": "Something went wrong. Please try again."
       }
     },
@@ -562,19 +593,50 @@
         "noNotes": "No notes left.",
         "close": "Close"
       },
-      "phone": {
-        "call": "Call {phone}",
-        "whatsapp": "Message on WhatsApp",
-        "copy": "Copy number",
-        "copied": "Number copied.",
-        "copyFailed": "Couldn't copy the number."
-      },
-      "markContacted": "Mark contacted",
-      "confirmTitle": "Confirm contact",
       "confirmDescription": "Did you contact {name} about {product}? This can't be moved back to pending.",
       "messages": {
         "contacted": "Request marked as contacted.",
         "notFound": "This request no longer exists.",
+        "genericError": "Something went wrong. Please try again."
+      }
+    },
+    "messages": {
+      "title": "Messages",
+      "description": "“Contact us” messages from site visitors",
+      "table": {
+        "sender": "Sender",
+        "message": "Message",
+        "phone": "Phone",
+        "date": "Date",
+        "status": "Status"
+      },
+      "filters": {
+        "label": "Status",
+        "all": "All messages"
+      },
+      "empty": {
+        "title": "No messages yet",
+        "description": "When someone uses the contact form, their message shows up here."
+      },
+      "emptyPending": {
+        "title": "Nothing pending",
+        "description": "Every message has been answered. New ones will show up here."
+      },
+      "details": {
+        "open": "View message",
+        "title": "Message details",
+        "sender": "Sender",
+        "email": "Email",
+        "phone": "Phone",
+        "date": "Sent on",
+        "status": "Status",
+        "message": "Message",
+        "close": "Close"
+      },
+      "confirmDescription": "Did you contact {name} about their message? This can't be moved back to pending.",
+      "messages": {
+        "contacted": "Message marked as contacted.",
+        "notFound": "This message no longer exists.",
         "genericError": "Something went wrong. Please try again."
       }
     },
@@ -653,6 +715,14 @@
       "invalidLink": "This invitation link is invalid or has expired.",
       "signedInTitle": "You're already signed in",
       "signedInDescription": "You're signed in as {email}. Sign out first to accept this invitation."
+    },
+    "preparing": {
+      "title": "Setting up your account…",
+      "description": "Your account will be ready in a moment, then we'll take you where you were going.",
+      "slowTitle": "This is taking longer than usual",
+      "slowDescription": "Your account was created but isn't fully set up yet. Try again in a moment.",
+      "retry": "Try again",
+      "home": "Home page"
     }
   },
   "notFound": {

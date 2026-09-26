@@ -16,6 +16,7 @@ import {
   authPageHref,
   clerkErrorMessage,
   clerkFieldError,
+  preparingHref,
   withTimeout,
 } from "../utils/Auth";
 import CodeInput from "./CodeInput";
@@ -53,7 +54,9 @@ export default function SignInView({ locale, returnTo }: AuthViewProps) {
       await signIn.authenticateWithRedirect({
         strategy: "oauth_google",
         redirectUrl: `/${locale}/sso-callback`,
-        redirectUrlComplete: `/${locale}${returnTo ?? "/admin"}`,
+        // Through `/preparing`: Google can create a brand-new account from
+        // the sign-in page too, and an existing one passes straight through.
+        redirectUrlComplete: `/${locale}${preparingHref(returnTo)}`,
       });
     } catch (error) {
       // Without this, a failed redirect (Clerk rejects the attempt for any

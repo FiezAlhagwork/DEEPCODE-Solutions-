@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 
 import type { Product } from "@/features/hosting/types/Hosting";
-import type { ListQueryParams } from "@/types/Shared";
+import type { LeadStatus, ListQueryParams } from "@/types/Shared";
 
 /**
  * A customer's request for a server plan — a lead the team follows up on by
@@ -12,7 +12,8 @@ import type { ListQueryParams } from "@/types/Shared";
  * shadow it in any file that imports both, silently.
  */
 
-export type RequestStatus = "pending" | "contacted";
+/** Same lifecycle as a contact message — see `LeadStatus`. */
+export type RequestStatus = LeadStatus;
 export type RequestType = "purchase" | "inquiry";
 
 /** The requester as `GET /api/requests` populates it. */
@@ -61,13 +62,6 @@ export type CreateRequestPayload = {
  */
 export type RequestsQueryParams = ListQueryParams & { status?: RequestStatus };
 
-/** One country in the phone field's picker. */
-export type CountryOption = {
-  iso: string;
-  dial: string;
-  label: string;
-};
-
 // --- Components ------------------------------------------------------------
 
 /**
@@ -106,10 +100,6 @@ export type RequestTypeFieldProps = {
   disabled?: boolean;
 };
 
-export type RequestStatusBadgeProps = {
-  status: RequestStatus;
-};
-
 // --- Admin -----------------------------------------------------------------
 
 /** The team's grid filter. `""` is "every status", per `useListControls`. */
@@ -123,20 +113,4 @@ export type RequestDetailsModalProps = {
   onClose: () => void;
   /** Hands the request over to the confirmation dialog. */
   onMarkContacted: (request: PlanRequest) => void;
-};
-
-export type MarkContactedDialogProps = {
-  request: PlanRequest | null;
-  isPending: boolean;
-  onCancel: () => void;
-  onConfirm: () => void;
-};
-
-export type PhoneActionsProps = {
-  phone: string;
-};
-
-export type PendingRequestsBadgeProps = {
-  /** The collapsed rail has no room for a number — it shows a dot instead. */
-  collapsed?: boolean;
 };

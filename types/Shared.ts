@@ -192,3 +192,19 @@ export type AccountMenuProps = {
   email?: string;
   imageUrl: string;
 };
+
+// --- Leads (server-plan requests, contact messages) ---------------------------
+
+/** Where the team is with a lead: not yet called, or called. */
+export type LeadStatus = "pending" | "contacted";
+
+export type LeadStatusBadgeProps = {
+  status: LeadStatus;
+};
+
+/** One country in a phone field's picker (`countryOptions()` in `lib/Phone.ts`). */
+export type CountryOption = {
+  iso: string;
+  dial: string;
+  label: string;
+};

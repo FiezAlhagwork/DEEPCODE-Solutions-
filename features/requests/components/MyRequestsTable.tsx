@@ -9,11 +9,11 @@ import EmptyState from "@/components/kit/EmptyState";
 import Pagination from "@/components/kit/Pagination";
 import { Panel } from "@/components/kit/Panel";
 import TableState from "@/components/kit/TableState";
+import LeadStatusBadge from "@/components/shared/LeadStatusBadge";
 import { useListControls } from "@/hooks/UseListControls";
 import type { Column } from "@/types/Kit";
 import { useRequests } from "../hooks/UseRequests";
 import type { PlanRequest } from "../types/Requests";
-import RequestStatusBadge from "./RequestStatusBadge";
 
 // The customer's own requests. Only ever shown to a non-admin — the page sends
 // an admin to the panel first — so `GET /api/requests` returns this account's
@@ -86,7 +86,7 @@ export default function MyRequestsTable() {
       id: "status",
       header: t("table.status"),
       className: "w-36",
-      cell: (request) => <RequestStatusBadge status={request.status} />,
+      cell: (request) => <LeadStatusBadge status={request.status} />,
     },
   ];
 

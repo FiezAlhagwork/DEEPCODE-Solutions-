@@ -53,6 +53,7 @@ app/                         # Next.js routes ONLY — no business logic
       sign-in/{page.tsx, loading.tsx}    # page redirects a signed-in visitor by role
       sign-up/{page.tsx, loading.tsx}
       accept-invitation/page.tsx         # shows AlreadySignedInCard when a session exists
+      preparing/page.tsx       # "setting up your account" — every new account passes here
       sso-callback/page.tsx    # completes Google OAuth — the one Clerk-component exception
     admin/                    # the admin panel — its own chrome, no Navbar/Footer
       layout.tsx              # QueryProvider + AdminShell + the admin/super_admin role gate
@@ -61,6 +62,7 @@ app/                         # Next.js routes ONLY — no business logic
       categories/{page.tsx, new/page.tsx, [id]/page.tsx}
       users/page.tsx
       requests/page.tsx       # the team's queue of customer requests
+      messages/page.tsx       # the team's inbox of contact-form messages
       account/page.tsx        # the signed-in admin's own account + sessions
 
 messages/                    # all UI copy, one file per locale
@@ -134,18 +136,27 @@ features/
   requests/                   # a customer's request for a server plan (a lead,
                               # not an order) — five layers, types named PlanRequest
     components/               # RequestModal + RequestForm (opened from ProductCard),
-                              # PhoneField, RequestTypeField, RequestStatusBadge,
-                              # MyRequestsTable
+                              # PhoneField, RequestTypeField, MyRequestsTable
       admin/                  # RequestsTable, RequestDetailsModal,
-                              # MarkContactedDialog, PhoneActions,
                               # RequestStats (dashboard), PendingRequestsBadge (sidebar)
     hooks/UseRequests.ts      # useRequests, useCreateRequest (retries a 409 once),
                               # usePendingRequestsCount (polls), useMarkContacted
     services/Requests.ts
     schemas/Requests.ts
     types/Requests.ts
-    constants/Countries.ts    # ISO + dial codes only; names come from Intl.DisplayNames
-    utils/Requests.ts         # countryOptions, composePhone, buildRequestPayload
+    utils/Requests.ts         # buildRequestPayload, requesterName
+    QueryKeys.ts
+  contact/                    # the public "contact us" form's messages — a lead with
+                              # no account behind it, same pending/contacted lifecycle
+    components/               # ContactPhoneField (public-site style), ContactSuccess
+      admin/                  # MessagesTable, MessageDetailsModal,
+                              # ContactStats (dashboard), PendingMessagesBadge (sidebar)
+    hooks/UseContact.ts       # useCreateContactMessage, useContactMessages,
+                              # usePendingContactCount (polls), useMarkMessageContacted
+    services/Contact.ts
+    schemas/Contact.ts        # limits mirror the backend's contact.validation.js
+    types/Contact.ts
+    utils/Contact.ts          # buildContactPayload (honeypot sent only when filled)
     QueryKeys.ts
   team/
     components/               # Team, TeamList, TeamCard
@@ -156,6 +167,8 @@ features/
                               # forms on Clerk's headless hooks (@clerk/nextjs/legacy),
                               # + CodeInput, GoogleButton, SsoCallbackView
                               # + AlreadySignedInCard (invitation opened with a live session)
+                              # + PreparingAccountView (waits for the account to sync)
+    hooks/UseAuth.ts          # useMyProfile — polls /auth/me until synced (~30s cap)
     schemas/Auth.ts           # zod factories: sign-in email, sign-up details, name, code
     services/Auth.ts          # getMyProfile()/getMyProfileWithRetry() — GET /api/auth/me
     types/Auth.ts             # MyProfile, AuthViewProps, CodeInputProps, GoogleButtonProps
@@ -171,7 +184,9 @@ components/
                               # (its avatar is the real signed-in admin's, and
                               # links to /admin/account),
                               # AdminMobileSidebar, AdminNavLinks, PageHeader, badges,
-                              # SignOutButton
+                              # SignOutButton, NavCountBadge (sidebar counts),
+                              # PhoneActions (call/WhatsApp/copy) and
+                              # MarkContactedDialog — shared by requests + messages
   kit/                        # our own component library (PascalCase), used by the
                               # admin panel, the auth pages, the order modal and the
                               # customer area: Button, IconButton, Panel, DataTable,
@@ -184,12 +199,14 @@ components/
                               # AccountMenu (the avatar's menu: my requests, sign out),
                               # NavigationOverlay, ScrollToTop, ClerkTokenSync,
                               # PageHero (hosting + projects page headers),
-                              # PendingScreen + ErrorScreen (route-level status screens)
+                              # PendingScreen + ErrorScreen (route-level status screens),
+                              # LeadStatusBadge (pending/contacted — requests + messages)
 lib/
   Api.ts                       # single axios instance + ApiError + auth interceptor
   ClerkTokenBridge.ts           # lets lib/Api.ts's interceptor reach the Clerk token
   CloudinaryLoader.ts           # next/image loader — skips Next's optimizer for Cloudinary
   Images.ts                     # compressImage() — resize + WebP before upload
+  Phone.ts                      # countryOptions, composePhone, tel/WhatsApp links
   Utils.ts
 providers/
   QueryProvider.tsx
@@ -198,12 +215,14 @@ hooks/
   UseSidebarCollapsed.ts       # admin sidebar collapse, persisted in localStorage
   UseListControls.ts           # search/debounce/paging/filters behind every admin grid
   UseConfirmedAction.ts        # the record a confirm dialog is asking about
+  UseHydrated.ts               # false on the server + first client pass, true after
 constants/
   Site.ts                      # siteNavLinks (navbar + drawer), footer links,
                                # contact info — shared by several components → root
   AdminNav.ts                  # admin nav items + route-matching helpers
   AccountNav.ts                # the customer area's sections
   Admin.ts                     # ADMIN_PAGE_SIZE
+  Countries.ts                 # ISO + dial codes; names come from Intl.DisplayNames
 types/
   Shared.ts                    # cross-cutting: route props, ChildrenProps,
                                # LocalizedText, Paginated<T>, footer/contact types
@@ -283,6 +302,7 @@ Any error thrown from `api.*` calls is always an `ApiError` with a ready-to-disp
 - **`accept-invitation` collects a name Clerk's ticket doesn't carry.** The ticket strategy (`signUp.create({ strategy: "ticket", ticket })`) pre-verifies the invited email, but this instance requires `firstName`/`lastName`, which an invite never supplies — `AcceptInvitationView.tsx` checks `signUp.status`, and if it's `"missing_requirements"` it shows a short name form before calling `signUp.update(...)`. **Where the invitation email links to is a backend code parameter, not a Clerk Dashboard setting**: `clerkClient.invitations.createInvitation({ ..., redirectUrl })` (called from the backend's `inviteUser`) needs `redirectUrl: "{frontendOrigin}/ar/accept-invitation"` — without it, Clerk defaults the link to `/sign-up`, which never collects the name-completion step this instance requires. This is a backend change, tracked as a pending item, not something Dashboard configuration alone can achieve.
 - **This instance runs in single-session mode, so the auth pages redirect a visitor who is already signed in — by role.** `sign-in/page.tsx` and `sign-up/page.tsx` call `auth()`, and when a `userId` exists they fetch the profile and `redirect()` to `landingPathForProfile(profile)`: `/admin` for `admin`/`super_admin`, `/` for everyone else. Without the redirect, every call those forms make — `signIn.create()`, `signUp.create()` and both `authenticateWithRedirect()` paths — is rejected by Clerk with `session_exists` ("You're already signed in"), which is a form that cannot succeed no matter what is typed into it. Without the *role* part, a plain user would be sent to `/admin` and bounced straight back off the gate, visibly passing through a panel that was never theirs. `accept-invitation` handles the same session trap differently — see below. All three routes are dynamic (`ƒ`) in `next build` as a result, same as the admin routes and for the same reason.
 - **`?returnTo=` on `/sign-in` and `/sign-up`** is where to go once signed in — the product a visitor was about to order, or the protected page they were bounced from. Both pages validate it with `safeReturnTo()` (internal, root-relative paths only; `//host`, a backslash and absolute URLs are dropped, so the page is not an open redirect) and pass it to the view, which uses it in place of `/admin` for `router.push` and Google's `redirectUrlComplete`, and carries it across the sign-in / sign-up link. An already-signed-in visitor with a `returnTo` is redirected straight to it. The path is locale-less; the locale-aware router adds the locale. Without a `returnTo`, behaviour is unchanged.
+- **Every new account passes through `/preparing` before using the site.** Clerk has the account the moment sign-up finishes; our database gets it a second or two later through the `user.created` webhook, and until then `/auth/me` says `synced: false` and `POST /api/requests` answers `409 ACCOUNT_NOT_SYNCED`. So the email sign-up, both Google buttons (Google can create an account from the sign-in page too) and the invitation flow land on `/preparing?returnTo=…`, which polls `/auth/me` every 1.5s through `useMyProfile()` and then continues to `returnTo`, or wherever `landingPathForProfile()` says. An account that already existed passes through on the first check. After ~30s it stops and says it is taking longer than usual, with a retry. Email sign-in skips it — that account already exists. The order modal runs the same hook as a backstop.
 - **`landingPathForProfile()` (`features/auth/utils/Auth.ts`) is the only place that decides what counts as an admin**, and `getMyProfileWithRetry()` (`features/auth/services/Auth.ts`) is the only place that owns the retry-once-on-unsynced behavior. The admin gate and both auth pages call them; neither rule is written twice.
 - **Route-level status screens live at the `[locale]` level, and that is structural, not stylistic.** A segment's `error.tsx` catches throws from the layouts *below* it, and its `loading.tsx` renders *inside* its own layout — so an `admin/error.tsx` or `admin/loading.tsx` could never cover `admin/layout.tsx`'s own role check, which is precisely the await that blocks and the throw that happens when the backend is unreachable. Hence `app/[locale]/error.tsx` (retry + back home, via `components/shared/ErrorScreen.tsx`) and `app/[locale]/loading.tsx` (bare spinner, via `PendingScreen.tsx`). The locale-level loader also shows on public-site navigations, so its copy stays neutral; `sign-in/loading.tsx` and `sign-up/loading.tsx` carry the specific "checking your account" wording.
 - **The retry button needs `startTransition` + `router.refresh()` + `reset()` together** — `reset()` alone replays the same cached RSC payload, and without the transition it re-throws the stale error before the refreshed payload arrives. See the dated Decisions Log entry; this was established against a backend taken down and brought back, not from the docs.
@@ -430,6 +450,7 @@ npm run optimize-images    # convert images to webp (scripts/convert-images-to-w
 | Users | **Wired to the API — the last feature to leave mock data.** `UsersTable` reads `useUsers({ page, limit, q, role })` with server-side search, role filter and paging; invite, change-role and deactivate all run their mutations, with translated toasts. The panel's write actions are `super_admin`-only and are disabled (with a reason) for anyone else, and on the viewer's own row. `constants/Users.ts` is deleted, and so is the dashboard's last placeholder tile (`UserStats`). |
 | Account | **Done.** `/admin/account` — the signed-in admin's own photo and name (edited through Clerk), their email/role/status (read from `GET /api/auth/me` on the server), and the list of devices signed in to the account, each with a revoke button. The only feature whose data does not come from `lib/Api.ts`; see the Decisions Log for why it still runs on TanStack Query. No backend work was needed — the existing `user.updated` webhook syncs edits into our own `User` document. |
 | Requests | **Done, both sides.** The product card's button opens `RequestModal` (one per product list): a visitor sees the product and a sign-in button that brings them back with the modal reopened (`?order=<id>`); a signed-in customer picks purchase/inquiry, a phone number (country picker, Syria first) and optional notes, and `POST /api/requests` records the lead. `/account/requests` lists their own requests with server paging. The team's side: `/admin/requests` lists every request (opens on "pending", server-side status filter and paging), a details dialog with the notes in full, call / WhatsApp / copy on the phone number, and a confirmed, one-way "mark contacted" (`PATCH /api/requests/:id/status`). The pending count shows as a sidebar badge and a dashboard tile. |
+| Contact | **Done, both sides.** The home page's form sends `POST /api/contact` (name, email, phone with a country picker, message, plus a hidden honeypot) and swaps itself for a thank-you panel. `/admin/messages` is the requests queue's twin: opens on "pending", status filter and paging on the server, a details dialog with the whole message, call / WhatsApp / copy / mailto, and a confirmed one-way "mark contacted" (`PATCH /api/contact/:id/status`). Pending count in the sidebar and on the dashboard. |
 | Admin panel (chrome) | **Done, and now protected.** `app/[locale]/admin/` with its own shell: a sidebar that collapses to an icon rail (persisted in `localStorage`), a route-derived breadcrumb, and the component library in `components/kit/`. `admin/layout.tsx` gates every route on `admin`/`super_admin` — see "Auth & Roles (Clerk)". |
 | Team | **Migrated.** `features/team/` — static data, presentational only. |
 | i18n (ar / en) | **Done.** Every route is prerendered in both locales; all copy lives in `messages/`. The language button in the navbar and the mobile overlay is `components/shared/LocaleSwitcher.tsx`, which swaps the locale while staying on the current route. |
@@ -438,7 +459,6 @@ npm run optimize-images    # convert images to webp (scripts/convert-images-to-w
 ## Known Issues / Cleanup Backlog
 
 - **`NEXT_PUBLIC_SITE_URL` is not set on the server yet**, so `canonical` and `hreflang` are baked into the production HTML as `http://localhost:3000/...`. Highest-impact, lowest-cost SEO fix outstanding.
-- The contact form still has an empty `onSubmit` — nothing is sent anywhere. `react-hook-form`, `@hookform/resolvers`, and `zod` are installed and reserved for it. Blocked on a backend endpoint; see the five-layer plan in the Decisions Log.
 - No `app/robots.ts` or `app/sitemap.ts`, and no OpenGraph/Twitter metadata — link previews are blank and search engines are not told about the locale pairs.
 - `i18n/metadata.ts` emits `hreflang` for `ar` and `en` but no `x-default`.
 - The navbar has no link to the Team section (`#team`). Projects got one on 2026-09-24 ("Our work" → `/projects`).
@@ -616,3 +636,17 @@ npm run optimize-images    # convert images to webp (scripts/convert-images-to-w
 - **2026-09-24** — **`usePendingRequestsCount` is the one query in the panel that polls** (`refetchInterval: 60_000`). A new request arrives from a customer, not from anything the admin does, so no mutation would ever invalidate it; everything else in the panel changes only through the panel. The sidebar badge and the dashboard tile share its key, so they cost one request between them, and `useMarkContacted` invalidating `requestKeys.all` updates the table, the badge and the tile together. The badge renders nothing at zero and becomes a dot on the collapsed rail.
 - **2026-09-24** — The badge is a `key === "requests"` check inside `AdminNavLinks`, **not a field on `AdminNavItem`**: one entry has a count, and a generic "badge" slot on the nav type would be an abstraction with a single user. If a second section ever needs one, that is when it moves into the type.
 - **2026-09-24** — The WhatsApp link is `https://wa.me/<digits>` built from the stored E.164 number — the backend already normalised it, so nothing is reshaped. It sits next to `tel:` and copy because in Syria most of these follow-ups happen on WhatsApp. Verified live: `+963944123456` → `tel:+963944123456` and `https://wa.me/963944123456`.
+- **2026-09-26** — **The pricing section ("website packages") is hidden from the home page, not deleted** (the user's call: it didn't read as professional). `<Pricing />` and its import are commented out in `app/[locale]/(site)/page.tsx`, the same way `DedicatedSection` already is; `Pricing`/`PricingList`/`PricingCard`, `pricingPlans` and the `pricing` message namespace all stay, so bringing it back is uncommenting two lines. The footer's "website packages" link (`/#pricing`) would have pointed at nothing, so it became "our work" → `/projects`, matching the navbar.
+- **2026-09-26** — **The contact form is wired to `POST /api/contact`**, and the team reads it at `/admin/messages`. The form's fields now match the API exactly — name, email, phone, message; "company" and "subject" were dropped (the user's call) rather than smuggled into the message text. `ContactForm` stays in `features/home` as part of the section it sits in and sends through `features/contact`, the same split as `ProductCard` opening the requests modal. Limits in `schemas/Contact.ts` are copied from the backend's `contact.validation.js` (read, not edited), so nothing the form accepts is refused there for length.
+- **2026-09-26** — **The honeypot is parked off-screen, not `display:none`**, with `aria-hidden`, `tabIndex={-1}` and `autoComplete="off"`, so no person and no password manager fills it; some bots skip fields that are `display:none`. It is only sent when something is in it. The backend answers a caught bot with the same `201` as a real message, on purpose — verified live: the bot submission showed the thank-you panel and never reached the admin list.
+- **2026-09-26** — **A sent message replaces the form with a thank-you panel** (the user's call), focus moved to its heading so a screen reader announces it, with a "send another" button that brings back an empty form. A toast alone is gone in seconds, and an empty form sitting there reads as though nothing happened. Failures still toast: `429` (5 an hour per IP, plain-text body, matched on status as with requests) and a phone the backend's libphonenumber rejects, which is also marked on the field.
+- **2026-09-26** — **A second feature needed the phone, status and dialog pieces, so they moved to the root** per this file's own rule: `constants/Countries.ts`, `lib/Phone.ts` (`countryOptions`, `composePhone`, `nationalDigits`, `telHref`, `whatsappHref`), `components/admin/PhoneActions.tsx`, a generic `components/admin/MarkContactedDialog.tsx` (the caller builds the sentence), and `components/shared/LeadStatusBadge.tsx` with its copy under `common.leadStatus` (was `requests.statuses`). `LeadStatus` in `types/Shared.ts` is the one `pending | contacted` type; `RequestStatus` is an alias of it. The requests feature's behaviour is unchanged, re-checked live after the move.
+- **2026-09-26** — **`AdminNavItem` gained a `badge` component**, as the 2026-09-24 entry said it would once a second section needed a count. `components/admin/NavCountBadge.tsx` owns the look (number, `99+`, a dot on the collapsed rail, nothing at zero); `PendingRequestsBadge` and `PendingMessagesBadge` each fetch their own count and render it. `AdminNavLinks` no longer knows any section by name.
+- **2026-09-26** — **The contact form's country list renders only after hydration** (`hooks/UseHydrated.ts`, on `useSyncExternalStore`). Country names and their sort order come from `Intl.DisplayNames`/`localeCompare`, which differ between Node's ICU and the browser's, and the form is server-rendered on the home page — it failed hydration ("server rendered text didn't match the client") on the `<option>`s. The server and the first client pass render only the selected country's `+963`; the full list follows. The order modal's `PhoneField` never had the problem, since it only ever renders in the browser.
+- **2026-09-26** — **The dashboard grid is `lg:grid-cols-3 2xl:grid-cols-6`**, for six tiles (projects and published come from one component). It was `lg:grid-cols-4`, which already left the requests tile alone on a second row; with messages added, three-by-two reads as a set and a single row fits from 1536px up.
+- **2026-09-26** — **The backend now refuses the self-lockout the 2026-09-15 entry warned about**: `PATCH /api/users/:id/role` and `DELETE /api/users/:id` answer `409 CANNOT_MODIFY_SELF` when a super admin targets their own account, and `409 LAST_SUPER_ADMIN` when the change would leave no super admin at all; `404 USER_NOT_FOUND` now also covers an already-deactivated account. `userErrorMessage()` maps both `409`s to translated toasts. The frontend's withholding of the actions on the viewer's own row stays — it is still the better experience than a button that only ever answers with an error — but it is no longer the only guard.
+- **2026-09-26** — Other backend changes absorbed on this side: `POST /api/contact` now always answers `data: null` (`createContactMessage` is typed `Promise<null>`); every project carries a server-filled `coverImagePublicId?`, never sent back, and the backend deletes a replaced or orphaned cover from Cloudinary itself. For reference, with nothing to change here: `GET /api/reseller/account` is now `admin`/`super_admin` only (a future dashboard tile must send the token), reseller failures surface as `502 UPSTREAM_ERROR`, and an unknown route answers JSON `404 ROUTE_NOT_FOUND` rather than an HTML page.
+- **2026-09-27** — **`/preparing` — "setting up your account" after every sign-up** (the user's call: a new customer who went straight on to order a server could beat the webhook and hit `409 ACCOUNT_NOT_SYNCED`, and the one silent retry in `useCreateRequest` was not always enough). Full design under Auth & Roles. Two side effects worth knowing: a new customer without a `returnTo` no longer passes through `/admin` to be bounced home by the gate, and an invited admin no longer depends on `getMyProfileWithRetry()`'s single retry to be recognised on their first visit. The `(auth)` layout now mounts `QueryProvider` for it. The order modal shows the same "setting up" state in place of the form (submit disabled) if it is ever reached unsynced; the silent `409` retry stays as a second backstop.
+- **2026-09-27** — `useMyProfile()` sets `notifyOnChangeProps: "all"`. Every poll answers the same `synced: false`, so without it the hook would not re-render between polls and would never notice it had reached its limit — the "taking longer than usual" state could not appear. The poll count is read from the cache entry (`getQueryState().dataUpdateCount`), which the observer result doesn't carry, and `retry()` resets the query so the count starts over. Worth knowing when testing it with `Fetch.fulfillRequest`: intercept `GET` only, since answering the CORS preflight too makes every request fail.
+- **2026-09-27** — **Phone fields split two fifths for the country and three for the number** from `sm` up, in both the contact form and the order modal (stacked on a phone). A quarter was tried first and truncated the country's name to "سوريا (3…"; two fifths (~185px beside a ~285px number on desktop) shows "سوريا (+963)" in full. Flags were considered and turned down: a native `<select>` cannot show images, emoji flags render as two letters on Windows, and a custom flag picker was more than the field needed. The selected country's `+<code>` now sits inside the number input's left edge, and the placeholder follows the country: a real-shaped `944 123 456` for Syria, a neutral `123 456 789` for everyone else (`EXAMPLE_NUMBERS` in `constants/Countries.ts`, `phonePlaceholder()` in `lib/Phone.ts`). Before, every country showed a Syrian number.
+- **2026-09-27** — Once again the running dev server missed newly-used Tailwind classes (`sm:col-span-3` was absent from its CSS while the production build had it) until it was restarted on a clean `.next`. If a layout change looks like it did nothing in dev, check `document.styleSheets` for the class before debugging the markup.

@@ -5,15 +5,15 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
 import IconButton from "@/components/kit/IconButton";
-import type { PhoneActionsProps } from "../../types/Requests";
-import { telHref, whatsappHref } from "../../utils/Requests";
+import { telHref, whatsappHref } from "@/lib/Phone";
+import type { PhoneActionsProps } from "@/types/Admin";
 
 // The number as a `tel:` link, then WhatsApp and copy — the three ways the
 // team actually reaches a customer, next to each other in the table and in
 // the details dialog. WhatsApp first among the buttons: in Syria it is how
 // most of these calls end up happening.
 export default function PhoneActions({ phone }: PhoneActionsProps) {
-  const t = useTranslations("admin.requests.phone");
+  const t = useTranslations("admin.common.phone");
 
   async function copy() {
     try {

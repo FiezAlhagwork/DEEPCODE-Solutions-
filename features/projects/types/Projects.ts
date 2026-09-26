@@ -46,6 +46,12 @@ export type Project = {
   description: LocalizedText;
   slug: string;
   coverImage: string;
+  /**
+   * The cover's Cloudinary id. Filled in by the server, and never sent — the
+   * backend ignores it on a write, and removes the old image itself when the
+   * cover is replaced or the project deleted.
+   */
+  coverImagePublicId?: string;
   gallery: ProjectGalleryImage[];
   links: ProjectLink[];
   /**

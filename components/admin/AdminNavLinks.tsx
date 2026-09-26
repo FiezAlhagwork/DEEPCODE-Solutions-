@@ -4,7 +4,6 @@ import { useTranslations } from "next-intl";
 
 import Tooltip from "@/components/kit/Tooltip";
 import { adminNavItems, isActiveHref } from "@/constants/AdminNav";
-import PendingRequestsBadge from "@/features/requests/components/admin/PendingRequestsBadge";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/Utils";
 import type { AdminNavLinksProps } from "@/types/Admin";
@@ -19,7 +18,7 @@ export default function AdminNavLinks({
 
   return (
     <nav className="flex flex-col gap-1">
-      {adminNavItems.map(({ key, href, icon: Icon }) => {
+      {adminNavItems.map(({ key, href, icon: Icon, badge: Badge }) => {
         const active = isActiveHref(pathname, href);
         const label = t(key);
 
@@ -55,11 +54,7 @@ export default function AdminNavLinks({
               )}
               <Icon className="size-4.5 shrink-0" aria-hidden />
               {!collapsed && <span className="truncate">{label}</span>}
-              {/* The one entry with a live count. A plain check here rather
-                  than a field on `AdminNavItem`, while it stays the only one. */}
-              {key === "requests" && (
-                <PendingRequestsBadge collapsed={collapsed} />
-              )}
+              {Badge && <Badge collapsed={collapsed} />}
             </Link>
           </Tooltip>
         );

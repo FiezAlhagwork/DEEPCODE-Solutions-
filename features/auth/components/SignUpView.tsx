@@ -16,6 +16,7 @@ import {
   authPageHref,
   clerkErrorMessage,
   clerkFieldError,
+  preparingHref,
   withTimeout,
 } from "../utils/Auth";
 import CodeInput from "./CodeInput";
@@ -52,7 +53,7 @@ export default function SignUpView({ locale, returnTo }: AuthViewProps) {
       await signUp.authenticateWithRedirect({
         strategy: "oauth_google",
         redirectUrl: `/${locale}/sso-callback`,
-        redirectUrlComplete: `/${locale}${returnTo ?? "/admin"}`,
+        redirectUrlComplete: `/${locale}${preparingHref(returnTo)}`,
       });
     } catch (error) {
       // Without this, a failed redirect (Clerk rejects the attempt for any
@@ -105,7 +106,7 @@ export default function SignUpView({ locale, returnTo }: AuthViewProps) {
       );
       if (attempt.status === "complete") {
         await setActive({ session: attempt.createdSessionId });
-        router.push(returnTo ?? "/admin");
+        router.push(preparingHref(returnTo));
         return;
       }
       toast.error(tCommon("genericError"));

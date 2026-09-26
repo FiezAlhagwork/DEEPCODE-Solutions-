@@ -17,7 +17,11 @@ import Field from "@/components/kit/Field";
 import TextInput from "@/components/kit/TextInput";
 import { useRouter } from "@/i18n/navigation";
 import { createNameSchema } from "../schemas/Auth";
-import { clerkErrorMessage, withTimeout } from "../utils/Auth";
+import {
+  clerkErrorMessage,
+  preparingHref,
+  withTimeout,
+} from "../utils/Auth";
 
 type Phase = "loading" | "missingName" | "error";
 
@@ -74,7 +78,7 @@ export default function AcceptInvitationView() {
         );
         if (attempt.status === "complete") {
           await setActive({ session: attempt.createdSessionId });
-          router.push("/admin");
+          router.push(preparingHref());
           return;
         }
         setPhase("missingName");
@@ -97,7 +101,7 @@ export default function AcceptInvitationView() {
       const attempt = await withTimeout(signUp.update(values), tCommon("timeoutError"));
       if (attempt.status === "complete") {
         await setActive({ session: attempt.createdSessionId });
-        router.push("/admin");
+        router.push(preparingHref());
         return;
       }
       toast.error(tCommon("genericError"));

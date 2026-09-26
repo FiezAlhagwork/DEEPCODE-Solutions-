@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { nationalDigits } from "../utils/Requests";
+import { nationalDigits } from "@/lib/Phone";
 
 /**
  * Validation for the order form — a factory, like every other schema here,

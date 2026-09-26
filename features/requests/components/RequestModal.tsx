@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 
 import Button from "@/components/kit/Button";
 import Modal from "@/components/kit/Modal";
+import { useMyProfile } from "@/features/auth/hooks/UseAuth";
 import { authPageHref } from "@/features/auth/utils/Auth";
 import { Link, usePathname } from "@/i18n/navigation";
 import { requestKeys } from "../QueryKeys";
@@ -29,9 +30,16 @@ export default function RequestModal({
   onSubmitted,
 }: RequestModalProps) {
   const t = useTranslations("requests.modal");
+  const tPreparing = useTranslations("auth.preparing");
   const { isLoaded, isSignedIn } = useAuth();
   const pathname = usePathname();
   const submitting = useIsMutating({ mutationKey: requestKeys.create() }) > 0;
+
+  // A backstop for `/preparing`: someone who reaches this modal with an
+  // account our database doesn't have yet (the webhook still in flight) sees
+  // that it's being set up instead of a form whose submit can only answer
+  // `409 ACCOUNT_NOT_SYNCED`. Asked only while the modal is open.
+  const account = useMyProfile({ enabled: isSignedIn === true && product !== null });
 
   // Where the sign-in page should send them back to: this page, with the
   // product reopened. Locale-less, because the sign-in page hands it to the
@@ -54,6 +62,7 @@ export default function RequestModal({
         form={FORM_ID}
         variant="primary"
         loading={submitting}
+        disabled={!account.ready}
       >
         {submitting ? t("sending") : t("submit")}
       </Button>
@@ -110,6 +119,26 @@ export default function RequestModal({
           {!isLoaded ? (
             <div className="flex justify-center py-6 text-ink-faint">
               <Loader2 className="size-5 animate-spin" aria-hidden />
+            </div>
+          ) : isSignedIn && !account.ready ? (
+            <div
+              role="status"
+              aria-live="polite"
+              className="flex flex-col items-center gap-3 py-6 text-center text-sm text-ink-muted"
+            >
+              {account.timedOut ? (
+                <>
+                  <p>{tPreparing("slowDescription")}</p>
+                  <Button variant="outline" size="sm" onClick={account.retry}>
+                    {tPreparing("retry")}
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Loader2 className="size-5 animate-spin text-primary" aria-hidden />
+                  <p>{t("preparing")}</p>
+                </>
+              )}
             </div>
           ) : isSignedIn ? (
             <RequestForm

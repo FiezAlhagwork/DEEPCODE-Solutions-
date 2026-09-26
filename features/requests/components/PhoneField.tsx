@@ -5,8 +5,13 @@ import { useLocale, useTranslations } from "next-intl";
 
 import SelectInput from "@/components/kit/SelectInput";
 import TextInput from "@/components/kit/TextInput";
+import {
+  countryOptions,
+  dialCodeOf,
+  dialPrefixPadding,
+  phonePlaceholder,
+} from "@/lib/Phone";
 import type { PhoneFieldProps } from "../types/Requests";
-import { countryOptions } from "../utils/Requests";
 
 // The backend only accepts a full international number and will not guess a
 // country, so the country is its own control rather than something the
@@ -25,6 +30,7 @@ export default function PhoneField({
   const t = useTranslations("requests.form");
   const locale = useLocale();
   const options = useMemo(() => countryOptions(locale), [locale]);
+  const dial = dialCodeOf(country);
 
   const hintId = `${numberId}-hint`;
   const errorId = `${numberId}-error`;
@@ -38,14 +44,16 @@ export default function PhoneField({
         </span>
       </label>
 
-      <div className="flex flex-col gap-2 sm:flex-row">
+      {/* Two fifths for the country, three for the number, from `sm` up —
+          wide enough for "Syria (+963)" to read in full. Stacked on a phone. */}
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-5">
         <SelectInput
           id={countryId}
           aria-label={t("country")}
           value={country}
           disabled={disabled}
           onChange={(event) => onCountryChange(event.target.value)}
-          className="sm:w-56 sm:shrink-0"
+          className="truncate sm:col-span-2"
         >
           {options.map((option) => (
             <option key={option.iso} value={option.iso}>
@@ -55,18 +63,30 @@ export default function PhoneField({
         </SelectInput>
 
         {/* A latin-only island, like the email inputs: digits read left to
-            right in both locales. */}
-        <TextInput
-          {...numberProps}
-          id={numberId}
-          type="tel"
-          inputMode="tel"
-          autoComplete="tel-national"
-          dir="ltr"
-          disabled={disabled}
-          aria-invalid={error ? true : undefined}
-          aria-describedby={error ? errorId : hintId}
-        />
+            right in both locales. The selected country's code sits inside
+            its left edge, so it is plain that it doesn't need typing. */}
+        <div className="relative sm:col-span-3">
+          <span
+            aria-hidden
+            dir="ltr"
+            className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm text-ink-faint"
+          >
+            +{dial}
+          </span>
+          <TextInput
+            {...numberProps}
+            id={numberId}
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel-national"
+            placeholder={phonePlaceholder(country)}
+            dir="ltr"
+            disabled={disabled}
+            style={{ paddingLeft: dialPrefixPadding(dial) }}
+            aria-invalid={error ? true : undefined}
+            aria-describedby={error ? errorId : hintId}
+          />
+        </div>
       </div>
 
       {error ? (

@@ -6,9 +6,8 @@ import type {
 } from "@/types/Shared";
 
 // The public navbar's links — read by both the desktop bar and the mobile
-// drawer, which used to carry two copies of this list. No "home" (the logo is
-// the home link) and no "pricing": the bar was crowded, and those two were the
-// ones to go. "Our work" is new — `/projects` had no way in from the navbar.
+// drawer, which used to carry two copies of this list. No "home": the logo is
+// the home link. "Our work" is new — `/projects` had no way in from the navbar.
 export const siteNavLinks: SiteNavLink[] = [
   { key: "about", href: "/#about" },
   { key: "services", href: "/#services" },
@@ -21,7 +20,7 @@ export const siteNavLinks: SiteNavLink[] = [
 export const footerNavLinks: FooterLink[] = [
   { key: "about", href: "/#about" },
   { key: "services", href: "/#services" },
-  { key: "pricing", href: "/#pricing" },
+  { key: "projects", href: "/projects" },
   { key: "contact", href: "/#contact" },
 ];
 

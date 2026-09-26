@@ -40,6 +40,11 @@ export const userErrorMessage = (
   if (!(error instanceof ApiError)) return t("genericError");
   if (error.code === "FORBIDDEN") return t("forbidden");
   if (error.code === "USER_NOT_FOUND") return t("notFound");
+  // Both `409`s. The panel already withholds the actions on the viewer's own
+  // row, so these are the backend's backstop showing through, not a path the
+  // UI offers.
+  if (error.code === "CANNOT_MODIFY_SELF") return t("cannotModifySelf");
+  if (error.code === "LAST_SUPER_ADMIN") return t("lastSuperAdmin");
   return error.message || t("genericError");
 };
 

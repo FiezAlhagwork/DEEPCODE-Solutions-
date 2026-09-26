@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import PageHeader from "@/components/admin/PageHeader";
 import CategoryStats from "@/features/categories/components/admin/CategoryStats";
+import ContactStats from "@/features/contact/components/admin/ContactStats";
 import ProjectStats from "@/features/projects/components/admin/ProjectStats";
 import RecentProjectsPanel from "@/features/projects/components/admin/RecentProjectsPanel";
 import RequestStats from "@/features/requests/components/admin/RequestStats";
@@ -21,11 +22,12 @@ export default async function AdminDashboardPage({ params }: LocaleRouteProps) {
     <div className="flex flex-col gap-5">
       <PageHeader title={t("welcome")} description={t("title")} />
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
         <ProjectStats />
         <CategoryStats />
         <UserStats />
         <RequestStats />
+        <ContactStats />
       </div>
 
       <RecentProjectsPanel />

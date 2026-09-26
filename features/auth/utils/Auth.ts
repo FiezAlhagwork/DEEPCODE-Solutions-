@@ -44,6 +44,16 @@ export const authPageHref = (
   returnTo ? `${page}?returnTo=${encodeURIComponent(returnTo)}` : page;
 
 /**
+ * `/preparing`, where a new account waits until our database has it — see
+ * `PreparingAccountView`. Locale-less, like `authPageHref`; the Google flows
+ * prefix the locale themselves, since Clerk navigates there directly.
+ */
+export const preparingHref = (returnTo?: string): string =>
+  returnTo
+    ? `/preparing?returnTo=${encodeURIComponent(returnTo)}`
+    : "/preparing";
+
+/**
  * Where a signed-in visitor belongs, decided from their real role. This is the
  * single copy of that decision: the admin layout's gate and the sign-in /
  * sign-up pages all call it, so "who counts as an admin" is never written

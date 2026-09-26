@@ -48,3 +48,11 @@ export type MyProfile =
       userId: string;
       role: null;
     };
+
+/** `returnTo` has already been through `safeReturnTo()` on the server page. */
+export type PreparingAccountViewProps = { returnTo?: string };
+
+export type UseMyProfileOptions = {
+  /** Off while there is nothing to ask about (the order modal is closed). */
+  enabled?: boolean;
+};

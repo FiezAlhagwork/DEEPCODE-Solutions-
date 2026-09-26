@@ -2,11 +2,14 @@ import {
   FolderKanban,
   Inbox,
   LayoutDashboard,
+  Mail,
   Tags,
   UserRound,
   Users,
 } from "lucide-react";
 
+import PendingMessagesBadge from "@/features/contact/components/admin/PendingMessagesBadge";
+import PendingRequestsBadge from "@/features/requests/components/admin/PendingRequestsBadge";
 import type { AdminNavItem } from "@/types/Admin";
 
 // Single source of truth for the admin navigation: the sidebar, the mobile
@@ -20,7 +23,18 @@ export const adminNavItems: AdminNavItem[] = [
   { key: "projects", href: "/admin/projects", icon: FolderKanban },
   { key: "categories", href: "/admin/categories", icon: Tags },
   { key: "users", href: "/admin/users", icon: Users },
-  { key: "requests", href: "/admin/requests", icon: Inbox },
+  {
+    key: "requests",
+    href: "/admin/requests",
+    icon: Inbox,
+    badge: PendingRequestsBadge,
+  },
+  {
+    key: "messages",
+    href: "/admin/messages",
+    icon: Mail,
+    badge: PendingMessagesBadge,
+  },
   { key: "account", href: "/admin/account", icon: UserRound },
 ];
 

@@ -1,6 +1,6 @@
 import type { LayoutDashboard } from "lucide-react";
 import type { Messages } from "next-intl";
-import type { ReactNode } from "react";
+import type { ComponentType, ReactNode } from "react";
 
 import type { ProjectStatus } from "@/features/projects/types/Projects";
 import type { AdminRole, AdminUserStatus } from "@/features/users/types/Users";
@@ -19,6 +19,21 @@ export type AdminNavItem = {
   key: keyof Messages["admin"]["sidebar"];
   href: string;
   icon: typeof LayoutDashboard;
+  /** A live count beside the label (pending requests, unread messages…). */
+  badge?: ComponentType<NavBadgeProps>;
+};
+
+/** Props every nav badge takes — see `AdminNavItem.badge`. */
+export type NavBadgeProps = {
+  /** The collapsed rail has no room for a number — it shows a dot instead. */
+  collapsed?: boolean;
+};
+
+export type NavCountBadgeProps = NavBadgeProps & {
+  /** Nothing renders while this is `undefined` or `0`. */
+  count: number | undefined;
+  /** The accessible text, e.g. "3 pending requests". */
+  label: string;
 };
 
 // --- Shell -----------------------------------------------------------------
@@ -146,4 +161,24 @@ export type ConfirmedAction<TRecord> = {
   ask: (record: TRecord) => void;
   dismiss: () => void;
   confirm: () => void;
+};
+
+// --- Leads -----------------------------------------------------------------
+
+/** Call / WhatsApp / copy for a stored E.164 number. */
+export type PhoneActionsProps = {
+  phone: string;
+};
+
+/**
+ * The confirmation before a lead leaves the pending queue. The caller builds
+ * the sentence, since what is being confirmed ("… about <product>", "… about
+ * their message") differs per list.
+ */
+export type MarkContactedDialogProps = {
+  open: boolean;
+  description?: string;
+  isPending: boolean;
+  onCancel: () => void;
+  onConfirm: () => void;
 };
